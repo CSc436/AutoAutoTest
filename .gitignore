@@ -1,6 +1,10 @@
+# Compiled code #
 *.class
 
+# Eclipse files #
+.project
+.metadata
+
 # Package Files #
-*.jar
 *.war
 *.ear
