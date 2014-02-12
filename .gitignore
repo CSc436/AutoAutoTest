@@ -4,6 +4,8 @@
 # Eclipse files #
 .project
 .metadata
+.classpath
+.externalToolBuilders/
 
 # Package Files #
 *.war
