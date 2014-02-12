@@ -41,7 +41,7 @@ public class Args {
     }
 
     /**
-     * Just prints args.
+     * Just returns the value of args.
      */
     public String toString() {
         return args;
