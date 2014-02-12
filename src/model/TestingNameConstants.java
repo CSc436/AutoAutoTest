@@ -12,6 +12,11 @@ public class TestingNameConstants {
     public static final String RETURN_VALUE = "returnValue";
 
     /**
+     * The default name for standard out
+     */
+    public static final String STANDARD_OUT_VALUE = "fos.getString()";
+
+    /**
      * private constructor so nobody can instantiate this class.
      */
     private TestingNameConstants() {
