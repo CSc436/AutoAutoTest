@@ -1,13 +1,12 @@
 package model;
 
-
 /**
- * Wrapper class for return values.  Holds them as strings.
+ * Wrapper class for return values. Holds them as strings.
+ * 
  * @author Ricky
  */
 public class ExpectedReturn {
     private String returnValue;
-
 
     /**
      * Default return value of "".
@@ -16,15 +15,15 @@ public class ExpectedReturn {
         returnValue = "";
     }
 
-
     /**
      * Sets return value to whatever is supplied.
-     * @param value the first value.
+     * 
+     * @param value
+     *            the first value.
      */
     public ExpectedReturn(String value) {
         returnValue = value;
     }
-
 
     /**
      * @return The return value.
@@ -33,14 +32,13 @@ public class ExpectedReturn {
         return returnValue;
     }
 
-
     /**
-     * @param value the new value.
+     * @param value
+     *            the new value.
      */
     public void setReturnValue(String value) {
         returnValue = value;
     }
-
 
     /**
      * @return assertEquals(TestingNameConstants.RETURN_VALUE, returnValue);

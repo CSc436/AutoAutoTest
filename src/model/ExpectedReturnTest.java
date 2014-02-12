@@ -1,14 +1,13 @@
 package model;
 
-
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-
 /**
  * Test the class ExpectedReturn.
+ * 
  * @author Ricky
- *
+ * 
  */
 public class ExpectedReturnTest {
 
@@ -26,7 +25,6 @@ public class ExpectedReturnTest {
 
         value = new ExpectedReturn("3.14");
         assertTrue(value.getReturnValue().equals("3.14"));
-
 
         assertTrue(value.toString().equals(
                 "assertEquals(" + TestingNameConstants.RETURN_VALUE + ", "
