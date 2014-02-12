@@ -43,7 +43,6 @@ public class ExpectedReturn {
 
 
     /**
-     * Writes the return value in the form of an assertEquals.
      * @return assertEquals(TestingNameConstants.RETURN_VALUE, returnValue);
      */
     public String toString() {

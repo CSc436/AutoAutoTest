@@ -21,11 +21,11 @@ public class ExpectedReturnTest {
         ExpectedReturn value = new ExpectedReturn();
         assertTrue(value.getReturnValue().equals(""));
 
-        value.setReturnValue("boolean");
-        assertTrue(value.getReturnValue().equals("boolean"));
+        value.setReturnValue("false");
+        assertTrue(value.getReturnValue().equals("false"));
 
-        value = new ExpectedReturn("double");
-        assertTrue(value.getReturnValue().equals("double"));
+        value = new ExpectedReturn("3.14");
+        assertTrue(value.getReturnValue().equals("3.14"));
 
 
         assertTrue(value.toString().equals(
