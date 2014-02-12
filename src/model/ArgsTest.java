@@ -12,15 +12,15 @@ public class ArgsTest {
     @Test
     public void ArgsTest() {
 
-            Args args = new Args();
-            assertTrue(args.getArgsValue().equals(""));
+        Args args = new Args();
+        assertTrue(args.getArgsValue().equals(""));
 
-            args.setArgsValue("x, false, 3.14");
-            assertTrue(args.getArgsValue().equals("x, false, 3.14"));
-            
-            args = new Args("\"indubitably\"");
-            assertTrue(args.getArgsValue().equals("\"indubitably\""));
-            
-            assertTrue(args.toString().equals(args.getArgsValue()));
+        args.setArgsValue("x, false, 3.14");
+        assertTrue(args.getArgsValue().equals("x, false, 3.14"));
+
+        args = new Args("\"indubitably\"");
+        assertTrue(args.getArgsValue().equals("\"indubitably\""));
+
+        assertTrue(args.toString().equals(args.getArgsValue()));
     }
 }
