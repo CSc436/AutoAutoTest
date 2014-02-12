@@ -1,6 +1,12 @@
 # Compiled code #
 *.class
 
+# Build Script files #
+jacoco.exe
+test_output/
+dist/
+bin/
+
 # Eclipse files #
 .project
 .metadata
