@@ -50,17 +50,26 @@ public class View extends Application {
         grid.add(sceneTitle, 0, 0, 2, 1);
         
         // user input goes here
-        Label userName = new Label("User Name:");
+        Label userName = new Label("Test Name:");
         grid.add(userName, 0, 1);
         
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
         
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
+        Label ip = new Label("Test Input:");
+        grid.add(ip, 0, 2);
         
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        TextField ipTextField = new TextField();
+        grid.add(ipTextField, 1, 2);
+//        PasswordField pwBox = new PasswordField();
+//        grid.add(pwBox, 1, 2);
+        
+        Label op = new Label("Test Output:");
+        grid.add(op, 0, 3);
+        
+        TextField opTextField = new TextField();
+        grid.add(opTextField, 1, 3);
+        
         
         
         
