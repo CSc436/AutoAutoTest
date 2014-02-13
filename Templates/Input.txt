@@ -1,0 +1,3 @@
+FakeStandardInput fsi = new FakeStandardInput();
+fsi.setText(INPUT);
+System.setOut(fis);
