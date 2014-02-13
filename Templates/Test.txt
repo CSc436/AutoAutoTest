@@ -1,0 +1,7 @@
+@Test
+public void NAME() {
+   INPUT_TEMP
+   FakeStandardOut...
+   System.setOut(...
+   assertEquals(RETURN_VALUE, returnValue);
+}
