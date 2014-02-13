@@ -19,16 +19,17 @@ public class StandardOutTest {
         ExpectedStandardOut so = new ExpectedStandardOut();
         assertTrue(so.getStandardOutValue().equals(""));
     }
-    
+
     /**
      * test non-empty constructor.
      */
     @Test
     public void standardOutNonEmptyConstructorTest() {
-        ExpectedStandardOut so = new ExpectedStandardOut("a different\n message");
+        ExpectedStandardOut so = new ExpectedStandardOut(
+                "a different\n message");
         assertTrue(so.getStandardOutValue().equals("a different\n message"));
     }
-    
+
     /**
      * test setter.
      */
@@ -39,13 +40,14 @@ public class StandardOutTest {
         so.setStandardOutValue("a line of text");
         assertTrue(so.getStandardOutValue().equals("a line of text"));
     }
-    
+
     /**
      * test toString.
      */
     @Test
     public void standardOutToStringTest() {
-        ExpectedStandardOut so = new ExpectedStandardOut("a different\n message");
+        ExpectedStandardOut so = new ExpectedStandardOut(
+                "a different\n message");
 
         assertTrue(so.toString().equals(
                 "assertEquals(" + TestingNameConstants.STANDARD_OUT_VALUE
