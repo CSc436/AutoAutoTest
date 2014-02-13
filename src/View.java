@@ -1,4 +1,5 @@
-// convert to xml
+// convert gui to xml
+// events and controller code still in java
 /** @dillon: this class is the graphical view of our system.
  *  the user will use this gui to interact with the model.
 **/
@@ -46,67 +47,66 @@ public class View extends Application {
         grid.setPadding(new Insets(25, 25, 25, 25)); // padding (space between edges and grid)
         
         Text sceneTitle = new Text("AutoAuto Tester"); // here we create the title for the scene
-        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        sceneTitle.setId("welcome-text");
         grid.add(sceneTitle, 0, 0, 2, 1);
         
         // user input goes here
-        Label userName = new Label("Test Name:");
+        Label userName = new Label("Name:");
         grid.add(userName, 0, 1);
         
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
         
-        Label ip = new Label("Test Input:");
+        Label ip = new Label("Standard Input:");
         grid.add(ip, 0, 2);
-        
         TextField ipTextField = new TextField();
         grid.add(ipTextField, 1, 2);
 //        PasswordField pwBox = new PasswordField();
 //        grid.add(pwBox, 1, 2);
         
-        Label op = new Label("Test Output:");
+        Label op = new Label("Standard Output:");
         grid.add(op, 0, 3);
-        
         TextField opTextField = new TextField();
         grid.add(opTextField, 1, 3);
         
+        Label arg = new Label("Arguments: ");
+        grid.add(arg, 0, 4);
+        TextField argTextField = new TextField();
+        grid.add(argTextField, 1, 4);
         
-        
+        Label ret = new Label("Return Values: ");
+        grid.add(ret, 0, 5);
+        TextField retTextField = new TextField();
+        grid.add(retTextField, 1, 5);
         
         // code for button
         Button button = new Button("Generate Test");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(button);
-        grid.add(hbBtn, 1, 4);
-        
+        grid.add(hbBtn, 1, 6);
         
         // text message
         final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 6);
-        
-        
-        
+        grid.add(actiontarget, 1, 7);
         
         button.setOnAction(new EventHandler<ActionEvent>() {
         	 
             @Override
             public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Test Generated.");
+            	actiontarget.setId("actiontarget");
+                actiontarget.setText("Test " + testcounter + " Generated.");
+                testcounter++;
             }
         });
-        
-        
-        
-        
-        
         
         Scene scene = new Scene(grid, 600, 400);
         primaryStage.setScene(scene);
         // end of gridpane layout
         // the grid pane is used as the root node
         
+     // this uses the .css file to add design characteristics
+        scene.getStylesheets().add(View.class.getResource("View.css").toExternalForm());        
         
         
         primaryStage.show();
