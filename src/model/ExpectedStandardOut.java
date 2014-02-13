@@ -13,14 +13,14 @@ public class ExpectedStandardOut {
 
     /**
      * @param value
-     *            constructor sets standardOutValue to the value supplied.
+     *            Constructor sets standardOutValue to the expected output of a student's method.
      */
     public ExpectedStandardOut(String value) {
         standardOutValue = value;
     }
 
     /**
-     * @return The standard out value.
+     * @return The expected output of a student's method.
      */
     public String getStandardOutValue() {
         return standardOutValue;
@@ -28,7 +28,7 @@ public class ExpectedStandardOut {
 
     /**
      * @param value
-     *            sets standardOutValue to the value supplied.
+     *            The expected output of a student's method.
      */
     public void setStandardOutValue(String value) {
         standardOutValue = value;
