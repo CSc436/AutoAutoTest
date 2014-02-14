@@ -28,7 +28,13 @@ class StringOutputStream extends OutputStream {
      *            is the array that is going to be passed into the method.
      */
     public void write(byte[] array) {
-        String something = new String(array);
+        String something = "";
+        try {
+            something = new String(array, "UTF8");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         string1 += something;
     } // end of write method with array arg
 
@@ -47,9 +53,10 @@ class StringOutputStream extends OutputStream {
      * 
      * @throws IOException
      *             if newStream is not created.
-     * @param arg0 is an int that is passed into the method.
-     *            is an Integer.
+     * @param arg0 will be used as input, and put into a string, then put into
+     *  an instance variable.
      */
+    @SuppressWarnings("javadoc")
     @Override
     public void write(int arg0) throws IOException {
         String something = "";

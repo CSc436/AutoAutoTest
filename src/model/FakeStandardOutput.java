@@ -1,6 +1,7 @@
 package model;
 
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 //Carlos Gallego
 //Feb 7, 2014
@@ -26,9 +27,10 @@ public class FakeStandardOutput extends PrintStream {
 
     /**
      * Summary: This is a constructor to create a FakeStandardOutput.
+     * @throws UnsupportedEncodingException 
      */
-    public FakeStandardOutput() {
-        super(new StringOutputStream());
+    public FakeStandardOutput() throws UnsupportedEncodingException {
+        super(new StringOutputStream(), true, "UTF8");
         newS = (StringOutputStream) super.out;
     } // end of FakeStandardOutput constructor
 
@@ -51,7 +53,12 @@ public class FakeStandardOutput extends PrintStream {
      *            is an object that can be passed in and converted to a string.
      */
     public void print(String blah) {
-        newS.write(blah.getBytes());
+        try {
+            newS.write(blah.getBytes("UTF8"));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     } // end of print with String method
 
     /**
