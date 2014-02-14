@@ -19,14 +19,14 @@ public class Args {
 
     /**
      * @param val
-     *            sets args to val.
+     *            Constructor sets args to the value supplied.
      */
     public Args(String val) {
         args = val;
     }
 
     /**
-     * @return returns args.
+     * @return The arguments set by the user.
      */
     public String getArgsValue() {
         return args;
@@ -34,14 +34,14 @@ public class Args {
 
     /**
      * @param val
-     *            set args to value
+     *            Set args to val.
      */
     public void setArgsValue(String val) {
         args = val;
     }
 
     /**
-     * Just returns the value of args.
+     * @return The arguments set by the user.
      */
     public String toString() {
         return args;
