@@ -1,5 +1,13 @@
 package model;
 
+/**
+ * Wrapper class holds a standard out value as a string. When toString is
+ * called, converts the standardOutValue to
+ * assertEquals(TestingNameConstants.STANDARD_OUT_VALUE, standardOutValue);
+ * 
+ * @author Ricky
+ * 
+ */
 public class ExpectedStandardOut {
 
     private String standardOutValue;

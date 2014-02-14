@@ -12,7 +12,7 @@ public class TestingNameConstants {
     public static final String RETURN_VALUE = "returnValue";
 
     /**
-     * The default name for standard out
+     * The default name for standard out.
      */
     public static final String STANDARD_OUT_VALUE = "fos.getString()";
 
