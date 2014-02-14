@@ -4,10 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * TemplateReader reads somes text files and returns them as strings. The files
+ * are templates for a generic test.
+ * 
+ * @author Ricky
+ * 
+ */
 public class TemplateReader {
 
     private static TemplateReader templateReader = new TemplateReader();
 
+    /**
+     * private constructor for code coverage.
+     */
     private TemplateReader() {
 
     }
