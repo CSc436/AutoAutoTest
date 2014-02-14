@@ -21,7 +21,6 @@ public class ArgsTest {
     @Test
     public void ArgsSetterTest() {
         Args args = new Args();
-
         args.setArgsValue("x, false, 3.14");
         assertTrue(args.getArgsValue().equals("x, false, 3.14"));
     }
