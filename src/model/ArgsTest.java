@@ -21,7 +21,7 @@ public class ArgsTest {
     }
 
     /**
-     * Test settter.
+     * Test setter.
      */
     @Test
     public void argsSetterTest() {
