@@ -8,18 +8,10 @@
 
 
 <GridPane fx:controller="ViewController" 
-    xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+    xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" 
+    styleClass="root">
 
 
-
-
-
-
-
-    <Text text="Welcome" 
-        GridPane.columnIndex="0" GridPane.rowIndex="0"
-        GridPane.columnSpan="2"/>
  
     <Label text="Name:"
         GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -51,12 +43,20 @@
         onAction="#handleSubmitButtonAction"/>
 	</HBox>
 
+
+
+
 	<Text fx:id="actiontarget"
-       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+		GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+       
+   <Text id="welcome-text" text="AutoAuto Test"
+   		GridPane.columnIndex="0" GridPane.rowIndex="0" 
+        GridPane.columnSpan="2"/>
 
 
-
-
+	<stylesheets>
+		<URL value="@View.css" />
+	</stylesheets>
 
 </GridPane>
 	
