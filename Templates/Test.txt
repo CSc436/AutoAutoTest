@@ -1,6 +1,13 @@
 @Test
 public void NAME() {
-   INPUT_TEMP
-   FakeStandardOut...
-   System.setOut(...
+   FakeStandardInput fsi = new FakeStandardInput();
+   fsi.setText(INPUT);
+   System.setIn(fsi);
+
+   FakeStandardOutput fso = new FakeStandardOutput();
+   System.setOut(fso);
+   assertEquals(fso.getOutput(), EXPECTED);
+
+   Object returnValue = CLASS.METHOD(ARGS);
+   assertEquals(returnValue, EXPECTED);
 }

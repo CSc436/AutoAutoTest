@@ -1,1 +1,1 @@
-returnValue = METHOD(ARGS);
+assertEquals(returnValue, EXPECTED);

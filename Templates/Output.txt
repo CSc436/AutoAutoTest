@@ -1,3 +1,2 @@
 FakeStandardOutput fso = new FakeStandardOutput();
-fso.setText(OUTPUT);
 System.setIn(fso);
