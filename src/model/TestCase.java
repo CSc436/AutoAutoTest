@@ -19,7 +19,7 @@ public class TestCase {
     private String className;
     private String methodName;
     private String testName;
-    
+
     /**
      * Create a new empty test
      * 
@@ -41,21 +41,21 @@ public class TestCase {
     public Args getArgs() {
         return arguments;
     }
-    
+
     /**
      * @return The ExpectedReturn Object for this TestCase
      */
     public ExpectedReturn getExpectedReturn() {
         return expectedReturn;
     }
-    
+
     /**
      * @return The ExpectedStandardOut Object for this TestCase
      */
     public ExpectedStandardOut getExpectedStandardOutput() {
         return expectedOutput;
     }
-    
+
     /**
      * @return The StockedStandardInput Object for this TestCase
      */
@@ -87,13 +87,10 @@ public class TestCase {
     public String toString() {
         String template = "@Test\n" + "public void TESTNAME() {\n"
                 + "    FakeStandardOut fso = new FakeStandardOut();\n"
-                + "    System.setOut(fso);\n"
-                + "    INPUT_LINE\n"
+                + "    System.setOut(fso);\n" + "    INPUT_LINE\n"
                 + "    CLASSNAME studentObject = new CLASSNAME();\n"
                 + "    Object returnValue = studentObject.METHOD(ARGS);\n"
-                + "    RETURN_LINE\n"
-                + "    OUTPUT_LINE\n"
-                + "}\n";
+                + "    RETURN_LINE\n" + "    OUTPUT_LINE\n" + "}\n";
         template = template.replace("RETURN_LINE", expectedReturn.toString());
         template = template.replace("OUTPUT_LINE", expectedOutput.toString());
         template = template.replace("INPUT_LINE", stockedInput.toString());

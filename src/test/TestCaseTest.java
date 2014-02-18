@@ -53,7 +53,7 @@ public class TestCaseTest {
         String javaString = returnCase.toString();
         assertTrue(javaString.contains("assertEquals(returnValue, 12345678"));
     }
-    
+
     /**
      * Ensure that stocked standard input is set inside of the test method.
      */
@@ -63,9 +63,11 @@ public class TestCaseTest {
         StockedStandardInput input = inputCase.getStockedInput();
         input.setInput("Hello");
         String javaString = inputCase.toString();
-        assertTrue(javaString.contains("FakeStandardInput stdin = new FakeStandardInput(\"Hello\")"));
+        String s;
+        s = "FakeStandardInput stdin = new FakeStandardInput(\"Hello\")";
+        assertTrue(javaString.contains(s));
     }
-    
+
     /**
      * Ensure that expected output is checked.
      */
@@ -75,11 +77,12 @@ public class TestCaseTest {
         ExpectedStandardOut output = outputCase.getExpectedStandardOutput();
         output.setStandardOutValue("\"Hello\"");
         String javaString = outputCase.toString();
-        assertTrue(javaString.contains("assertEquals(fos.getString(), \"Hello\");"));
+        assertTrue(javaString
+                .contains("assertEquals(fos.getString(), \"Hello\");"));
     }
-    
+
     /**
-     * Ensure that correct args are passed to the student function
+     * Ensure that correct args are passed to the student function.
      */
     @Test
     public void testSettingArgs() {
