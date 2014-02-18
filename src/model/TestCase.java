@@ -12,29 +12,55 @@ package model;
  */
 public class TestCase {
 
+    private Args arguments;
     private ExpectedReturn expectedReturn;
-    private String methodName;
+    private ExpectedStandardOut expectedOutput;
+    private StockedStandardInput stockedInput;
     private String className;
+    private String methodName;
     private String testName;
-
+    
     /**
      * Create a new empty test
      * 
      * Tests should have expected values set before exporting!
      */
     public TestCase() {
+        arguments = new Args();
+        expectedOutput = new ExpectedStandardOut();
         expectedReturn = new ExpectedReturn();
-        methodName = "method";
+        stockedInput = new StockedStandardInput();
         className = "Class";
+        methodName = "method";
         testName = "test";
     }
 
     /**
-     * @param value
-     *            The expected return value for this test
+     * @return The Args Object for this TestCase
      */
-    public void setExpectedReturnValue(String value) {
-        expectedReturn.setReturnValue(value);
+    public Args getArgs() {
+        return arguments;
+    }
+    
+    /**
+     * @return The ExpectedReturn Object for this TestCase
+     */
+    public ExpectedReturn getExpectedReturn() {
+        return expectedReturn;
+    }
+    
+    /**
+     * @return The ExpectedStandardOut Object for this TestCase
+     */
+    public ExpectedStandardOut getExpectedStandardOutput() {
+        return expectedOutput;
+    }
+    
+    /**
+     * @return The StockedStandardInput Object for this TestCase
+     */
+    public StockedStandardInput getStockedInput() {
+        return stockedInput;
     }
 
     /**
@@ -62,15 +88,16 @@ public class TestCase {
         String template = "@Test\n" + "public void TESTNAME() {\n"
                 + "    FakeStandardOut fso = new FakeStandardOut();\n"
                 + "    System.setOut(fso);\n"
-                + "    FakeStandardIn fsi = new FakeStandardIn(INPUT);\n"
-                + "    System.setIn(fsi);\n"
+                + "    INPUT_LINE\n"
                 + "    CLASSNAME studentObject = new CLASSNAME();\n"
                 + "    Object returnValue = studentObject.METHOD(ARGS);\n"
-                + "    EXPECTED_RETURN_LINE\n"
-                + "    assertEquals(EXPECTED_OUTPUT, fso.getString());\n"
+                + "    RETURN_LINE\n"
+                + "    OUTPUT_LINE\n"
                 + "}\n";
-        template = template.replace("EXPECTED_RETURN_LINE",
-                expectedReturn.toString());
+        template = template.replace("RETURN_LINE", expectedReturn.toString());
+        template = template.replace("OUTPUT_LINE", expectedOutput.toString());
+        template = template.replace("INPUT_LINE", stockedInput.toString());
+        template = template.replace("ARGS", arguments.toString());
         template = template.replace("CLASSNAME", className);
         template = template.replace("METHOD", methodName);
         template = template.replace("TESTNAME", testName);
