@@ -22,7 +22,19 @@ public class TemplateReaderTest {
     public void testCall() {
         String str = TemplateReader.readCall();
         System.out.println(str);
-        assertTrue(str.equals("Object returnValue = CLASS.METHOD(ARGS);"));
+        assertTrue(str
+                .equals("Object returnValue = CLASS_INSTANCE.METHOD(ARGS);"));
+    }
+
+    /**
+     * reads the ClassInstance.txt file and ensures it was read correctly,
+     * prints it out for user verification too.
+     */
+    @Test
+    public void testClassInstance() {
+        String str = TemplateReader.readClassInstance();
+        System.out.println(str);
+        assertTrue(str.equals("CLASS CLASS_INSTANCE = new CLASS();"));
     }
 
     /**
@@ -48,7 +60,18 @@ public class TemplateReaderTest {
         System.out.println(str);
         assertTrue(str
                 .equals("FakeStandardOutput fso = new FakeStandardOutput();\n"
-                        + "System.setIn(fso);"));
+                        + "System.setOut(fso);"));
+    }
+
+    /**
+     * reads the OutputAssertion.txt file and ensures it was read correctly,
+     * prints it out for user verification too.
+     */
+    @Test
+    public void testOutputAssertion() {
+        String str = TemplateReader.readOutputAssertion();
+        System.out.println(str);
+        assertTrue(str.equals("assertEquals(fso.getOutput(), EXPECTED);"));
     }
 
     /**
@@ -56,8 +79,8 @@ public class TemplateReaderTest {
      * out for user verification too.
      */
     @Test
-    public void testReturn() {
-        String str = TemplateReader.readReturn();
+    public void testReturnAssertion() {
+        String str = TemplateReader.readReturnAssertion();
         System.out.println(str);
         assertTrue(str.equals("assertEquals(returnValue, EXPECTED);"));
     }
@@ -70,18 +93,16 @@ public class TemplateReaderTest {
     public void testTest() {
         String str = TemplateReader.readTest();
         System.out.println(str);
-        assertTrue(str.equals("@Test\n" + "public void NAME() {\n"
-                + "   FakeStandardInput fsi = new FakeStandardInput();\n"
-                + "   fsi.setText(INPUT);\n" + "   System.setIn(fsi);\n\n" 
-                +
-
-                "   FakeStandardOutput fso = new FakeStandardOutput();\n"
-                + "   System.setOut(fso);\n"
-                + "   assertEquals(fso.getOutput(), EXPECTED);\n\n" 
-                +
-
-                "   Object returnValue = CLASS.METHOD(ARGS);\n"
-                + "   assertEquals(returnValue, EXPECTED);\n" + "}"));
+        assertTrue(str.equals(
+                "@Test\n" + "public void NAME() {\n"
+              + "   Input.txt\n"
+              + "   Output.txt\n"
+              + "   ClassInstance.txt\n"
+              + "   Call.txt\n"
+              + "   ReturnAssertion.txt\n"
+              + "   OutputAssertion.txt\n"
+              + "}"
+           ));
     }
 
     /**

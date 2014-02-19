@@ -1,13 +1,9 @@
 @Test
 public void NAME() {
-   FakeStandardInput fsi = new FakeStandardInput();
-   fsi.setText(INPUT);
-   System.setIn(fsi);
-
-   FakeStandardOutput fso = new FakeStandardOutput();
-   System.setOut(fso);
-   assertEquals(fso.getOutput(), EXPECTED);
-
-   Object returnValue = CLASS.METHOD(ARGS);
-   assertEquals(returnValue, EXPECTED);
+   Input.txt
+   Output.txt
+   ClassInstance.txt
+   Call.txt
+   ReturnAssertion.txt
+   OutputAssertion.txt
 }

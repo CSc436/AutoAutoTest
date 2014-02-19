@@ -30,6 +30,14 @@ public class TemplateReader {
     public static String readCall() {
         return templateReader.doRead("Call.txt");
     }
+    
+    /**
+     * return value is "" if file not found.
+     * @return The contents of ClassInstance.txt
+     */
+    public static String readClassInstance() {
+        return templateReader.doRead("ClassInstance.txt");
+    }
 
     /**
      * return value is "" if file not found.
@@ -46,13 +54,21 @@ public class TemplateReader {
     public static String readOutput() {
         return templateReader.doRead("Output.txt");
     }
+    
+    /**
+     * return value is "" if file not found.
+     * @return The contents of OutputAssertion.txt
+     */
+    public static String readOutputAssertion() {
+        return templateReader.doRead("OutputAssertion.txt");
+    }
 
     /**
      * return value is "" if file not found.
      * @return The contents of Return.txt
      */
-    public static String readReturn() {
-        return templateReader.doRead("Return.txt");
+    public static String readReturnAssertion() {
+        return templateReader.doRead("ReturnAssertion.txt");
     }
 
     /**

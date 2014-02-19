@@ -1,2 +1,3 @@
 FakeStandardOutput fso = new FakeStandardOutput();
-System.setIn(fso);
+System.setOut(fso);
+   
