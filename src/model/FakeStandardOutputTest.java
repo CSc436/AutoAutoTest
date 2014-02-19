@@ -4,20 +4,24 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
 /**
+ *This is a test class that tests both the FakeStandardOutput and
+ *        StringOutputStream.
+ *            
  * @author Carlos G
  * 
- *         This is a test class that tests both the FakeStandardOutput and
- *         StringOutputStream.
+
  * 
  */
 public class FakeStandardOutputTest {
 
     /**
-     * This is a test that tests insertion of Objects.
+     * Verifies Objects that are printed after replacing standard out end up 
+     * in the fake stream rather than the console.
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -26,16 +30,19 @@ public class FakeStandardOutputTest {
             throws UnsupportedEncodingException {
         FakeStandardOutput newOutput = new FakeStandardOutput();
         System.setOut(newOutput);
+        
+        ArrayList<Integer> newList = new ArrayList<Integer>();
+        newList.add(1);
 
-        System.out.print((Object) 20);
-        assertEquals("20", newOutput.getOutput());
+        System.out.print(newList);
 
         System.out.println((Object) "something");
-        assertEquals("20something", newOutput.getOutput());
+        assertEquals("[1]something", newOutput.getOutput());
     } // end of testFakeOutputStreamWithObjects
 
     /**
-     * This is a test that tests insertion of Strings.
+     * Verifies Strings that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -46,14 +53,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print("something");
-        assertEquals("something", newOutput.getOutput());
 
         System.out.println("somethingelse");
         assertEquals("somethingsomethingelse", newOutput.getOutput());
-    } // end of testFakeOutputStreamWithStrings
+    } 
 
     /**
-     * This is a test that tests insertion of Ints.
+     * Verifies Ints that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -64,14 +71,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print(5);
-        assertEquals("5", newOutput.getOutput());
 
         System.out.println(6);
         assertEquals("56", newOutput.getOutput());
-    } // end of testFakeOutputStreamWithInts
+    } 
 
     /**
-     * This is a test that tests insertion of Doubles.
+     * Verifies Doubles that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -82,14 +89,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print(5.0d);
-        assertEquals("5.0", newOutput.getOutput());
 
         System.out.println(6.0d);
         assertEquals("5.06.0", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithInts
+    } 
 
     /**
-     * This is a test that tests insertion of Floats.
+     * Verifies Floats that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -100,14 +107,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print(5.0f);
-        assertEquals("5.0", newOutput.getOutput());
 
         System.out.println(6.0f);
         assertEquals("5.06.0", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithFloats
+    } 
 
     /**
-     * This is a test that tests insertion of Bytes.
+     * Verifies Bytes that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -117,17 +124,17 @@ public class FakeStandardOutputTest {
         FakeStandardOutput newOutput = new FakeStandardOutput();
         System.setOut(newOutput);
 
-        Byte foo = 12;
+        byte foo = 12;
         System.out.print(foo);
-        assertEquals("12", newOutput.getOutput());
 
-        Byte bar = 16;
+        byte bar = 16;
         System.out.println(bar);
         assertEquals("1216", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithBytes
+    } 
 
     /**
-     * This is a test that tests insertion of Shorts.
+     * Verifies Shorts that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -139,15 +146,15 @@ public class FakeStandardOutputTest {
 
         short foo = 12;
         System.out.print(foo);
-        assertEquals("12", newOutput.getOutput());
 
         short bar = 16;
         System.out.println(bar);
         assertEquals("1216", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithShorts
+    } 
 
     /**
-     * This is a test that tests insertion of Longs.
+     * Verifies Longs that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -158,14 +165,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print(5L);
-        assertEquals("5", newOutput.getOutput());
 
         System.out.println(6L);
         assertEquals("56", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithLongs
+    } 
 
     /**
-     * This is a test that tests insertion of Booleans.
+     * Verifies Booleans that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -176,14 +183,14 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print(false);
-        assertEquals("false", newOutput.getOutput());
 
         System.out.println(true);
         assertEquals("falsetrue", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithBooleans
+    } 
 
     /**
-     * This is a test that tests insertion of Chars.
+     * Verifies Chars that are printed after replacing standard out end up 
+     * in the fake stream rather than the console
      * 
      * @throws UnsupportedEncodingException will be thrown if error occurs.
      */
@@ -194,11 +201,10 @@ public class FakeStandardOutputTest {
         System.setOut(newOutput);
 
         System.out.print('f');
-        assertEquals("f", newOutput.getOutput());
 
         System.out.println('g');
         assertEquals("fg", newOutput.getOutput());
-    } // end of testFkeOutputStreamWithChars
+    } 
 
     /**
      * Test method that tests the StringOutputStream method.
@@ -209,13 +215,12 @@ public class FakeStandardOutputTest {
     @Test
     public void testStringOutputStream() throws IOException {
         StringOutputStream newStream = new StringOutputStream();
-        byte[] something = "1".getBytes("UTF8");
-        newStream.write(something);
-        assertEquals("1", newStream.getString());
+        byte[] bytesAsString = "1".getBytes("UTF8");
+        newStream.write(bytesAsString);
         newStream.write(5);
         assertEquals("1", newStream.getString());
         newStream.close();
-    } // end of testStringOutputStream
+    } 
 
     /**
      * Test throws an exception in StringOutputStream solely for code coverage.
@@ -226,7 +231,7 @@ public class FakeStandardOutputTest {
         StringOutputStream newStream = new StringOutputStream();
         newStream.write(null);
         newStream.close();
-    } // end of testThrowingExceptions
+    }
 
     /**
      * Test throws an exception in FakeStandardOutput solely for code coverage
@@ -238,6 +243,6 @@ public class FakeStandardOutputTest {
         newStream = new FakeStandardOutput();
         newStream.print((String) null);
         newStream.close();
-    } // end of testThrowingExceptions2
+    }
 
-} // end of TestFakeStandardOutput
+} 
