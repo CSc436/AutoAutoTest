@@ -40,9 +40,9 @@ public class FakeStandardOutputTest {
 
         System.out.print(newList);
 
-        System.out.println((Object) "something");
+        System.out.print((Object) "something");
         assertEquals("[1]something", newOutput.getOutput());
-    } // end of testFakeOutputStreamWithObjects
+    } 
 
     /**
      * Verifies Strings that are printed after replacing standard out end up 
@@ -58,7 +58,7 @@ public class FakeStandardOutputTest {
 
         System.out.print("something");
 
-        System.out.println("somethingelse");
+        System.out.print("somethingelse");
         assertEquals("somethingsomethingelse", newOutput.getOutput());
     } 
 
@@ -76,7 +76,7 @@ public class FakeStandardOutputTest {
 
         System.out.print(5);
 
-        System.out.println(6);
+        System.out.print(6);
         assertEquals("56", newOutput.getOutput());
     } 
 
@@ -94,7 +94,7 @@ public class FakeStandardOutputTest {
 
         System.out.print(5.0d);
 
-        System.out.println(6.0d);
+        System.out.print(6.0d);
         assertEquals("5.06.0", newOutput.getOutput());
     } 
 
@@ -112,7 +112,7 @@ public class FakeStandardOutputTest {
 
         System.out.print(5.0f);
 
-        System.out.println(6.0f);
+        System.out.print(6.0f);
         assertEquals("5.06.0", newOutput.getOutput());
     } 
 
@@ -132,7 +132,7 @@ public class FakeStandardOutputTest {
         System.out.print(foo);
 
         byte bar = 16;
-        System.out.println(bar);
+        System.out.print(bar);
         assertEquals("1216", newOutput.getOutput());
     } 
 
@@ -152,7 +152,7 @@ public class FakeStandardOutputTest {
         System.out.print(foo);
 
         short bar = 16;
-        System.out.println(bar);
+        System.out.print(bar);
         assertEquals("1216", newOutput.getOutput());
     } 
 
@@ -170,7 +170,7 @@ public class FakeStandardOutputTest {
 
         System.out.print(5L);
 
-        System.out.println(6L);
+        System.out.print(6L);
         assertEquals("56", newOutput.getOutput());
     } 
 
@@ -188,7 +188,7 @@ public class FakeStandardOutputTest {
 
         System.out.print(false);
 
-        System.out.println(true);
+        System.out.print(true);
         assertEquals("falsetrue", newOutput.getOutput());
     } 
 
@@ -206,7 +206,7 @@ public class FakeStandardOutputTest {
 
         System.out.print('f');
 
-        System.out.println('g');
+        System.out.print('g');
         assertEquals("fg", newOutput.getOutput());
     } 
 
