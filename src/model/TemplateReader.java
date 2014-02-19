@@ -114,7 +114,6 @@ public class TemplateReader {
             str += scanner.nextLine() + "\n";
         }
         str = str.trim();
-        
         scanner.close();
         return str;
     }
