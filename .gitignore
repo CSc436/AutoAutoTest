@@ -2,7 +2,7 @@
 *.class
 
 # Build Script files #
-jacoco.exe
+jacoco.exec
 test_output/
 dist/
 bin/
