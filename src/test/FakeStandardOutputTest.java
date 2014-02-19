@@ -1,4 +1,4 @@
-package model;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import model.FakeStandardOutput;
+import model.StringOutputStream;
+
 import org.junit.Test;
+
 
 /**
  *This is a test class that tests both the FakeStandardOutput and
@@ -217,8 +221,8 @@ public class FakeStandardOutputTest {
         StringOutputStream newStream = new StringOutputStream();
         byte[] bytesAsString = "1".getBytes("UTF8");
         newStream.write(bytesAsString);
-        newStream.write(5);
-        assertEquals("1", newStream.getString());
+        newStream.write(65);
+        assertEquals("1A", newStream.getString());
         newStream.close();
     } 
 

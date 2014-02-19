@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * @author Carlos G 
  * 
  */
-class StringOutputStream extends OutputStream {
+public class StringOutputStream extends OutputStream {
 
     private String outputBuffer;
 
@@ -36,7 +36,9 @@ class StringOutputStream extends OutputStream {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+//        System.out.println("outputbuffer = " + outputBuffer);
         outputBuffer += bytesAsString;
+//        System.out.println("outputbuffer = " + outputBuffer);
     } 
 
     /**
@@ -49,6 +51,7 @@ class StringOutputStream extends OutputStream {
         return outputBuffer;
     }
 
+    @Override
     /**
      * This is a write method that was overwritten. It is not used.
      * 
@@ -58,9 +61,8 @@ class StringOutputStream extends OutputStream {
      *          will be used as input, and put into a string, then put into
      *          an instance variable.
      */
-    @Override
     public void write(int arg0) throws IOException {
-        String something = "";
+        char something = (char) arg0;
         outputBuffer += something;
     } 
 
