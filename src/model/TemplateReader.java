@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -91,12 +92,12 @@ public class TemplateReader {
      */
     private static String doRead(String inputFile) {
         // add directory to path
-        inputFile = "Templates\\" + inputFile;
+        inputFile = Paths.get("Templates", inputFile).toString();
         Scanner scanner;
         try {
             scanner = new Scanner(new File(inputFile));
         } catch (FileNotFoundException e) {
-            System.out.println("error, file " + inputFile + " not found!");
+            System.out.println("error, file " + inputFile + " not found!"); // TODO turn into a logging statement
             e.printStackTrace();
             return "";
         }
