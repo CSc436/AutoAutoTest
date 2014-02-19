@@ -1,3 +1,5 @@
+package model;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -63,7 +65,7 @@ public class FakeStandardIn extends InputStream {
             return -1;
         }
         currentIndex++; // advance index before we return
-        return buffer.getBytes()[currentIndex - 1];
+        return buffer.getBytes("UTF8")[currentIndex - 1];
     }
 
     /**

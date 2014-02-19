@@ -1,3 +1,5 @@
+package test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -6,6 +8,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import org.junit.Test;
+
+import model.FakeStandardIn;
 
 /**
  * @author wcohen
@@ -26,7 +30,7 @@ public class FakeStdInTest {
                               * re-direct System.in to our FakeStdIn object
                               * instead
                               */
-        Scanner keyboard = new Scanner(System.in); /*
+        Scanner keyboard = new Scanner(System.in, "UTF8"); /*
                                                     * create fake std in rather
                                                     * than using actual keyboard
                                                     * input
@@ -77,7 +81,7 @@ public class FakeStdInTest {
         FakeStandardIn myFSI = new FakeStandardIn();
         myFSI.setString(null);
         byte x = (byte) myFSI.read();
-        String s = new String(new byte[] {x});
+        String s = new String(new byte[] {x}, "UTF8");
         assertEquals("\n", s);
 
         /* test with trying to set the FSI to an empty string */
@@ -85,7 +89,7 @@ public class FakeStdInTest {
         String p = "";
         myFSI.setString(p);
         x = (byte) myFSI.read();
-        s = new String(new byte[] {x});
+        s = new String(new byte[] {x}, "UTF8");
         assertEquals("\n", s);
 
         /* Try reading from the FSI now that the buffer is exhausted */
@@ -97,7 +101,7 @@ public class FakeStdInTest {
         myFSI.setString("lemon\n");
         byte[] ba = new byte[10];
         charsRead = myFSI.read(ba); // read the entire buffer as bytes into ba
-        s = new String(ba, 0, charsRead);
+        s = new String(ba, 0, charsRead, "UTF8");
         assertEquals(6, charsRead);
         assertEquals(6, s.length());
         assertEquals("lemon\n", s);
