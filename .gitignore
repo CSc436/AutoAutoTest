@@ -1,9 +1,17 @@
 # Compiled code #
 *.class
 
+# Build Script files #
+jacoco.exec
+test_output/
+dist/
+bin/
+
 # Eclipse files #
 .project
 .metadata
+.classpath
+.externalToolBuilders/
 
 # Package Files #
 *.war
