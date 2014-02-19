@@ -133,4 +133,4 @@ public class FakeStandardOutput extends PrintStream {
         return innerStream.getString();
     }
 
-} // end of FakeStandardOutput
+} 
