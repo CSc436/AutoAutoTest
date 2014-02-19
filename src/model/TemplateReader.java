@@ -17,7 +17,7 @@ public class TemplateReader {
     private static TemplateReader templateReader = new TemplateReader();
 
     /**
-     * private constructor prevents template readers from being made
+     * private constructor prevents template readers from being made.
      */
     private TemplateReader() {
 
@@ -103,7 +103,8 @@ public class TemplateReader {
         try {
             scanner = new Scanner(new File(inputFile));
         } catch (FileNotFoundException e) {
-            System.out.println("error, file " + inputFile + " not found!"); // TODO turn into a logging statement
+         // TODO turn into a logging statement
+            System.out.println("error, file " + inputFile + " not found!");
             e.printStackTrace();
             return "";
         }
