@@ -22,7 +22,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readCall();
         System.out.println(str);
         assertTrue(str
-                .equals("Object returnValue = CLASS_INSTANCE.METHOD(ARGS);"));
+                .equals("Object returnValue = ClassInstance.METHOD(ARGS);"));
     }
 
     /**
