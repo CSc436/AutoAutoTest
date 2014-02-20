@@ -1,9 +1,10 @@
 @Test
 public void NAME() {
-   Input.txt
-   Output.txt
-   ClassInstance.txt
-   Call.txt
-   ReturnAssertion.txt
-   OutputAssertion.txt
+   INPUT_LINE
+   FakeStandardOutput fso = new FakeStandardOutput();
+   System.setOut(fso);
+   CLASS ClassInstance = new CLASS();
+   CALL_LINE
+   RETURN_LINE
+   OUTPUT_LINE
 }

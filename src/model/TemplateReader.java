@@ -25,14 +25,16 @@ public class TemplateReader {
 
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of Call.txt
      */
     public static String readCall() {
         return templateReader.doRead("Call.txt");
     }
-    
+
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of ClassInstance.txt
      */
     public static String readClassInstance() {
@@ -41,6 +43,7 @@ public class TemplateReader {
 
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of Input.txt
      */
     public static String readInput() {
@@ -49,14 +52,16 @@ public class TemplateReader {
 
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of Output.txt
      */
     public static String readOutput() {
         return templateReader.doRead("Output.txt");
     }
-    
+
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of OutputAssertion.txt
      */
     public static String readOutputAssertion() {
@@ -65,6 +70,7 @@ public class TemplateReader {
 
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of Return.txt
      */
     public static String readReturnAssertion() {
@@ -73,6 +79,7 @@ public class TemplateReader {
 
     /**
      * return value is "" if file not found.
+     * 
      * @return The contents of Test.txt
      */
     public static String readTest() {
@@ -103,7 +110,7 @@ public class TemplateReader {
         try {
             scanner = new Scanner(new File(inputFile));
         } catch (FileNotFoundException e) {
-         // TODO turn into a logging statement
+            // TODO turn into a logging statement
             System.out.println("error, file " + inputFile + " not found!");
             e.printStackTrace();
             return "";

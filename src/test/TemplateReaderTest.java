@@ -26,17 +26,6 @@ public class TemplateReaderTest {
     }
 
     /**
-     * reads the ClassInstance.txt file and ensures it was read correctly,
-     * prints it out for user verification too.
-     */
-    @Test
-    public void testClassInstance() {
-        String str = TemplateReader.readClassInstance();
-        System.out.println(str);
-        assertTrue(str.equals("CLASS CLASS_INSTANCE = new CLASS();"));
-    }
-
-    /**
      * reads the Input.txt file and ensures it was read correctly, prints it out
      * for user verification too.
      */
@@ -46,7 +35,7 @@ public class TemplateReaderTest {
         System.out.println(str);
         assertTrue(str
                 .equals("FakeStandardInput fsi = new FakeStandardInput();\n"
-                        + "fsi.setText(INPUT);\n" + "System.setOut(fis);"));
+                        + "fsi.setText(INPUT);\n" + "System.setIn(fis);"));
     }
 
     /**
@@ -58,30 +47,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readOutput();
         System.out.println(str);
         assertTrue(str
-                .equals("FakeStandardOutput fso = new FakeStandardOutput();\n"
-                        + "System.setOut(fso);"));
-    }
-
-    /**
-     * reads the OutputAssertion.txt file and ensures it was read correctly,
-     * prints it out for user verification too.
-     */
-    @Test
-    public void testOutputAssertion() {
-        String str = TemplateReader.readOutputAssertion();
-        System.out.println(str);
-        assertTrue(str.equals("assertEquals(fso.getOutput(), EXPECTED);"));
-    }
-
-    /**
-     * reads the Return.txt file and ensures it was read correctly, prints it
-     * out for user verification too.
-     */
-    @Test
-    public void testReturnAssertion() {
-        String str = TemplateReader.readReturnAssertion();
-        System.out.println(str);
-        assertTrue(str.equals("assertEquals(returnValue, EXPECTED);"));
+                .equals("assertEquals(fso.getOutput(), EXPECTED);"));
     }
 
     /**
@@ -93,13 +59,15 @@ public class TemplateReaderTest {
         String str = TemplateReader.readTest();
         System.out.println(str);
         assertTrue(str.equals(
-                "@Test\n" + "public void NAME() {\n"
-              + "   Input.txt\n"
-              + "   Output.txt\n"
-              + "   ClassInstance.txt\n"
-              + "   Call.txt\n"
-              + "   ReturnAssertion.txt\n"
-              + "   OutputAssertion.txt\n"
+                "@Test\n" 
+              + "public void NAME() {\n"
+              + "   INPUT_LINE\n"
+              + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
+              + "   System.setOut(fso);\n"
+              + "   CLASS ClassInstance = new CLASS();\n"
+              + "   CALL_LINE\n"
+              + "   RETURN_LINE\n"
+              + "   OUTPUT_LINE\n"
               + "}"
            ));
     }

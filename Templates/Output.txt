@@ -1,2 +1,1 @@
-FakeStandardOutput fso = new FakeStandardOutput();
-System.setOut(fso);
+assertEquals(fso.getOutput(), EXPECTED);
