@@ -84,7 +84,9 @@
         <module name="JavadocVariable">
             <property name="scope" value="protected"/>
         </module>
-        <module name="JavadocStyle"/>
+        <module name="JavadocStyle">
+            <property name="checkFirstSentence" value="false"/>
+        </module>
 
 
         <!-- Checks for Naming Conventions.                  -->
@@ -152,7 +154,7 @@
         <module name="HiddenField"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <module name="MagicNumber"/>
+        <!-- <module name="MagicNumber"/> -->
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows"/>
         <module name="SimplifyBooleanExpression"/>

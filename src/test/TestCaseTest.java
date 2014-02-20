@@ -1,7 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import model.TestCase;
 
 import org.junit.Test;
@@ -23,15 +23,17 @@ public class TestCaseTest {
     @Test
     public void testEmptyTestCase() {
         TestCase emptyCase = new TestCase();
+        emptyCase.setTestName("empty");
+        assertEquals("empty", emptyCase.getTestName());
         String javaString = emptyCase.toString();
         assertTrue(javaString.startsWith("@Test"));
-        assertTrue(javaString.contains("public void test() {"));
+        assertTrue(javaString.contains("public void empty() {"));
         assertTrue(javaString
                 .contains("FakeStandardOut fso = new FakeStandardOut();"));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
-                .contains("FakeStandardIn fsi = new FakeStandardIn("));
-        assertTrue(javaString.contains("System.setIn(fsi);"));
+                .contains("FakeStandardInput stdin = new FakeStandardInput("));
+        assertTrue(javaString.contains("System.setIn(stdin);"));
         assertTrue(javaString.contains("studentObject = "));
         assertTrue(javaString.contains("Object returnValue = "));
         assertTrue(javaString.contains("assertEquals(returnValue,"));
@@ -45,9 +47,49 @@ public class TestCaseTest {
     @Test
     public void testSettingReturnValue() {
         TestCase returnCase = new TestCase();
-        returnCase.setExpectedReturnValue("12345678");
+        returnCase.setExpectedReturn("12345678");
+        assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
         assertTrue(javaString.contains("assertEquals(returnValue, 12345678"));
+    }
+
+    /**
+     * Ensure that stocked standard input is set inside of the test method.
+     */
+    @Test
+    public void testSettingInput() {
+        TestCase inputCase = new TestCase();
+        inputCase.setStockedInput("Hello");
+        assertEquals("Hello", inputCase.getStockedInput());
+        String javaString = inputCase.toString();
+        String s;
+        s = "FakeStandardInput stdin = new FakeStandardInput(\"Hello\")";
+        assertTrue(javaString.contains(s));
+    }
+
+    /**
+     * Ensure that expected output is checked.
+     */
+    @Test
+    public void testSettingOutput() {
+        TestCase outputCase = new TestCase();
+        outputCase.setExpectedStandardOutput("\"Hello\"");
+        assertEquals("\"Hello\"", outputCase.getExpectedStandardOutput());
+        String javaString = outputCase.toString();
+        assertTrue(javaString
+                .contains("assertEquals(fos.getString(), \"Hello\");"));
+    }
+
+    /**
+     * Ensure that correct args are passed to the student function.
+     */
+    @Test
+    public void testSettingArgs() {
+        TestCase argsCase = new TestCase();
+        argsCase.setArgs("1,2,3");
+        assertEquals("1,2,3", argsCase.getArgs());
+        String javaString = argsCase.toString();
+        assertTrue(javaString.contains("method(1,2,3)"));
     }
 
     /**
@@ -58,6 +100,7 @@ public class TestCaseTest {
     public void testSettingClassName() {
         TestCase classCase = new TestCase();
         classCase.setClassName("Byte");
+        assertEquals("Byte", classCase.getClassName());
         String javaString = classCase.toString();
         assertTrue(javaString.contains("Byte studentObject = new Byte();"));
     }
@@ -70,6 +113,7 @@ public class TestCaseTest {
     public void testSettingMethodName() {
         TestCase methodCase = new TestCase();
         methodCase.setMethodName("jump");
+        assertEquals("jump", methodCase.getMethodName());
         String javaString = methodCase.toString();
         assertTrue(javaString.contains("jump("));
     }
