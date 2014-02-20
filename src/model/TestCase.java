@@ -30,53 +30,107 @@ public class TestCase {
         expectedOutput = new ExpectedStandardOut();
         expectedReturn = new ExpectedReturn();
         stockedInput = new StockedStandardInput();
-        className = "Class";
-        methodName = "method";
-        testName = "test";
+        setClassName("Class");
+        setMethodName("method");
+        setTestName("test");
     }
 
     /**
-     * @return The Args Object for this TestCase
+     * @return The arguments for this TestCase
      */
-    public Args getArgs() {
-        return arguments;
+    public String getArgs() {
+        return arguments.getArgsValue();
+    }
+    
+    /**
+     * @param newValue The new arguments for the current test
+     */
+    public void setArgs(String newValue) {
+        arguments.setArgsValue(newValue);
     }
 
     /**
-     * @return The ExpectedReturn Object for this TestCase
+     * @return The expected return value for this TestCase
      */
-    public ExpectedReturn getExpectedReturn() {
-        return expectedReturn;
+    public String getExpectedReturn() {
+        return expectedReturn.getReturnValue();
+    }
+    
+    /**
+     * @param newValue the expected return value for this TestCase
+     */
+    public void setExpectedReturn(String newValue) {
+        expectedReturn.setReturnValue(newValue);
     }
 
     /**
-     * @return The ExpectedStandardOut Object for this TestCase
+     * @return The expected standard out for this TestCase
      */
-    public ExpectedStandardOut getExpectedStandardOutput() {
-        return expectedOutput;
+    public String getExpectedStandardOutput() {
+        return expectedOutput.getStandardOutValue();
+    }
+    
+    /**
+     * @param newValue The expected standard out for this TestCase
+     */
+    public void setExpectedStandardOutput(String newValue) {
+        expectedOutput.setStandardOutValue(newValue);
     }
 
     /**
-     * @return The StockedStandardInput Object for this TestCase
+     * @return The standard input for this TestCase
      */
-    public StockedStandardInput getStockedInput() {
-        return stockedInput;
+    public String getStockedInput() {
+        return stockedInput.getInputString();
+    }
+    
+    /**
+     * @param newValue the standard input for this TestCase
+     */
+    public void setStockedInput(String newValue) {
+        stockedInput.setInput(newValue);
     }
 
     /**
-     * @param name
-     *            The method to test.
+     * @return the class name
      */
-    public void setMethodName(String name) {
-        methodName = name;
+    public String getClassName() {
+        return className;
     }
 
     /**
-     * @param name
-     *            The class that contains the method to test.
+     * @param newName the new name of the class
      */
-    public void setClassName(String name) {
-        className = name;
+    public void setClassName(String newName) {
+        this.className = newName;
+    }
+
+    /**
+     * @return the test name
+     */
+    public String getTestName() {
+        return testName;
+    }
+
+    /**
+     * @param newName the new test name
+     */
+    public void setTestName(String newName) {
+        this.testName = newName;
+    }
+
+    /**
+     * @return the method name
+     */
+    public String getMethodName() {
+        return methodName;
+    }
+
+    /**
+     * @param newName the new method name
+     */
+    public void setMethodName(String newName) {
+        this.methodName = newName;
     }
 
     /**

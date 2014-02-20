@@ -1,10 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import model.Args;
-import model.ExpectedReturn;
-import model.ExpectedStandardOut;
-import model.StockedStandardInput;
 import model.TestCase;
 
 import org.junit.Test;
@@ -26,9 +23,11 @@ public class TestCaseTest {
     @Test
     public void testEmptyTestCase() {
         TestCase emptyCase = new TestCase();
+        emptyCase.setTestName("empty");
+        assertEquals("empty", emptyCase.getTestName());
         String javaString = emptyCase.toString();
         assertTrue(javaString.startsWith("@Test"));
-        assertTrue(javaString.contains("public void test() {"));
+        assertTrue(javaString.contains("public void empty() {"));
         assertTrue(javaString
                 .contains("FakeStandardOut fso = new FakeStandardOut();"));
         assertTrue(javaString.contains("System.setOut(fso);"));
@@ -48,8 +47,8 @@ public class TestCaseTest {
     @Test
     public void testSettingReturnValue() {
         TestCase returnCase = new TestCase();
-        ExpectedReturn expectedReturn = returnCase.getExpectedReturn();
-        expectedReturn.setReturnValue("12345678");
+        returnCase.setExpectedReturn("12345678");
+        assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
         assertTrue(javaString.contains("assertEquals(returnValue, 12345678"));
     }
@@ -60,8 +59,8 @@ public class TestCaseTest {
     @Test
     public void testSettingInput() {
         TestCase inputCase = new TestCase();
-        StockedStandardInput input = inputCase.getStockedInput();
-        input.setInput("Hello");
+        inputCase.setStockedInput("Hello");
+        assertEquals("Hello", inputCase.getStockedInput());
         String javaString = inputCase.toString();
         String s;
         s = "FakeStandardInput stdin = new FakeStandardInput(\"Hello\")";
@@ -74,8 +73,8 @@ public class TestCaseTest {
     @Test
     public void testSettingOutput() {
         TestCase outputCase = new TestCase();
-        ExpectedStandardOut output = outputCase.getExpectedStandardOutput();
-        output.setStandardOutValue("\"Hello\"");
+        outputCase.setExpectedStandardOutput("\"Hello\"");
+        assertEquals("\"Hello\"", outputCase.getExpectedStandardOutput());
         String javaString = outputCase.toString();
         assertTrue(javaString
                 .contains("assertEquals(fos.getString(), \"Hello\");"));
@@ -87,8 +86,8 @@ public class TestCaseTest {
     @Test
     public void testSettingArgs() {
         TestCase argsCase = new TestCase();
-        Args args = argsCase.getArgs();
-        args.setArgsValue("1,2,3");
+        argsCase.setArgs("1,2,3");
+        assertEquals("1,2,3", argsCase.getArgs());
         String javaString = argsCase.toString();
         assertTrue(javaString.contains("method(1,2,3)"));
     }
@@ -101,6 +100,7 @@ public class TestCaseTest {
     public void testSettingClassName() {
         TestCase classCase = new TestCase();
         classCase.setClassName("Byte");
+        assertEquals("Byte", classCase.getClassName());
         String javaString = classCase.toString();
         assertTrue(javaString.contains("Byte studentObject = new Byte();"));
     }
@@ -113,6 +113,7 @@ public class TestCaseTest {
     public void testSettingMethodName() {
         TestCase methodCase = new TestCase();
         methodCase.setMethodName("jump");
+        assertEquals("jump", methodCase.getMethodName());
         String javaString = methodCase.toString();
         assertTrue(javaString.contains("jump("));
     }
