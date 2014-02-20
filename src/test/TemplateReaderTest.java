@@ -35,7 +35,7 @@ public class TemplateReaderTest {
         System.out.println(str);
         assertTrue(str
                 .equals("FakeStandardInput fsi = new FakeStandardInput();\n"
-                        + "fsi.setText(INPUT);\n" + "System.setIn(fis);"));
+                        + "fsi.setString(INPUT);\n" + "System.setIn(fis);"));
     }
 
     /**
@@ -48,6 +48,18 @@ public class TemplateReaderTest {
         System.out.println(str);
         assertTrue(str
                 .equals("assertEquals(fso.getOutput(), EXPECTED);"));
+    }
+    
+    /**
+     * reads the Return.txt file and ensures it was read correctly, prints it
+     * out for user verification too.
+     */
+    @Test
+    public void testReturn() {
+        String str = TemplateReader.readReturn();
+        System.out.println(str);
+        assertTrue(str
+                .equals("assertEquals(returnValue, EXPECTED);"));
     }
 
     /**
