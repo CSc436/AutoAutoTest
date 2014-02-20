@@ -9,7 +9,7 @@ import java.io.OutputStream;
  *         was created using a byte array.
  * 
  */
-class StringOutputStream extends OutputStream {
+public class StringOutputStream extends OutputStream {
 
     private String string1;
 

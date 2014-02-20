@@ -7,10 +7,10 @@ import java.io.UnsupportedEncodingException;
 //Feb 7, 2014
 
 /**
+ * This class creates a "FakeStandardOutput", as a string so testing can be
+ * easily done between student code correct answer.
  * 
- * @author Carlos G This class creates a "FakeStandardOutput", as a string so
- *         testing can be easily done between student code correct answer.
- * 
+ * @author Carlos G
  */
 public class FakeStandardOutput extends PrintStream {
 
@@ -27,7 +27,9 @@ public class FakeStandardOutput extends PrintStream {
 
     /**
      * Summary: This is a constructor to create a FakeStandardOutput.
-     * @throws UnsupportedEncodingException 
+     * 
+     * @throws UnsupportedEncodingException
+     *             if the machine somehow doesn't support UTF8
      */
     public FakeStandardOutput() throws UnsupportedEncodingException {
         super(new StringOutputStream(), true, "UTF8");

@@ -1,25 +1,28 @@
-package model;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import model.FakeStandardOutput;
+import model.StringOutputStream;
+
 import org.junit.Test;
 
 /**
+ * This is a test class that tests both the FakeStandardOutput and
+ * StringOutputStream.
+ * 
  * @author Carlos G
- * 
- *         This is a test class that tests both the FakeStandardOutput and
- *         StringOutputStream.
- * 
  */
 public class FakeStandardOutputTest {
 
     /**
      * This is a test that tests insertion of Objects.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithObjects()
@@ -37,7 +40,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Strings.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithStrings()
@@ -55,7 +59,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Ints.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithInts()
@@ -73,7 +78,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Doubles.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithDoubles()
@@ -91,7 +97,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Floats.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithFloats()
@@ -109,7 +116,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Bytes.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithBytes()
@@ -129,7 +137,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Shorts.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithShorts()
@@ -149,7 +158,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Longs.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithLongs()
@@ -167,7 +177,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Booleans.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithBooleans()
@@ -185,7 +196,8 @@ public class FakeStandardOutputTest {
     /**
      * This is a test that tests insertion of Chars.
      * 
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testFakeOutputStreamWithChars()
@@ -219,7 +231,9 @@ public class FakeStandardOutputTest {
 
     /**
      * Test throws an exception in StringOutputStream solely for code coverage.
-     * @throws IOException will be thrown if stream does not close properly.
+     * 
+     * @throws IOException
+     *             will be thrown if stream does not close properly.
      */
     @Test
     public void testThrowingExceptions() throws IOException {
@@ -230,7 +244,9 @@ public class FakeStandardOutputTest {
 
     /**
      * Test throws an exception in FakeStandardOutput solely for code coverage
-     * @throws UnsupportedEncodingException will be thrown if error occurs.
+     * 
+     * @throws UnsupportedEncodingException
+     *             will be thrown if error occurs.
      */
     @Test
     public void testThrowingExceptions2() throws UnsupportedEncodingException {
