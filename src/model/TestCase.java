@@ -19,7 +19,7 @@ public class TestCase {
     private String className;
     private String methodName;
     private String testName;
-    
+
     /**
      * Create a new empty test
      * 
@@ -30,53 +30,107 @@ public class TestCase {
         expectedOutput = new ExpectedStandardOut();
         expectedReturn = new ExpectedReturn();
         stockedInput = new StockedStandardInput();
-        className = "Class";
-        methodName = "method";
-        testName = "test";
+        setClassName("Class");
+        setMethodName("method");
+        setTestName("test");
     }
 
     /**
-     * @return The Args Object for this TestCase
+     * @return The arguments for this TestCase
      */
-    public Args getArgs() {
-        return arguments;
+    public String getArgs() {
+        return arguments.getArgsValue();
     }
     
     /**
-     * @return The ExpectedReturn Object for this TestCase
+     * @param newValue The new arguments for the current test
      */
-    public ExpectedReturn getExpectedReturn() {
-        return expectedReturn;
-    }
-    
-    /**
-     * @return The ExpectedStandardOut Object for this TestCase
-     */
-    public ExpectedStandardOut getExpectedStandardOutput() {
-        return expectedOutput;
-    }
-    
-    /**
-     * @return The StockedStandardInput Object for this TestCase
-     */
-    public StockedStandardInput getStockedInput() {
-        return stockedInput;
+    public void setArgs(String newValue) {
+        arguments.setArgsValue(newValue);
     }
 
     /**
-     * @param name
-     *            The method to test.
+     * @return The expected return value for this TestCase
      */
-    public void setMethodName(String name) {
-        methodName = name;
+    public String getExpectedReturn() {
+        return expectedReturn.getReturnValue();
+    }
+    
+    /**
+     * @param newValue the expected return value for this TestCase
+     */
+    public void setExpectedReturn(String newValue) {
+        expectedReturn.setReturnValue(newValue);
     }
 
     /**
-     * @param name
-     *            The class that contains the method to test.
+     * @return The expected standard out for this TestCase
      */
-    public void setClassName(String name) {
-        className = name;
+    public String getExpectedStandardOutput() {
+        return expectedOutput.getStandardOutValue();
+    }
+    
+    /**
+     * @param newValue The expected standard out for this TestCase
+     */
+    public void setExpectedStandardOutput(String newValue) {
+        expectedOutput.setStandardOutValue(newValue);
+    }
+
+    /**
+     * @return The standard input for this TestCase
+     */
+    public String getStockedInput() {
+        return stockedInput.getInputString();
+    }
+    
+    /**
+     * @param newValue the standard input for this TestCase
+     */
+    public void setStockedInput(String newValue) {
+        stockedInput.setInput(newValue);
+    }
+
+    /**
+     * @return the class name
+     */
+    public String getClassName() {
+        return className;
+    }
+
+    /**
+     * @param newName the new name of the class
+     */
+    public void setClassName(String newName) {
+        this.className = newName;
+    }
+
+    /**
+     * @return the test name
+     */
+    public String getTestName() {
+        return testName;
+    }
+
+    /**
+     * @param newName the new test name
+     */
+    public void setTestName(String newName) {
+        this.testName = newName;
+    }
+
+    /**
+     * @return the method name
+     */
+    public String getMethodName() {
+        return methodName;
+    }
+
+    /**
+     * @param newName the new method name
+     */
+    public void setMethodName(String newName) {
+        this.methodName = newName;
     }
 
     /**
@@ -87,13 +141,10 @@ public class TestCase {
     public String toString() {
         String template = "@Test\n" + "public void TESTNAME() {\n"
                 + "    FakeStandardOut fso = new FakeStandardOut();\n"
-                + "    System.setOut(fso);\n"
-                + "    INPUT_LINE\n"
+                + "    System.setOut(fso);\n" + "    INPUT_LINE\n"
                 + "    CLASSNAME studentObject = new CLASSNAME();\n"
                 + "    Object returnValue = studentObject.METHOD(ARGS);\n"
-                + "    RETURN_LINE\n"
-                + "    OUTPUT_LINE\n"
-                + "}\n";
+                + "    RETURN_LINE\n" + "    OUTPUT_LINE\n" + "}\n";
         template = template.replace("RETURN_LINE", expectedReturn.toString());
         template = template.replace("OUTPUT_LINE", expectedOutput.toString());
         template = template.replace("INPUT_LINE", stockedInput.toString());
