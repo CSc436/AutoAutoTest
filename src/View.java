@@ -2,6 +2,8 @@
  *  the user will use this gui to interact with the model.
 **/
 
+// TODO 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

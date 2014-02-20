@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
  
 public class ViewController {
-	private int testcounter = 0;
+	private int testcounter = 2;
 	private String name;
 	private String params;
 	private String testreturn;
@@ -28,18 +28,21 @@ public class ViewController {
     
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
     	generateTest();
-    	actiontarget.setText(getOutputMessage());
+    	// actiontarget.setText(getOutputMessage()); no need to have text pop up
+        label = new Label(name + "(" + params + ")" + testreturn + stdin + stdout + "\n");
+        box.getChildren().add(testcounter, label);
         testcounter++;
-        label = new Label(name + "(" + params + ")" + testreturn + stdin + stdout);
-        box.getChildren().add(label);
     }
     
     
     // TODO get the selected item from the list, delete that item from the model
+    	// maybe base it off of a given id at creation
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
-    	// here: delete a test from the model
-    	actiontarget.setText("A test has been deleted.");
-        testcounter--;
+        if (testcounter > 2) {
+        	testcounter--;
+        }
+    	box.getChildren().get(testcounter).setVisible(false);
+    	// actiontarget.setText("A test has been deleted."); no need to have text pop up
     }
     
     

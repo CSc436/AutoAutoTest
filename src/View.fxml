@@ -17,13 +17,15 @@
 	<ScrollPane fx:id="list"
 		GridPane.columnIndex="0" GridPane.rowIndex="0">
 		<content>
-			<VBox prefWidth="200" prefHeight="200" alignment="center" fx:id="box">
+			<VBox prefWidth="300" prefHeight="100" alignment="center" fx:id="box">
 				<children>
-					<Label alignment="center" fx:id="gcProgramLine" text="g0x100 y123 z23"/>
+					<Label alignment="center" text="All Tests"/>
+					<Label alignment="center" text="Name	Parameters Returns StdIn StdOut"/>
 				</children>
 			</VBox>
 		</content>
 	</ScrollPane>
+	
 	
 
  	<GridPane alignment="center" hgap="10" vgap="10"
@@ -65,7 +67,7 @@
 		
 		<HBox spacing="10" alignment="bottom_right" 
 	        GridPane.columnIndex="0" GridPane.rowIndex="6">
-	        <Button text="Delete Test"     
+	        <Button text="Delete Last Test"     
 	        onAction="#handleDeleteButtonAction"/>
 		</HBox>
 		
