@@ -88,10 +88,6 @@ public class TestCollection {
      */
     private String getClassName(String filePath) throws Exception {
         File destination = new File(filePath);
-        if (!destination.canWrite()) {
-            throw new IOException("Permission denied. Cannot write to "
-                    + filePath);
-        }
         String filename = destination.getName();
         if (!filename.endsWith(".java")) {
             throw new RuntimeException("Destination must be a .java file");
