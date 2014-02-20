@@ -1,6 +1,7 @@
-package model;
+package test;
 
 import static org.junit.Assert.assertTrue;
+import model.Args;
 
 import org.junit.Test;
 
