@@ -90,7 +90,7 @@ public class TemplateReader {
         inputFile = Paths.get("Templates", inputFile).toString();
         Scanner scanner;
         try {
-            scanner = new Scanner(new File(inputFile));
+            scanner = new Scanner(new File(inputFile), "UTF8");
         } catch (FileNotFoundException e) {
             // TODO turn into a logging statement
             System.out.println("error, file " + inputFile + " not found!");
@@ -100,7 +100,7 @@ public class TemplateReader {
 
         String str = "";
         while (scanner.hasNextLine()) {
-            str += scanner.nextLine() + "\n";
+            str = str.concat(scanner.nextLine() + "\n");
         }
         str = str.trim();
         scanner.close();
