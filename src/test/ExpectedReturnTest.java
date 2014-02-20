@@ -1,6 +1,9 @@
-package model;
+package test;
 
 import static org.junit.Assert.assertTrue;
+import model.ExpectedReturn;
+import model.TestingNameConstants;
+
 import org.junit.Test;
 
 /**
