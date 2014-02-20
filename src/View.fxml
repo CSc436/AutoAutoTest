@@ -5,59 +5,89 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <GridPane fx:controller="ViewController" 
     xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" 
     styleClass="root">
 
 
- 
-    <Label text="Name:"
-        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <Label text="Parameters:"
-        GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <Label text="Return Value:"
-        GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <Label text="Standard In:"
-        GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-    <Label text="Standard Out:"
-        GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-        
-         
-    <TextField fx:id="namefield"
-        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-	<TextField fx:id="paramsfield"
-        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-	<TextField fx:id="returnfield"
-        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-	<TextField fx:id="stdinfield"
-        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-	<TextField fx:id="stdoutfield"
-        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+		
+	<ScrollPane fx:id="list"
+		GridPane.columnIndex="0" GridPane.rowIndex="0">
+		<content>
+			<VBox prefWidth="200" prefHeight="200" alignment="center" fx:id="box">
+				<children>
+					<Label alignment="center" fx:id="gcProgramLine" text="g0x100 y123 z23"/>
+				</children>
+			</VBox>
+		</content>
+	</ScrollPane>
+	
 
+ 	<GridPane alignment="center" hgap="10" vgap="10"
+ 		GridPane.columnIndex="0" GridPane.rowIndex="1">
+	    <Label text="Name:"
+	        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+	    <Label text="Parameters:"
+	        GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+	    <Label text="Return Value:"
+	        GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+	    <Label text="Standard In:"
+	        GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+	    <Label text="Standard Out:"
+	        GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+	        
+	         
+	    <TextField fx:id="namefield"
+	        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+		<TextField fx:id="paramsfield"
+	        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+		<TextField fx:id="returnfield"
+	        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+		<TextField fx:id="stdinfield"
+	        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+		<TextField fx:id="stdoutfield"
+	        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+	
+	
+		<HBox spacing="10" alignment="bottom_right" 
+	        GridPane.columnIndex="1" GridPane.rowIndex="6">
+	        <Button text="Generate Test"     
+	        onAction="#handleGenerateButtonAction"/>
+		</HBox>
+		
+		
+		
+		
+		
+		
+		<HBox spacing="10" alignment="bottom_right" 
+	        GridPane.columnIndex="0" GridPane.rowIndex="6">
+	        <Button text="Delete Test"     
+	        onAction="#handleDeleteButtonAction"/>
+		</HBox>
+		
+		
+	
+	
+	
+		<Text fx:id="actiontarget"
+			GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+			
+		<Text id="welcome-text" text="AutoAuto Tester"
+	   		GridPane.columnIndex="0" GridPane.rowIndex="0" 
+	        GridPane.columnSpan="2"/>
+	
+	
 
-	<HBox spacing="10" alignment="bottom_right" 
-        GridPane.columnIndex="1" GridPane.rowIndex="6">
-        <Button text="Generate Test"     
-        onAction="#handleSubmitButtonAction"/>
-	</HBox>
-
-
-
-
-	<Text fx:id="actiontarget"
-		GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-       
-   <Text id="welcome-text" text="AutoAuto Tester"
-   		GridPane.columnIndex="0" GridPane.rowIndex="0" 
-        GridPane.columnSpan="2"/>
-
-
-	<stylesheets>
-		<URL value="@View.css" />
-	</stylesheets>
+	
+	
+	</GridPane>
+	
+		<stylesheets>
+			<URL value="@View.css" />
+		</stylesheets>
 
 </GridPane>
-	
-	

@@ -2,7 +2,10 @@
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
  
 public class ViewController {
@@ -19,11 +22,32 @@ public class ViewController {
     @FXML private TextField returnfield;
     @FXML private TextField stdinfield;
     @FXML private TextField stdoutfield;
+    @FXML private Label label;
+    @FXML private ScrollPane list;
+    @FXML private VBox box;
     
-    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-    	getAllData(); // get all the data from the text fields
+    @FXML protected void handleGenerateButtonAction(ActionEvent event) {
+    	generateTest();
     	actiontarget.setText(getOutputMessage());
         testcounter++;
+        label = new Label(name + "(" + params + ")" + testreturn + stdin + stdout);
+        box.getChildren().add(label);
+    }
+    
+    
+    // TODO get the selected item from the list, delete that item from the model
+    @FXML protected void handleDeleteButtonAction(ActionEvent event) {
+    	// here: delete a test from the model
+    	actiontarget.setText("A test has been deleted.");
+        testcounter--;
+    }
+    
+    
+    // TODO make the model make a new test with the given data
+    void generateTest() {
+    	getAllData(); // get all the data from the text fields
+    	// make the model make a new test
+    	sendAllDataToModel(); // give data to model to new test
     }
     
     
@@ -32,7 +56,34 @@ public class ViewController {
         setTestParams(paramsfield.getText());
         setTestReturn(returnfield.getText());
         setTestStdIn(stdinfield.getText());
-        setTestStdOut(stdinfield.getText());
+        setTestStdOut(stdoutfield.getText());
+    }
+    
+    // this method will send all of the data to the model via sub methods
+    void sendAllDataToModel() {
+    	sendNameToModel(name);
+    	sendParamsToModel(params);
+    	sendReturnToModel(testreturn);
+    	sendStdInToModel(stdin);
+    	sendStdOutToModel(stdout);
+    }
+    
+    
+    // TODO send the data to the new model
+    private void sendNameToModel(String pname) {
+    	// give the name to the model
+    }
+    private void sendParamsToModel(String pparams) {
+    	// give the params to the model
+    }
+    private void sendReturnToModel(String ptestreturn) {
+    	// give the testreturn to the model
+    }
+    private void sendStdInToModel(String pstdin) {
+    	// give the stdin to the model
+    }
+    private void sendStdOutToModel(String pstdout) {
+    	// give the stdout to the model
     }
     
     
