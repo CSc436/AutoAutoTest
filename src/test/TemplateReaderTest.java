@@ -20,9 +20,9 @@ public class TemplateReaderTest {
     @Test
     public void testCall() {
         String str = TemplateReader.readCall();
+        String expected = "Object returnValue = ClassInstance.METHOD(ARGS);";
         System.out.println(str);
-        assertTrue(str
-                .equals("Object returnValue = ClassInstance.METHOD(ARGS);"));
+        assertTrue(str.equals(expected));
     }
 
     /**
@@ -32,10 +32,12 @@ public class TemplateReaderTest {
     @Test
     public void testInput() {
         String str = TemplateReader.readInput();
+        String expected = 
+                "FakeStandardInput fsi = new FakeStandardInput();\n"
+                + "fsi.setString(INPUT);\n" 
+                + "System.setIn(fis);";
         System.out.println(str);
-        assertTrue(str
-                .equals("FakeStandardInput fsi = new FakeStandardInput();\n"
-                        + "fsi.setString(INPUT);\n" + "System.setIn(fis);"));
+        assertTrue(str.equals(expected));
     }
 
     /**
@@ -45,9 +47,9 @@ public class TemplateReaderTest {
     @Test
     public void testOutput() {
         String str = TemplateReader.readOutput();
+        String expected = "assertEquals(fso.getOutput(), EXPECTED);";
         System.out.println(str);
-        assertTrue(str
-                .equals("assertEquals(fso.getOutput(), EXPECTED);"));
+        assertTrue(str.equals(expected));
     }
     
     /**
@@ -57,9 +59,9 @@ public class TemplateReaderTest {
     @Test
     public void testReturn() {
         String str = TemplateReader.readReturn();
+        String expected = "assertEquals(returnValue, EXPECTED);";
         System.out.println(str);
-        assertTrue(str
-                .equals("assertEquals(returnValue, EXPECTED);"));
+        assertTrue(str.equals(expected));
     }
 
     /**
@@ -69,19 +71,19 @@ public class TemplateReaderTest {
     @Test
     public void testTest() {
         String str = TemplateReader.readTest();
-        System.out.println(str);
-        assertTrue(str.equals(
+        String expected =                 
                 "@Test\n" 
-              + "public void NAME() {\n"
-              + "   INPUT_LINE\n"
-              + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
-              + "   System.setOut(fso);\n"
-              + "   CLASS ClassInstance = new CLASS();\n"
-              + "   CALL_LINE\n"
-              + "   RETURN_LINE\n"
-              + "   OUTPUT_LINE\n"
-              + "}"
-           ));
+                + "public void NAME() {\n"
+                + "   INPUT_LINE\n"
+                + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
+                + "   System.setOut(fso);\n"
+                + "   CLASS ClassInstance = new CLASS();\n"
+                + "   CALL_LINE\n"
+                + "   RETURN_LINE\n"
+                + "   OUTPUT_LINE\n"
+                + "}";
+        System.out.println(str);
+        assertTrue(str.equals(expected));
     }
 
     /**
