@@ -27,8 +27,9 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Call.txt
+     * @throws FileNotFoundException 
      */
-    public static String readCall() {
+    public static String readCall() throws FileNotFoundException {
         return templateReader.doRead("Call.txt");
     }
 
@@ -36,8 +37,9 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Input.txt
+     * @throws FileNotFoundException 
      */
-    public static String readInput() {
+    public static String readInput() throws FileNotFoundException {
         return templateReader.doRead("Input.txt");
     }
 
@@ -45,8 +47,9 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Output.txt
+     * @throws FileNotFoundException 
      */
-    public static String readOutput() {
+    public static String readOutput() throws FileNotFoundException {
         return templateReader.doRead("Output.txt");
     }
 
@@ -54,8 +57,9 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Return.txt
+     * @throws FileNotFoundException 
      */
-    public static String readReturn() {
+    public static String readReturn() throws FileNotFoundException {
         return templateReader.doRead("Return.txt");
     }
     
@@ -63,8 +67,9 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Test.txt
+     * @throws FileNotFoundException 
      */
-    public static String readTest() {
+    public static String readTest() throws FileNotFoundException {
         return templateReader.doRead("Test.txt");
     }
 
@@ -75,8 +80,10 @@ public class TemplateReader {
      * @param inputFile
      *            The file to read.
      * @return The file as a string. If file is not found, returns "".
+     * @throws FileNotFoundException 
      */
-    public static String readTemplate(String inputFile) {
+    public static String readTemplate(String inputFile)
+            throws FileNotFoundException {
         return templateReader.doRead(inputFile);
     }
 
@@ -84,19 +91,12 @@ public class TemplateReader {
      * @param inputFile
      *            The file to read.
      * @return The file as a string. If file is not found, returns "".
+     * @throws FileNotFoundException 
      */
-    private String doRead(String inputFile) {
+    private String doRead(String inputFile) throws FileNotFoundException {
         // add directory to path
         inputFile = Paths.get("Templates", inputFile).toString();
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new File(inputFile), "UTF8");
-        } catch (FileNotFoundException e) {
-            // TODO turn into a logging statement
-            System.out.println("error, file " + inputFile + " not found!");
-            e.printStackTrace();
-            return "";
-        }
+        Scanner scanner = new Scanner(new File(inputFile), "UTF8");
 
         String str = "";
         while (scanner.hasNextLine()) {
