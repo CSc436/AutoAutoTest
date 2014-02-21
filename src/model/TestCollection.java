@@ -1,8 +1,9 @@
 package model;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
@@ -66,8 +67,6 @@ public class TestCollection {
      *            end with .java and be writable to by the current user.
      * @throws Exception
      *             If the filePath isn't a .java file or can't be written to.
-     * @throws IOException
-     *             If unable to open the file for any reason.
      */
     public void save(String filePath) throws Exception {
         String className = getClassName(filePath);
@@ -130,7 +129,8 @@ public class TestCollection {
      */
     private void writeToFile(String content, String filePath)
             throws IOException {
-        FileWriter writer = new FileWriter(filePath);
+        FileOutputStream outStream = new FileOutputStream(filePath);
+        OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF8");
         writer.write(content);
         writer.close();
     }

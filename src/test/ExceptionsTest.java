@@ -3,7 +3,10 @@ package test;
 import java.io.FileNotFoundException;
 
 
+
+
 import model.TemplateReader;
+import model.TestCollection;
 
 import org.junit.Test;
 
@@ -23,6 +26,16 @@ public class ExceptionsTest {
     @Test(expected = FileNotFoundException.class)
     public void testFileNotFound() throws FileNotFoundException {
        TemplateReader.readTemplate("FileNotFound.txt");
+    }
+    
+    /**
+     * Ensure that an exception is thrown when trying to write to a non
+     * .java file
+     * @throws Exception Because we tried to save a .py file instead of .java
+     */
+    @Test(expected = RuntimeException.class)
+    public void testSavingToNonJavaFile() throws Exception {
+        TestCollection.getInstance().save("Lol.py");
     }
 
 }

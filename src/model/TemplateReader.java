@@ -27,7 +27,7 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Call.txt
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If Call.txt doesn't exist
      */
     public static String readCall() throws FileNotFoundException {
         return templateReader.doRead("Call.txt");
@@ -37,7 +37,7 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Input.txt
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException  if Input.txt doesn't exist
      */
     public static String readInput() throws FileNotFoundException {
         return templateReader.doRead("Input.txt");
@@ -47,7 +47,7 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Output.txt
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If Output.txt doesn't exist
      */
     public static String readOutput() throws FileNotFoundException {
         return templateReader.doRead("Output.txt");
@@ -57,7 +57,7 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Return.txt
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If Return.txt doesn't exist
      */
     public static String readReturn() throws FileNotFoundException {
         return templateReader.doRead("Return.txt");
@@ -67,7 +67,7 @@ public class TemplateReader {
      * return value is "" if file not found.
      * 
      * @return The contents of Test.txt
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If Test.txt doesn't exist
      */
     public static String readTest() throws FileNotFoundException {
         return templateReader.doRead("Test.txt");
@@ -80,7 +80,7 @@ public class TemplateReader {
      * @param inputFile
      *            The file to read.
      * @return The file as a string. If file is not found, returns "".
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If the inputFile doesn't exist
      */
     public static String readTemplate(String inputFile)
             throws FileNotFoundException {

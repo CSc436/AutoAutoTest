@@ -122,6 +122,7 @@ public class TestCollectionTest {
         String base = tempDir.toString();
         String path = Paths.get(base, "ExampleTest.java").toString();
         collection.save(path);
+        assertTrue(new File(path).exists());
     }
     
     /**
@@ -129,8 +130,8 @@ public class TestCollectionTest {
      */
     @Test
     public void testGetInstanceReturnsATestCollection() {
-        TestCollection collection = TestCollection.getInstance();
-        assertTrue(collection instanceof TestCollection);
+        TestCollection theCollection = TestCollection.getInstance();
+        assertTrue(theCollection instanceof TestCollection);
     }
     
     /**
@@ -140,16 +141,8 @@ public class TestCollectionTest {
     public void testGetInstanceReturnsTheSameInstance() {
         TestCollection collection1 = TestCollection.getInstance();
         TestCollection collection2 = TestCollection.getInstance();
-        assertTrue(collection1 == collection2);
+        assertEquals(collection1, collection2);
     }
     
-    /**
-     * Ensure that an exception is thrown when trying to write to a non
-     * .java file
-     * @throws Exception Because we tried to save a .py file instead of .java
-     */
-    @Test(expected = RuntimeException.class)
-    public void testSavingToNonJavaFile() throws Exception {
-        collection.save("Lol.py");
-    }
+
 }

@@ -19,7 +19,7 @@ public class TemplateReaderTest {
     /**
      * reads the Call.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void testCall() throws FileNotFoundException {
@@ -32,7 +32,7 @@ public class TemplateReaderTest {
     /**
      * reads the Input.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void testInput() throws FileNotFoundException {
@@ -48,7 +48,7 @@ public class TemplateReaderTest {
     /**
      * reads the Output.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void testOutput() throws FileNotFoundException {
@@ -61,7 +61,7 @@ public class TemplateReaderTest {
     /**
      * reads the Return.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void testReturn() throws FileNotFoundException {
@@ -74,7 +74,7 @@ public class TemplateReaderTest {
     /**
      * reads the Test.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void testTest() throws FileNotFoundException {
@@ -99,7 +99,7 @@ public class TemplateReaderTest {
     /**
      * reads the Return.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException (This shouldn't happen)
      */
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
