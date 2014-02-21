@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -121,5 +122,34 @@ public class TestCollectionTest {
         String base = tempDir.toString();
         String path = Paths.get(base, "ExampleTest.java").toString();
         collection.save(path);
+    }
+    
+    /**
+     * Ensure that get instance actually return a TestCollection Object.
+     */
+    @Test
+    public void testGetInstanceReturnsATestCollection() {
+        TestCollection collection = TestCollection.getInstance();
+        assertTrue(collection instanceof TestCollection);
+    }
+    
+    /**
+     * Ensure that get instance returns the same Object each time
+     */
+    @Test
+    public void testGetInstanceReturnsTheSameInstance() {
+        TestCollection collection1 = TestCollection.getInstance();
+        TestCollection collection2 = TestCollection.getInstance();
+        assertTrue(collection1 == collection2);
+    }
+    
+    /**
+     * Ensure that an exception is thrown when trying to write to a non
+     * .java file
+     * @throws Exception Because we tried to save a .py file instead of .java
+     */
+    @Test(expected = RuntimeException.class)
+    public void testSavingToNonJavaFile() throws Exception {
+        collection.save("Lol.py");
     }
 }
