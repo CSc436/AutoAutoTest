@@ -8,6 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
  
+/**
+ * @author dillon
+ * This is the main class for the controller code. It
+ * contains all of the methods and data for
+ * interacting between the model and the view.
+ */
 public class ViewController {
 	private int testcounter = 2;
 	private String name;
@@ -26,10 +32,17 @@ public class ViewController {
     @FXML private ScrollPane list;
     @FXML private VBox box;
     
+    
+    
+    /**
+     * @param event
+     * This method generates a new test when the button is pressed.
+     */
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
     	generateTest();
     	// actiontarget.setText(getOutputMessage()); no need to have text pop up
-        label = new Label(name + "(" + params + ")" + testreturn + stdin + stdout + "\n");
+        label = new Label(name + "(" + params + ")" 
+        		+ testreturn + stdin + stdout + "\n");
         box.getChildren().add(testcounter, label);
         testcounter++;
     }
@@ -37,16 +50,24 @@ public class ViewController {
     
     // TODO get the selected item from the list, delete that item from the model
     	// maybe base it off of a given id at creation
+    /**
+     * @param event
+     * This method deletes a test from the collection when the delete button in the
+     * view is pressed.
+     */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
         if (testcounter > 2) {
         	testcounter--;
         }
     	box.getChildren().get(testcounter).setVisible(false);
-    	// actiontarget.setText("A test has been deleted."); no need to have text pop up
+    	// actiontarget.setText("A test has been deleted.");
     }
     
     
     // TODO make the model make a new test with the given data
+    /** This method is a sub method to make the model generate a new test.
+     * 
+     */
     void generateTest() {
     	getAllData(); // get all the data from the text fields
     	// make the model make a new test
@@ -54,8 +75,12 @@ public class ViewController {
     }
     
     
+    /** This method is a sub method that is used to pull
+     * all of the data from the text fields in the gui.
+     * 
+     */
     void getAllData() {
-        setTestName(namefield.getText()); // set the test name to the value from the text field
+        setTestName(namefield.getText());
         setTestParams(paramsfield.getText());
         setTestReturn(returnfield.getText());
         setTestStdIn(stdinfield.getText());
@@ -63,6 +88,10 @@ public class ViewController {
     }
     
     // this method will send all of the data to the model via sub methods
+    /**This method is a sub method that sends all of the
+     * collected data to the model.
+     * 
+     */
     void sendAllDataToModel() {
     	sendNameToModel(name);
     	sendParamsToModel(params);
@@ -73,23 +102,54 @@ public class ViewController {
     
     
     // TODO send the data to the new model
+    /**
+     * 
+     * @param pname
+     * Gives the name value to the model.
+     */
     private void sendNameToModel(String pname) {
     	// give the name to the model
     }
+    
+    /**
+     * 
+     * @param pparams
+     * Gives the parameter value to the model.
+     */
     private void sendParamsToModel(String pparams) {
     	// give the params to the model
     }
+    
+    /**
+     * @param ptestreturn
+     * Gives the return value to the model.
+     */
     private void sendReturnToModel(String ptestreturn) {
     	// give the testreturn to the model
     }
+    
+    /**
+     * @param pstdin
+     * Gives the standard in value to the model.
+     */
     private void sendStdInToModel(String pstdin) {
     	// give the stdin to the model
     }
+    
+    /**
+     * @param pstdout
+     * Gives the standard out value to the model.
+     */
     private void sendStdOutToModel(String pstdout) {
     	// give the stdout to the model
     }
     
     
+    /**
+     * @return message
+     * This method creates a string that is a formatted message
+     * to the user regarding a new test.
+     */
     String getOutputMessage() {
     	String message = "Test #" + testcounter;
     	message += "\n------------------------------";
@@ -102,18 +162,39 @@ public class ViewController {
     }
     
     
+    /**
+     * @param pname
+     * Sets the name.
+     */
     void setTestName(String pname) {
     	name = pname;
     }
+    
+    /**
+     * @param pparams
+     * Sets the parameters.
+     */
     void setTestParams(String pparams) {
     	params = pparams;
     }
+    /**
+     * @param preturn
+     * Sets the return value.
+     */
     void setTestReturn(String preturn) {
     	testreturn = preturn;
     }
+    /**
+     * @param pin
+     * Sets the standard in value.
+     */
     void setTestStdIn(String pin) {
     	stdin = pin;
     }
+    /**
+     * @param pout
+     * Sets the standard out value.
+     */
     void setTestStdOut(String pout) {
     	stdout = pout;
     }
