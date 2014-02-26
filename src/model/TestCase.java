@@ -13,6 +13,7 @@ package model;
 public class TestCase {
 
     private Args arguments;
+    private boolean useTimeout;
     private ExpectedReturn expectedReturn;
     private ExpectedStandardOut expectedOutput;
     private StockedStandardInput stockedInput;
@@ -33,6 +34,7 @@ public class TestCase {
         setClassName("Class");
         setMethodName("method");
         setTestName("test");
+        setUseTimeout(false);
     }
 
     /**
@@ -133,6 +135,20 @@ public class TestCase {
         this.methodName = newName;
     }
 
+    /**
+     * @return Whether to use timeout or not
+     */
+    private boolean getUseTimeout() {
+        return useTimeout;
+    }
+    
+    /**
+     * @param Whether to use timeout or not
+     */
+    private void setUseTimeout(boolean newValue) {
+        this.useTimeout = newValue;
+    }
+    
     /**
      * @return The code that will test the method based on the parameters
      *         specified.
