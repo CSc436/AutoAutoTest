@@ -1,6 +1,8 @@
-package model;
+package test;
 
 import static org.junit.Assert.assertTrue;
+import model.ExpectedStandardOut;
+import model.TestingNameConstants;
 
 import org.junit.Test;
 
