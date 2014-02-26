@@ -38,6 +38,8 @@ public class View extends Application {
     	ListView<String> list = new ListView<String>();
     	ObservableList<String> items = FXCollections.observableArrayList ("Test1", "Test2", "...", "TestN");
     	list.setItems(items);
+    	list.setPrefWidth(100);
+    	list.setPrefHeight(70);
     	
     	
     	launch(args);
