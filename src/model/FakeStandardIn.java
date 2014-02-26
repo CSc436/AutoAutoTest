@@ -6,8 +6,11 @@ import java.io.InputStream;
 /**
  * This class allows us to redirect pre-determined input into a program which
  * uses a Scanner object to receive user input via the keyboard.
+ * 
+ * @author William cohen
  */
 public class FakeStandardIn extends InputStream {
+    
     private String buffer;
     private int currentIndex;
 
@@ -21,7 +24,7 @@ public class FakeStandardIn extends InputStream {
     } // end of default constructor
 
     /**
-     * Allow the buffer string to be created or reset The current index will be
+     * Allow the buffer string to be created or reset.  The current index will be
      * reset to 0 when this happens.
      * 
      * @param inputStr
@@ -37,16 +40,14 @@ public class FakeStandardIn extends InputStream {
         } else {
             // check to see if string already ends with newline or if we must
             // add one
-            int l = inputStr.length();
-            // if input is already newline-terminated
-            if (inputStr.charAt(l - 1) == '\n') {
+            if (inputStr.endsWith("\n")) {
                 buffer = inputStr;
             } else {
                 buffer = inputStr + "\n";
             }
             currentIndex = 0;
         } // end of valid input string
-    } // end of setString
+    }
 
     /**
      * Reads the next character from the buffer, and returns it as an integer
@@ -70,10 +71,7 @@ public class FakeStandardIn extends InputStream {
 
     /**
      * Reads characters up to the length of b, or the remaining unread
-     * characters in the buffer, whichever is less. If the length of b is 0,
-     * then returns 0. If the end of the buffer has been reached, returns -1.
-     * Otherwise, at least one character/byte has been read, and the return
-     * value is the number of bytes read.
+     * characters in the buffer, whichever is less.
      * 
      * @param b
      *            An array of type byte, which will be filled with the
@@ -81,15 +79,18 @@ public class FakeStandardIn extends InputStream {
      *            remaining number of characters in the buffer.
      * 
      * @return The number of characters actually read, or -1 if the buffer has
-     *         been exhausted.
+     *         been exhausted.  If the length of b is 0, then no characters
+     *         are read.
      * 
      * @throws IOException (This should never actually happen).
+     * 
+     * @throws NullPointerException If the target array, b is null.
      */
     @Override
-    public int read(byte[] b) throws IOException {
+    public int read(byte[] b) throws IOException, NullPointerException {
         // result array is null, cannot hold any characters
         if (b == null) {
-            return 0;
+            throw new NullPointerException();
         }
 
         int resultLength = b.length;
@@ -128,10 +129,8 @@ public class FakeStandardIn extends InputStream {
 
     /**
      * Attempts to read up to len bytes from the buffer, assuming that there are
-     * that many unprocessed characters remaining. If len is 0, then nothing is
-     * read, and returns 0. If buffer has been exhausted, then nothing is read,
-     * and returns -1. Otherwise, at least one byte is read and stored in
-     * b[off].
+     * that many unprocessed characters remaining.  Bytes read are stored
+     * beginning at b[off].
      * 
      * @param b
      *            An array of type byte, which will be filled with the
@@ -153,15 +152,19 @@ public class FakeStandardIn extends InputStream {
      *         been exhausted.
      * 
      * @throws IOException (This should never actually happen).
+     * 
+     * @throws NullPointerException If the target array, b is null.
      */
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-        if ((b == null) || (len == 0)) {
-            return 0; // result array is null or nothing asked to read
+        // result array is null, cannot hold any characters
+        if (b == null) {
+            throw new NullPointerException();
         }
-
-        if (off < 0) {
-            return 0; // invalid offset -- do nothing and quit out of procedure
+        
+        // not asked to read anything, or invalid offset
+        if ((len == 0) || (off < 0)) {
+            return 0;
         }
 
         int resultLength = b.length;

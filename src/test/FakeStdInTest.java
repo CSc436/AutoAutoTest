@@ -16,10 +16,11 @@ import model.FakeStandardIn;
  */
 public class FakeStdInTest {
     /**
-     * Performs the first set of unit tests on the FakeStandardIn class.
+     * Tests creating a FakeStandardIn, loading it with several tokens, and
+     * linking it to a Scanner to retrieve the tokens.
      */
     @Test
-    public void testFakeStdIn() {
+    public void testFakeStdInWithScanner() {
         FakeStandardIn myFSI = new FakeStandardIn();
         String testString = "Orange\nApple\nStrawberry\nCherry\nLemon\n";
         testString = testString + "Tangerine\nGrapefruit";
@@ -31,10 +32,11 @@ public class FakeStdInTest {
                               * instead
                               */
         Scanner keyboard = new Scanner(System.in, "UTF8"); /*
-                                                    * create fake std in rather
-                                                    * than using actual keyboard
-                                                    * input
-                                                    */
+                                                            * create fake std in
+                                                            * rather than using
+                                                            * actual keyboard
+                                                            * input
+                                                            */
 
         assertTrue(keyboard.hasNext());
 
@@ -70,18 +72,19 @@ public class FakeStdInTest {
     }
 
     /**
-     * Performs the second set of unit tests on the FakeStandardInput class.
+     * Test trying to fill our FakeStandardIn with a null string and an empty.
+     * string.
      * 
      * @throws IOException
-     *             (This should never actually happen.)
+     *             (This should not happen.)
      */
     @Test
-    public void testFSI2() throws IOException {
+    public void testNullStrgAndEmptyStrg() throws IOException {
         /* test with trying to set the FSI to a null string */
         FakeStandardIn myFSI = new FakeStandardIn();
         myFSI.setString(null);
         byte x = (byte) myFSI.read();
-        String s = new String(new byte[] {x}, "UTF8");
+        String s = new String(new byte[] { x }, "UTF8");
         assertEquals("\n", s);
 
         /* test with trying to set the FSI to an empty string */
@@ -89,43 +92,94 @@ public class FakeStdInTest {
         String p = "";
         myFSI.setString(p);
         x = (byte) myFSI.read();
-        s = new String(new byte[] {x}, "UTF8");
+        s = new String(new byte[] { x }, "UTF8");
         assertEquals("\n", s);
+    }
 
-        /* Try reading from the FSI now that the buffer is exhausted */
+    /**
+     * Test attempting to read after the entire buffer contents have been used.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testReadFromExhaustedBuffer() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        String p = "aaa";
+        myFSI.setString(p);
+        byte[] ba = new byte[5];
+        // read the only token in the buffer
+        myFSI.read(ba);
+        // Try reading from the FSI now that the buffer is exhausted
         int charsRead = myFSI.read();
         assertEquals(-1, charsRead);
+    }
 
+    /**
+     * Test reading the entire buffer contents to a byte array.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testReadToByteArray() throws IOException {
         /* Try reading into a byte array which can hold the entire buffer */
-        myFSI = new FakeStandardIn();
+        FakeStandardIn myFSI = new FakeStandardIn();
         myFSI.setString("lemon\n");
         byte[] ba = new byte[10];
-        charsRead = myFSI.read(ba); // read the entire buffer as bytes into ba
-        s = new String(ba, 0, charsRead, "UTF8");
+        int charsRead = myFSI.read(ba); // read the entire buffer as bytes into
+                                        // ba
+        String s = new String(ba, 0, charsRead, "UTF8");
         assertEquals(6, charsRead);
         assertEquals(6, s.length());
         assertEquals("lemon\n", s);
-
-        /* Try reading into a byte array which is null, or has length 0 */
-        charsRead = myFSI.read(null);
-        assertEquals(0, charsRead);
-        byte[] dummy = new byte[0];
-        charsRead = myFSI.read(dummy);
-        assertEquals(0, charsRead);
-
         /* Try reading now that the entire contents of buffer has been used */
         charsRead = myFSI.read(ba);
         assertEquals(-1, charsRead);
     }
 
     /**
-     * Performs the third set of unit tests on the FakeStandardInput class.
+     * Test reading to a null array.
+     * 
+     * @throws IOException
+     *             (This test is designed to cause an exception.)
+     */
+    @Test(expected = NullPointerException.class)
+    public void testReadToNullArray() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        myFSI.setString("lemon\n");
+        int charsRead = 0;
+
+        /* Try reading into a byte array which is null, or has length 0 */
+        charsRead = myFSI.read(null); // exception happens here
+        assertEquals(0, charsRead);
+
+    }
+
+    /**
+     * Test reading a token into an array with no empty space.
+     * 
+     * @throws IOException
+     *             (This will never happen.)
+     */
+    @Test
+    public void testReadToEmptyArray() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        myFSI.setString("peaches\n");
+        byte[] dummy = new byte[0];
+        int charsRead = myFSI.read(dummy);
+        assertEquals(0, charsRead);
+    }
+
+    /**
+     * Test reading to a valid array, which is too small to hold the entire
+     * buffer contents.
      * 
      * @throws IOException
      *             (This should never actually happen.)
      */
     @Test
-    public void testFSI3() throws IOException {
+    public void testReadingToSmallArray() throws IOException {
         /*
          * Try reading into a byte array which will hold SOME but not all of the
          * characters in buffer
@@ -135,23 +189,68 @@ public class FakeStdInTest {
         byte[] ba = new byte[6];
         int charsRead = myFSI.read(ba);
         assertEquals(6, charsRead);
+    }
 
-        myFSI = new FakeStandardIn();
+    /**
+     * Test asking to read 0 characters into a valid array.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testReading0Chars() throws IOException {
+
+        FakeStandardIn myFSI = new FakeStandardIn();
         myFSI.setString("Raspberry");
-        charsRead = myFSI.read(ba, 4, 0); /* test asking to read 0 chars */
+        byte[] ba = new byte[6];
+        int charsRead = myFSI.read(ba, 4, 0); // test asking to read 0 chars
         assertEquals(0, charsRead);
+    }
 
-        charsRead = myFSI.read(ba, -2, 2); /* test invalid offset */
+    /**
+     * Test when trying to read to an invalid offset of the destination array.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testInvalidOffset() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        myFSI.setString("Strawberry");
+        byte[] ba = new byte[6];
+        int charsRead = myFSI.read(ba, -2, 2); /* test invalid offset */
         assertEquals(0, charsRead);
+    }
+
+    /**
+     * Test reading into an array with no space.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testReadFromInvalidArray() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        myFSI.setString("Grape");
 
         byte[] dummy = new byte[0];
-        charsRead = myFSI.read(dummy, 0, 2); // test invalid destination array
+        int charsRead = myFSI.read(dummy, 0, 2); // test invalid destination
+                                                 // array
         assertEquals(0, charsRead);
+    }
 
-        charsRead = myFSI.read(ba, 0, 10); /*
-                                            * try to read more than the array
-                                            * can hold
-                                            */
+    /**
+     * Try reading more elements than the size of the array.
+     * 
+     * @throws IOException
+     *             (This should not happen.)
+     */
+    @Test
+    public void testReadMoreThanArrCanHold() throws IOException {
+        FakeStandardIn myFSI = new FakeStandardIn();
+        myFSI.setString("Boysenberry");
+        byte[] ba = new byte[6];
+        int charsRead = myFSI.read(ba, 0, 10);
         assertEquals(6, charsRead);
     }
 
