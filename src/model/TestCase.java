@@ -21,7 +21,7 @@ public class TestCase {
     private String testName;
 
     /**
-     * Create a new empty test
+     * Create a new empty test.
      * 
      * Tests should have expected values set before exporting!
      */

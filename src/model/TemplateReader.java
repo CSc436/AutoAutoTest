@@ -22,10 +22,16 @@ public class TemplateReader {
     private TemplateReader() {
 
     }
+    
+    /**
+     * @return The contents of Collection.txt
+     * @throws FileNotFoundException If Collection.txt doesn't exist
+     */
+    public static String readCollection() throws FileNotFoundException {
+        return templateReader.doRead("Collection.txt");
+    }
 
     /**
-     * return value is "" if file not found.
-     * 
      * @return The contents of Call.txt
      * @throws FileNotFoundException If Call.txt doesn't exist
      */
@@ -34,8 +40,6 @@ public class TemplateReader {
     }
 
     /**
-     * return value is "" if file not found.
-     * 
      * @return The contents of Input.txt
      * @throws FileNotFoundException  if Input.txt doesn't exist
      */
@@ -44,8 +48,6 @@ public class TemplateReader {
     }
 
     /**
-     * return value is "" if file not found.
-     * 
      * @return The contents of Output.txt
      * @throws FileNotFoundException If Output.txt doesn't exist
      */
@@ -54,8 +56,6 @@ public class TemplateReader {
     }
 
     /**
-     * return value is "" if file not found.
-     * 
      * @return The contents of Return.txt
      * @throws FileNotFoundException If Return.txt doesn't exist
      */
@@ -64,8 +64,6 @@ public class TemplateReader {
     }
     
     /**
-     * return value is "" if file not found.
-     * 
      * @return The contents of Test.txt
      * @throws FileNotFoundException If Test.txt doesn't exist
      */
@@ -79,7 +77,7 @@ public class TemplateReader {
      * 
      * @param inputFile
      *            The file to read.
-     * @return The file as a string. If file is not found, returns "".
+     * @return The contents of the file as a String
      * @throws FileNotFoundException If the inputFile doesn't exist
      */
     public static String readTemplate(String inputFile)

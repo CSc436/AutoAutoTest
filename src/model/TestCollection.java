@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -102,9 +103,13 @@ public class TestCollection {
      * @param className
      *            The name of the test class
      * @return The test class as a string
+     * @throws FileNotFoundException
+     *             If Collection.txt cannot be found.
      */
-    private String getFileContentString(String className) {
+    private String getFileContentString(String className)
+            throws FileNotFoundException {
         String template = "";
+        template = TemplateReader.readCollection();
         template = template.replace("CLASSNAME", className);
         StringBuilder testCaseCode = new StringBuilder();
         for (TestCase test : tests) {
