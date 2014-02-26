@@ -1,3 +1,5 @@
+package view;
+
 /** @dillon: this class is the graphical view of our system.
  *  the user will use this gui to interact with the model.
 **/
@@ -11,15 +13,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
  
 
+
 /**
  * @author dillon
  * This is the main class, we run it to run the GUI. 
  */
 public class View extends Application {
+	
 	private static final int GUI_WIDTH = 900;
 	private static final int GUI_HEIGHT = 600;
 
-	
 	
 	
     /**This is the generic main method, it launches the gui.
@@ -28,7 +31,7 @@ public class View extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    
 
     
     @Override
