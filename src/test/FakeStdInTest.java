@@ -12,9 +12,12 @@ import org.junit.Test;
 import model.FakeStandardIn;
 
 /**
+ * Test class for FakeStandardIn.
+ * 
  * @author wcohen
  */
 public class FakeStdInTest {
+
     /**
      * Tests creating a FakeStandardIn, loading it with several tokens, and
      * linking it to a Scanner to retrieve the tokens.
