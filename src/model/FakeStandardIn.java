@@ -21,11 +21,11 @@ public class FakeStandardIn extends InputStream {
     public FakeStandardIn() {
         buffer = "";
         currentIndex = 0;
-    } // end of default constructor
+    }
 
     /**
-     * Allow the buffer string to be created or reset.  The current index will be
-     * reset to 0 when this happens.
+     * Allow the buffer string to be created or reset.  The current index will
+     * be reset to 0 when this happens.
      * 
      * @param inputStr
      *            The entire contents of the buffer, with each token separated
@@ -46,7 +46,7 @@ public class FakeStandardIn extends InputStream {
                 buffer = inputStr + "\n";
             }
             currentIndex = 0;
-        } // end of valid input string
+        } 
     }
 
     /**
@@ -62,11 +62,12 @@ public class FakeStandardIn extends InputStream {
     @Override
     public int read() throws IOException {
         // if there are no more characters to read
-        if (currentIndex == buffer.length()) {
+        if (currentIndex >= buffer.length()) {
             return -1;
         }
+        byte result = (byte) buffer.charAt(currentIndex);
         currentIndex++; // advance index before we return
-        return buffer.getBytes("UTF8")[currentIndex - 1];
+        return result;
     }
 
     /**
@@ -83,48 +84,10 @@ public class FakeStandardIn extends InputStream {
      *         are read.
      * 
      * @throws IOException (This should never actually happen).
-     * 
-     * @throws NullPointerException If the target array, b is null.
      */
     @Override
-    public int read(byte[] b) throws IOException, NullPointerException {
-        // result array is null, cannot hold any characters
-        if (b == null) {
-            throw new NullPointerException();
-        }
-
-        int resultLength = b.length;
-
-        // result array cannot hold any characters
-        if (resultLength == 0) {
-            return 0;
-        }
-
-        // entire contents of buffer has been used
-        if (currentIndex >= buffer.length()) {
-            return -1;
-        }
-
-        // if we get here, then we can read at least one character
-        // and process it into the appropriate byte value
-
-        int charsRead = 0;
-
-        for (int i = 0; i < resultLength; i++) {
-            // typecast character into byte value
-            b[i] = (byte) buffer.charAt(currentIndex);
-
-            currentIndex++; // increment position in buffer
-            charsRead++; // increment number of characters read
-
-            // check to see if input buffer has been exhausted
-            if (currentIndex >= buffer.length()) {
-                return charsRead;
-            }
-        } // end of looping through and reading characters
-
-        // returns the number of characters read and stored into array
-        return charsRead;
+    public int read(byte[] b) throws IOException {
+        return read(b, 0, b.length);
     }
 
     /**
@@ -135,8 +98,8 @@ public class FakeStandardIn extends InputStream {
      * @param b
      *            An array of type byte, which will be filled with the
      *            characters from the buffer up to the lesser of
-     *            b.length-offset, len, or remaining unread characters in the
-     *            buffer.
+     *            b.length-offset to len, or remaining unread characters in
+     *            the buffer.
      * 
      * @param off
      *            The offset (number of array cells to skip) for storing the
@@ -145,57 +108,49 @@ public class FakeStandardIn extends InputStream {
      * 
      * @param len
      *            The maximum number of characters that we want to read
-     *            (although we may read less due to exhausting the array b or
-     *            exhausting the buffer).
+     *            (although we may read less due to exhausting the buffer).
      * 
      * @return The number of characters actually read, or -1 if the buffer has
      *         been exhausted.
      * 
      * @throws IOException (This should never actually happen).
-     * 
-     * @throws NullPointerException If the target array, b is null.
      */
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-        // result array is null, cannot hold any characters
-        if (b == null) {
-            throw new NullPointerException();
-        }
-        
-        // not asked to read anything, or invalid offset
-        if ((len == 0) || (off < 0)) {
-            return 0;
+        if (len < 0 || off < 0 || off + len > b.length) {
+            throw new IndexOutOfBoundsException();
         }
 
-        int resultLength = b.length;
-
-        // result array cannot hold any characters
-        if (resultLength == 0) {
-            return 0;
-        }
-
-        // entire contents of buffer has been used
         if (currentIndex >= buffer.length()) {
             return -1;
         }
-
-        // if we get here, we can read and process at least one character
-
+        
+        return privateRead(b, off, len);
+    }
+    
+    /**
+     * Fill the given byte[] with bytes from the buffer. It is assumed that
+     * off and len are valid (non-negative) parameters.
+     * 
+     * @param b The byte array to fill
+     * @param off The starting index
+     * @param len The amount of characters to read
+     * @return The number of character read
+     * @throws IOException (This will never happen)
+     */
+    private int privateRead(byte[] b, int off, int len) throws IOException {
         int charsRead = 0;
+        int target = off + len;
 
-        // start i at the offset index
-        for (int i = off; i < resultLength; i++) {
-            // typecast character into byte value
-            b[i] = (byte) buffer.charAt(currentIndex);
-
-            currentIndex++; // increment position in buffer
-            charsRead++; // increment number of characters read
-
-            // check to see if input buffer has been exhausted
-            if (currentIndex >= buffer.length()) {
-                return charsRead;
+        for (int i = off; i < target; i++) {
+            byte nextByte = (byte) read();
+            if (nextByte == -1) {
+                break;
             }
-        } // end of looping through and reading characters
+            b[i] = nextByte;
+            charsRead++;
+        }
+
         return charsRead;
-    } // end of read
+    }
 }
