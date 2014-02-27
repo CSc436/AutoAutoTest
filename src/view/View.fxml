@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<GridPane fx:controller="ViewController"
+<GridPane fx:controller="view.ViewController"
 	xmlns:fx="http://javafx.com/fxml"
 	alignment="center" hgap="10" vgap="10" styleClass="root">
 
@@ -17,10 +17,9 @@
 	<ScrollPane fx:id="list"
 		GridPane.columnIndex="0" GridPane.rowIndex="0">
 		<content>
-			<VBox prefWidth="300" prefHeight="100" alignment="center" fx:id="box">
+			<VBox prefWidth="300" prefHeight="300" alignment="center" fx:id="box">
 				<children>
-					<Label alignment="center" text="All Tests"/>
-					<Label alignment="center" text="Name	Parameters Returns StdIn StdOut"/>
+					<Label alignment="center" text=""/>
 				</children>
 			</VBox>
 		</content>
@@ -40,6 +39,10 @@
 	        GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 	    <Label text="Standard Out:"
 	        GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <Label text="Method Name:"
+        	GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    	<Label text="Class Name:"
+    		GridPane.columnIndex="0" GridPane.rowIndex="7"/>
 	        
 	         
 	    <TextField fx:id="namefield"
@@ -52,10 +55,14 @@
 	        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 		<TextField fx:id="stdoutfield"
 	        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <TextField fx:id="methodnamefield"
+        	GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    	<TextField fx:id="classnamefield"
+    		GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 	
 	
 		<HBox spacing="10" alignment="bottom_right" 
-	        GridPane.columnIndex="1" GridPane.rowIndex="6">
+	        GridPane.columnIndex="1" GridPane.rowIndex="8">
 	        <Button text="Generate Test"     
 	        onAction="#handleGenerateButtonAction"/>
 		</HBox>
@@ -66,7 +73,7 @@
 		
 		
 		<HBox spacing="10" alignment="bottom_right" 
-	        GridPane.columnIndex="0" GridPane.rowIndex="6">
+	        GridPane.columnIndex="0" GridPane.rowIndex="8">
 	        <Button text="Delete Last Test"     
 	        onAction="#handleDeleteButtonAction"/>
 		</HBox>

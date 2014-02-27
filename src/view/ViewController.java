@@ -7,6 +7,7 @@
 package view;
 
 import model.TestCase;
+import model.TestCollection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,8 +25,10 @@ import javafx.scene.text.Text;
 public class ViewController {
 	TestCollection TC;
 	
-	private int testcounter = 2;
-	private String name;
+	private int testcounter = 0;
+	private String testname;
+	private String methodname;
+	private String classname;
 	private String params;
 	private String testreturn;
 	private String stdin;
@@ -37,10 +40,16 @@ public class ViewController {
     @FXML private TextField returnfield;
     @FXML private TextField stdinfield;
     @FXML private TextField stdoutfield;
+    @FXML private TextField methodnamefield;
+    @FXML private TextField classnamefield;
     @FXML private Label label;
     @FXML private ScrollPane list;
     @FXML private VBox box;
     
+    
+    public ViewController() {
+    	TC = TestCollection.getInstance();
+    }
     
     
     /**
@@ -49,7 +58,8 @@ public class ViewController {
      */
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
     	generateTest(); // add a test to the model
-        label = new Label(name + "(" + params + ")" + testreturn + stdin + stdout + "\n"); // add it to the model
+        // label = new Label(testname + "(" + params + ")" + testreturn + stdin + stdout + "\n"); // add it to the model
+        label = new Label(getOutputMessage());
         box.getChildren().add(testcounter, label); // insert it to the list
         testcounter++;
     }
@@ -63,10 +73,11 @@ public class ViewController {
      * the delete button in the view is pressed.
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
-        if (testcounter > 2) {
+        if (testcounter > 0) {
         	testcounter--;
+        	box.getChildren().get(testcounter).setVisible(false);
         }
-    	box.getChildren().get(testcounter).setVisible(false);
+
     	// get selected test from the list
     	// delete that test from the test collection
     	
@@ -78,9 +89,8 @@ public class ViewController {
      */
     public void generateTest() {
     	getAllData(); // get all the data from the text fields
-    	TestCase T = new TestCase(); // make the model make a new test
+    	TestCase T = TC.newTest(); // add the test case to the test collection
     	sendAllDataToModel(T); // give data to model to new test
-    	TC.add(T); // add the test case to the test collection
     }
     
     
@@ -94,6 +104,8 @@ public class ViewController {
         setTestReturn(returnfield.getText());
         setTestStdIn(stdinfield.getText());
         setTestStdOut(stdoutfield.getText());
+        setTestMethodName(methodnamefield.getText());
+        setTestClassName(classnamefield.getText());
     }
     
     
@@ -103,16 +115,13 @@ public class ViewController {
      * 
      */
     void sendAllDataToModel(TestCase T) {
-    	T.setMethodName(name);
-    	T.setExpectedReturnValue(testreturn);
-    	T.setClassName(className);
-    	
-    	
-//    	sendNameToModel(name);
-//    	sendParamsToModel(params);
-//    	sendReturnToModel(testreturn);
-//    	sendStdInToModel(stdin);
-//    	sendStdOutToModel(stdout);
+    	T.setArgs(params);
+    	T.setClassName(classname);
+    	T.setExpectedReturn(testreturn);
+    	T.setExpectedStandardOutput(stdout);
+    	T.setMethodName(methodname);
+    	T.setStockedInput(stdin);
+    	T.setTestName(testname);
     }
     
     
@@ -163,21 +172,23 @@ public class ViewController {
 //    }
 //    
 //    
-//    /** dillon: probably going to be removed
-//     * @return message
-//     * This method creates a string that is a formatted message
-//     * to the user regarding a new test.
-//     */
-//    String getOutputMessage() {
-//    	String message = "Test #" + testcounter;
-//    	message += "\n------------------------------";
-//    	message += "\nName:	" + name + "(" + params + ")";
-//    	message += "\nStdIn:	" + stdin;
-//    	message += "\nStdOut:	" + stdout;
-//    	message += "\nReturns:	" + testreturn;
-//    	message += "\n------------------------------";
-//    	return message;
-//    }
+    /**
+     * @return message
+     * This method creates a string that is a formatted message
+     * to the user regarding a new test.
+     */
+    String getOutputMessage() {
+    	String message = "------------------------------";
+    	message += "\nTest #" + testcounter;
+    	message += "\nName:	" + testname + "(" + params + ")";
+    	message += "\nStdIn:	" + stdin;
+    	message += "\nStdOut:	" + stdout;
+    	message += "\nReturns:	" + testreturn;
+    	message += "\nMethod Name:     " + methodname;
+    	message += "\nClass Name:     " + classname;
+    	message += "\n------------------------------";
+    	return message;
+    }
     
     
     /**
@@ -185,7 +196,7 @@ public class ViewController {
      * Sets the name.
      */
     void setTestName(String pname) {
-    	name = pname;
+    	testname = pname;
     }
     
     /**
@@ -215,6 +226,24 @@ public class ViewController {
      */
     void setTestStdOut(String pout) {
     	stdout = pout;
+    }
+    
+    /**
+     * set the class name of the test
+     * @param pcname
+     * Sets the name of the class.
+     */
+    void setTestClassName(String pcname) {
+    	classname = pcname;
+    }
+    
+    /**
+     * set the name of the method that the test will call
+     * @param pmname
+     * Sets the name of the method.
+     */
+    void setTestMethodName(String pmname) {
+    	methodname = pmname;
     }
     
 }

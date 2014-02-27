@@ -25,23 +25,17 @@ public class View extends Application {
 	
 	private static final int GUI_WIDTH = 900;
 	private static final int GUI_HEIGHT = 600;
-	
 
 
-
-	
-	
     /**This is the generic main method, it launches the gui.
      * @param args
      */
     public static void main(String[] args) {
-    	ListView<String> list = new ListView<String>();
-    	ObservableList<String> items = FXCollections.observableArrayList ("Test1", "Test2", "...", "TestN");
-    	list.setItems(items);
-    	list.setPrefWidth(100);
-    	list.setPrefHeight(70);
-    	
-    	
+//    	ListView<String> list = new ListView<String>();
+//    	ObservableList<String> items = FXCollections.observableArrayList ("Test1", "Test2", "...", "TestN");
+//    	list.setItems(items);
+//    	list.setPrefWidth(100);
+//    	list.setPrefHeight(70);
     	launch(args);
     }
     
