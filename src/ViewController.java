@@ -52,8 +52,8 @@ public class ViewController {
     	// maybe base it off of a given id at creation
     /**
      * @param event
-     * This method deletes a test from the collection when the delete button in the
-     * view is pressed.
+     * This method deletes a test from the collection when
+     * the delete button in the view is pressed.
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
         if (testcounter > 2) {
