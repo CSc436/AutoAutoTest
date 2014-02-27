@@ -47,7 +47,7 @@ public class TestCollectionTest {
      */
     @AfterClass
     public static void removeTempDir() {
-        // tempDir.delete();
+        tempDir.delete();
     }
     
     /**
@@ -126,7 +126,7 @@ public class TestCollectionTest {
     }
     
     /**
-     * Ensure that get instance actually return a TestCollection Object.
+     * Ensure that getInstance() actually returns a TestCollection Object.
      */
     @Test
     public void testGetInstanceReturnsATestCollection() {

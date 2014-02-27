@@ -77,22 +77,23 @@ public class TestCollection {
 
     /**
      * Verify that the given file path is valid. A valid file path ends with a
-     * .java file extension and is writable.
+     * filename that is a valid Java filename.
      * 
      * @param filePath
      *            The place to write the Java code to
      * @return The name of the file in the path, without the .java extension
-     * @throws Exception
-     *             If the path is not writable or doesn't end with a .java
-     *             extension.
+     * @throws Exception If the filename isn't a valid Java filename
      */
     private String getClassName(String filePath) throws Exception {
         File destination = new File(filePath);
         String filename = destination.getName();
         if (!filename.endsWith(".java")) {
-            throw new RuntimeException("Destination must be a .java file");
+            filename += ".java";
         }
         String className = filename.substring(0, filename.length() - 5);
+        if (className.contains(".")) {
+            throw new RuntimeException("Java Class names may not contain '.'");
+        }
         return className;
     }
 
