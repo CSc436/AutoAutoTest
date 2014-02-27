@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -126,6 +127,21 @@ public class TestCollectionTest {
     }
     
     /**
+     * Ensure that a .java file can be written to disk.
+     * 
+     * @throws Exception If the test file couldn't be written
+     */
+    @Test
+    public void testSavingTestWithoutJavaExtension() throws Exception {
+        collection.newTest();
+        String base = tempDir.toString();
+        String path = Paths.get(base, "ExampleTest").toString();
+        collection.save(path);
+        path += ".java";
+        assertTrue(new File(path).exists());
+    }
+    
+    /**
      * Ensure that getInstance() actually returns a TestCollection Object.
      */
     @Test
@@ -141,7 +157,7 @@ public class TestCollectionTest {
     public void testGetInstanceReturnsTheSameInstance() {
         TestCollection collection1 = TestCollection.getInstance();
         TestCollection collection2 = TestCollection.getInstance();
-        assertEquals(collection1, collection2);
+        assertSame(collection1, collection2);
     }
     
 
