@@ -8,27 +8,32 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<GridPane fx:controller="view.ViewController"
+<BorderPane fx:controller="view.ViewController"
 	xmlns:fx="http://javafx.com/fxml"
-	alignment="center" hgap="10" vgap="10" styleClass="root">
+	styleClass="root">
 
 
-		
+
+	<ListView fx:id="mylist">
+			
+	</ListView>
+
+
+
+	<!--
 	<ScrollPane fx:id="list"
 		GridPane.columnIndex="0" GridPane.rowIndex="0">
 		<content>
-			<VBox prefWidth="300" prefHeight="300" alignment="center" fx:id="box">
+			<VBox prefWidth="300" prefHeight="500" alignment="center" fx:id="box">
 				<children>
 					<Label alignment="center" text=""/>
 				</children>
 			</VBox>
 		</content>
 	</ScrollPane>
-	
-	
+	-->
 
- 	<GridPane alignment="center" hgap="10" vgap="10"
- 		GridPane.columnIndex="0" GridPane.rowIndex="1">
+ 	<GridPane alignment="center" hgap="10" vgap="10">
 	    <Label text="Name:"
 	        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 	    <Label text="Parameters:"
@@ -99,4 +104,4 @@
 			<URL value="@View.css" />
 		</stylesheets>
 
-</GridPane>
+</BorderPane>

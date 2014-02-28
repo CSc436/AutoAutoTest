@@ -23,8 +23,7 @@ import javafx.scene.text.Text;
  * interacting between the model and the view.
  */
 public class ViewController {
-	TestCollection TC;
-	
+	private TestCollection TC;
 	private int testcounter = 0;
 	private String testname;
 	private String methodname;
@@ -44,9 +43,11 @@ public class ViewController {
     @FXML private TextField classnamefield;
     @FXML private Label label;
     @FXML private ScrollPane list;
-    @FXML private VBox box;
+    @FXML private VBox testsView;// make this a list
     
-    
+    /**
+     * Generic constructor used for tests.
+     */
     public ViewController() {
     	TC = TestCollection.getInstance();
     }
@@ -57,11 +58,12 @@ public class ViewController {
      * This method generates a new test when the button is pressed.
      */
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
-    	generateTest(); // add a test to the model
-        // label = new Label(testname + "(" + params + ")" + testreturn + stdin + stdout + "\n"); // add it to the model
-        label = new Label(getOutputMessage());
-        box.getChildren().add(testcounter, label); // insert it to the list
-        testcounter++;
+        if (testsView != null) {
+        	generateTest(); // add a test to the model
+        	label = new Label(getOutputMessage());
+        	testsView.getChildren().add(testcounter, label); // insert it to the list
+        	testcounter++;
+        }
     }
     
     
@@ -73,14 +75,16 @@ public class ViewController {
      * the delete button in the view is pressed.
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
-        if (testcounter > 0) {
-        	testcounter--;
-        	box.getChildren().get(testcounter).setVisible(false);
-        }
+    	if (testsView != null) {
+    		if (testcounter > 0) {
+    			testcounter--;
+    			testsView.getChildren().get(testcounter).setVisible(false);
+    		}
 
-    	// get selected test from the list
-    	// delete that test from the test collection
+    		// get selected test from the list
+    		// delete that test from the test collection
     	
+    	}
     }
     
     
@@ -108,13 +112,12 @@ public class ViewController {
         setTestClassName(classnamefield.getText());
     }
     
-    
-    // this method will send all of the data to the model via sub methods
     /**This method is a sub method that sends all of the
      * collected data to the model.
-     * 
+     * @param
+     * An individual test case.
      */
-    void sendAllDataToModel(TestCase T) {
+    private void sendAllDataToModel(TestCase T) {
     	T.setArgs(params);
     	T.setClassName(classname);
     	T.setExpectedReturn(testreturn);
@@ -178,15 +181,15 @@ public class ViewController {
      * to the user regarding a new test.
      */
     String getOutputMessage() {
-    	String message = "------------------------------";
-    	message += "\nTest #" + testcounter;
-    	message += "\nName:	" + testname + "(" + params + ")";
-    	message += "\nStdIn:	" + stdin;
-    	message += "\nStdOut:	" + stdout;
-    	message += "\nReturns:	" + testreturn;
-    	message += "\nMethod Name:     " + methodname;
-    	message += "\nClass Name:     " + classname;
-    	message += "\n------------------------------";
+    	//String message = "------------------------------";
+    	String message = "\nTest #" + testcounter;
+    	message += "Name:	" + testname + "(" + params + ")";
+    	//message += "\nStdIn:	" + stdin;
+    	//message += "\nStdOut:	" + stdout;
+    	//message += "\nReturns:	" + testreturn;
+    	//message += "\nMethod Name:     " + methodname;
+    	//message += "\nClass Name:     " + classname;
+    	//message += "\n------------------------------";
     	return message;
     }
     
@@ -195,7 +198,7 @@ public class ViewController {
      * @param pname
      * Sets the name.
      */
-    void setTestName(String pname) {
+    public void setTestName(String pname) {
     	testname = pname;
     }
     
@@ -203,28 +206,28 @@ public class ViewController {
      * @param pparams
      * Sets the parameters.
      */
-    void setTestParams(String pparams) {
+    public void setTestParams(String pparams) {
     	params = pparams;
     }
     /**
      * @param preturn
      * Sets the return value.
      */
-    void setTestReturn(String preturn) {
+    public void setTestReturn(String preturn) {
     	testreturn = preturn;
     }
     /**
      * @param pin
      * Sets the standard in value.
      */
-    void setTestStdIn(String pin) {
+    public void setTestStdIn(String pin) {
     	stdin = pin;
     }
     /**
      * @param pout
      * Sets the standard out value.
      */
-    void setTestStdOut(String pout) {
+    public void setTestStdOut(String pout) {
     	stdout = pout;
     }
     
@@ -233,7 +236,7 @@ public class ViewController {
      * @param pcname
      * Sets the name of the class.
      */
-    void setTestClassName(String pcname) {
+    public void setTestClassName(String pcname) {
     	classname = pcname;
     }
     
@@ -242,8 +245,43 @@ public class ViewController {
      * @param pmname
      * Sets the name of the method.
      */
-    void setTestMethodName(String pmname) {
+    public void setTestMethodName(String pmname) {
     	methodname = pmname;
+    }
+    
+    /**
+     * This method was created strictly for testing purposes
+     * @param ps
+     * A generic string used for all fields of a test.
+     */
+    public void setAllFields(String ps) {
+    	setTestName(ps);
+        setTestParams(ps);
+        setTestStdIn(ps);
+        setTestStdOut(ps);
+        setTestClassName(ps);
+        setTestMethodName(ps);
+    }
+    
+    /**
+     * Returns the number of tests that are stored in the test collection.
+     * @return
+     * The number of tests in the collection.
+     */
+    public int getNumberOfTests() {
+    	return TC.testCount();
+    }
+    
+    /**
+     * Returns the string value of a single test case when
+     * given an integer index.
+     * @param i
+     * The integer index of the desired test.
+     * @return
+     * The string representation of the test.
+     */
+    public String getTestAsString(int i) {
+    	return TC.getTest(i).toString();
     }
     
 }
