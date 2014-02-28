@@ -87,7 +87,7 @@ public class TestCase {
     }
     
     /**
-     * @param Whether to use timeout or not
+     * @param newValue Whether to use timeout or not
      */
     public void setTimeoutTime(int newValue) {
         this.timeoutTime = newValue;
