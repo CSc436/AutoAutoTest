@@ -13,9 +13,9 @@ package model;
 public class TestCase {
 
     private Args arguments;
-    private int timeoutTime;
     private ExpectedReturn expectedReturn;
     private ExpectedStandardOut expectedOutput;
+    private int timeoutTime;
     private StockedStandardInput stockedInput;
     private String className;
     private String methodName;
@@ -80,6 +80,20 @@ public class TestCase {
     }
 
     /**
+     * @return Whether to use timeout or not
+     */
+    private int getTimeoutTime() {
+        return timeoutTime;
+    }
+    
+    /**
+     * @param Whether to use timeout or not
+     */
+    private void setTimeoutTime(int newValue) {
+        this.timeoutTime = newValue;
+    }
+    
+    /**
      * @return The standard input for this TestCase
      */
     public String getStockedInput() {
@@ -135,20 +149,6 @@ public class TestCase {
         this.methodName = newName;
     }
 
-    /**
-     * @return Whether to use timeout or not
-     */
-    private int getTimeoutTime() {
-        return timeoutTime;
-    }
-    
-    /**
-     * @param Whether to use timeout or not
-     */
-    private void setTimeoutTime(int newValue) {
-        this.timeoutTime = newValue;
-    }
-    
     /**
      * @return The code that will test the method based on the parameters
      *         specified.
