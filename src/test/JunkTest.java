@@ -12,18 +12,7 @@ public class JunkTest {
     public class ThreadStopper extends Thread {
         @Override 
         public void run() {
-            Class<BogusWork> theClass = runningClass;
-            Method theMethod = runningMethod;
-            
-            System.out.println(theClass.toString() + "::::" + theMethod.toString());
-            
-            args = new Object[] {new Integer(1)};
-            try {
-                theMethod.invoke(BogusWork.class, 0);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+              
         }
     }
     
@@ -33,44 +22,32 @@ public class JunkTest {
 
         
         final BogusWork ban = new BogusWork();
-        runningClass = BogusWork.class;
-        try {
-            runningMethod = runningClass.getMethod("dumber");
-        } catch (Exception e2) {
-            e2.printStackTrace();
-        } 
         
-        System.out.println(runningClass.toString() + "::::" + runningMethod.toString());
-        
+        Thread get = new Thread() {
+            @Override
+            public void run() {
+                ban.dumb(0);
+            }
+        };
+        get.start();
         try {
-            runningMethod.invoke(ban.getClass());
-        } catch (Exception e) {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        System.out.println("before interupt");
+        if(get.isAlive()) {
+            System.out.println("its alive");
+            get.stop();
+        }
+        System.out.println("after interupt");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        
-//        Thread get = new Thread() {
-//            @Override
-//            public void run() {
-//                ban.dumb(0);
-//            }
-//        };
-//        get.start();
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//        }
-//        System.out.println("before interupt");
-//        get.stop();
-//        System.out.println("after interupt");
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
         System.out.println("end of prog");
     }
 }
