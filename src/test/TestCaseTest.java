@@ -118,4 +118,15 @@ public class TestCaseTest {
         assertTrue(javaString.contains("jump("));
     }
 
+    /**
+     * Ensure that the method name is used to call the method in the Java
+     * output.
+     */
+    @Test
+    public void testSettingTimeoutTime() {
+        TestCase timeoutCase = new TestCase();
+        timeoutCase.setTimeoutTime(2000);
+        assertEquals(2000, timeoutCase.getTimeoutTime());
+    }
+
 }

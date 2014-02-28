@@ -15,6 +15,7 @@ public class TestCase {
     private Args arguments;
     private ExpectedReturn expectedReturn;
     private ExpectedStandardOut expectedOutput;
+    private int timeoutTime;
     private StockedStandardInput stockedInput;
     private String className;
     private String methodName;
@@ -33,6 +34,7 @@ public class TestCase {
         setClassName("Class");
         setMethodName("method");
         setTestName("test");
+        setTimeoutTime(1000);
     }
 
     /**
@@ -77,6 +79,20 @@ public class TestCase {
         expectedOutput.setStandardOutValue(newValue);
     }
 
+    /**
+     * @return Whether to use timeout or not
+     */
+    public int getTimeoutTime() {
+        return timeoutTime;
+    }
+    
+    /**
+     * @param newValue Whether to use timeout or not
+     */
+    public void setTimeoutTime(int newValue) {
+        this.timeoutTime = newValue;
+    }
+    
     /**
      * @return The standard input for this TestCase
      */
