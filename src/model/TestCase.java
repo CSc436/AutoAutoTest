@@ -82,14 +82,14 @@ public class TestCase {
     /**
      * @return Whether to use timeout or not
      */
-    private int getTimeoutTime() {
+    public int getTimeoutTime() {
         return timeoutTime;
     }
     
     /**
      * @param Whether to use timeout or not
      */
-    private void setTimeoutTime(int newValue) {
+    public void setTimeoutTime(int newValue) {
         this.timeoutTime = newValue;
     }
     
