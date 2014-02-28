@@ -11,7 +11,12 @@ public class JunkTest {
     @Test
     public void doingStuff() {
         BogusWork ban = new BogusWork();
-        Thread get = new Thread(ban);
+        Thread get = new Thread() {
+            @Override
+            public void run() {
+                // do method
+            }
+        };
         get.start();
         System.out.println("here");
         System.out.println("here bant");
