@@ -106,7 +106,10 @@
     </target>
 
     <target name="findbugs" depends="compile">
-        <findbugs home="${dev}/findbugs-2.0.3" output="text" failOnError="true">
+        <findbugs home="${dev}/findbugs-2.0.3"
+                output="text"
+                failOnError="true"
+                excludefilter="${config}/findbugs_ignore_tests.xml">
             <auxClassPath path="${dev}"/>
             <sourcePath path="${src}"/>
             <class location="${bin}"/>
