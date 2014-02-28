@@ -13,7 +13,7 @@ package model;
 public class TestCase {
 
     private Args arguments;
-    private boolean useTimeout;
+    private int timeoutTime;
     private ExpectedReturn expectedReturn;
     private ExpectedStandardOut expectedOutput;
     private StockedStandardInput stockedInput;
@@ -34,7 +34,7 @@ public class TestCase {
         setClassName("Class");
         setMethodName("method");
         setTestName("test");
-        setUseTimeout(false);
+        setTimeoutTime(1000);
     }
 
     /**
@@ -138,15 +138,15 @@ public class TestCase {
     /**
      * @return Whether to use timeout or not
      */
-    private boolean getUseTimeout() {
-        return useTimeout;
+    private int getTimeoutTime() {
+        return timeoutTime;
     }
     
     /**
      * @param Whether to use timeout or not
      */
-    private void setUseTimeout(boolean newValue) {
-        this.useTimeout = newValue;
+    private void setTimeoutTime(int newValue) {
+        this.timeoutTime = newValue;
     }
     
     /**
