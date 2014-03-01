@@ -4,12 +4,9 @@ Thread timeOut = new Thread() {
     }
 };
 timeOut.start();
-try {Thread.sleep(SleepNumber);} 
+try {Thread.sleep(TimeoutTime);}
 catch (Exception e) {}
 if(timeOut.isAlive()) {
     timeOut.stop();
     fail();
 }
-
-
-

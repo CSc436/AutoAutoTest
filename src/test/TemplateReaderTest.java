@@ -24,7 +24,20 @@ public class TemplateReaderTest {
     @Test
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
-        String expected = "Object returnValue = ClassInstance.METHOD(ARGS);";
+        String expected = 
+                    "Thread timeOut = new Thread() {\n" 
+                  + "    public void run() {\n"
+                  + "        Object returnValue = ClassInstance.METHOD(ARGS);\n"
+                  + "    }\n"
+                  + "};\n"
+                  + "timeOut.start();\n"
+                  + "try {Thread.sleep(TimeoutTime);}\n" 
+                  + "catch (Exception e) {}\n"
+                  + "if(timeOut.isAlive()) {\n"
+                  + "    timeOut.stop();\n"
+                  + "    fail();\n"
+                  + "}";
+
         System.out.println(str);
         assertTrue(str.equals(expected));
     }
