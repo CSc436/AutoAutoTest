@@ -15,11 +15,12 @@ public class TestCase {
     private Args arguments;
     private ExpectedReturn expectedReturn;
     private ExpectedStandardOut expectedOutput;
-    private int timeoutTime;
     private StockedStandardInput stockedInput;
     private String className;
     private String methodName;
     private String testName;
+    private boolean ignoreWhitespace;
+    private int timeoutTime;
 
     /**
      * Create a new empty test.
@@ -35,6 +36,7 @@ public class TestCase {
         setMethodName("method");
         setTestName("test");
         setTimeoutTime(1000);
+        setIgnoreWhitespace(false);
     }
 
     /**
@@ -43,9 +45,10 @@ public class TestCase {
     public String getArgs() {
         return arguments.getArgsValue();
     }
-    
+
     /**
-     * @param newValue The new arguments for the current test
+     * @param newValue
+     *            The new arguments for the current test
      */
     public void setArgs(String newValue) {
         arguments.setArgsValue(newValue);
@@ -57,9 +60,10 @@ public class TestCase {
     public String getExpectedReturn() {
         return expectedReturn.getReturnValue();
     }
-    
+
     /**
-     * @param newValue the expected return value for this TestCase
+     * @param newValue
+     *            the expected return value for this TestCase
      */
     public void setExpectedReturn(String newValue) {
         expectedReturn.setReturnValue(newValue);
@@ -71,9 +75,10 @@ public class TestCase {
     public String getExpectedStandardOutput() {
         return expectedOutput.getStandardOutValue();
     }
-    
+
     /**
-     * @param newValue The expected standard out for this TestCase
+     * @param newValue
+     *            The expected standard out for this TestCase
      */
     public void setExpectedStandardOutput(String newValue) {
         expectedOutput.setStandardOutValue(newValue);
@@ -85,23 +90,41 @@ public class TestCase {
     public int getTimeoutTime() {
         return timeoutTime;
     }
-    
+
     /**
-     * @param newValue Whether to use timeout or not
+     * @param newValue
+     *            Whether to use timeout or not
      */
     public void setTimeoutTime(int newValue) {
         this.timeoutTime = newValue;
     }
-    
+
+    /**
+     * @return true if this TestCase will ignore whitespace in strings
+     */
+    public boolean isIgnoreWhitespace() {
+        return ignoreWhitespace;
+    }
+
+    /**
+     * @param newValue
+     *            true to have this TestCase ignore whitespace.
+     *            False otherwise.
+     */
+    public void setIgnoreWhitespace(boolean newValue) {
+        ignoreWhitespace = newValue;
+    }
+
     /**
      * @return The standard input for this TestCase
      */
     public String getStockedInput() {
         return stockedInput.getInputString();
     }
-    
+
     /**
-     * @param newValue the standard input for this TestCase
+     * @param newValue
+     *            the standard input for this TestCase
      */
     public void setStockedInput(String newValue) {
         stockedInput.setInput(newValue);
@@ -115,7 +138,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new name of the class
+     * @param newName
+     *            the new name of the class
      */
     public void setClassName(String newName) {
         this.className = newName;
@@ -129,7 +153,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new test name
+     * @param newName
+     *            the new test name
      */
     public void setTestName(String newName) {
         this.testName = newName;
@@ -143,7 +168,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new method name
+     * @param newName
+     *            the new method name
      */
     public void setMethodName(String newName) {
         this.methodName = newName;
