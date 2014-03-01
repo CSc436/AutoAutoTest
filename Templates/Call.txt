@@ -1,1 +1,15 @@
-Object returnValue = ClassInstance.METHOD(ARGS);
+Thread timeOut = new Thread() {
+    public void run() {
+        Object returnValue = ClassInstance.METHOD(ARGS);
+    }
+};
+timeOut.start();
+try {Thread.sleep(SleepNumber);} 
+catch (Exception e) {}
+if(timeOut.isAlive()) {
+    timeOut.stop();
+    fail();
+}
+
+
+
