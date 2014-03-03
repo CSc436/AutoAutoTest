@@ -19,6 +19,7 @@ public class TestCase {
     private String className;
     private String methodName;
     private String testName;
+    private boolean ignorePunctuation;
     private boolean ignoreWhitespace;
     private int timeoutTime;
 
@@ -36,6 +37,7 @@ public class TestCase {
         setMethodName("method");
         setTestName("test");
         setTimeoutTime(1000);
+        setIgnorePunctuation(false);
         setIgnoreWhitespace(false);
     }
 
@@ -108,11 +110,25 @@ public class TestCase {
 
     /**
      * @param newValue
-     *            true to have this TestCase ignore whitespace.
+     *            true to have this TestCase ignore whitespace
      *            False otherwise.
      */
     public void setIgnoreWhitespace(boolean newValue) {
         ignoreWhitespace = newValue;
+    }
+
+    /**
+     * @return the true if punctuation in strings will be ignored
+     */
+    public boolean isIgnorePunctuation() {
+        return ignorePunctuation;
+    }
+
+    /**
+     * @param newValue true if punctuation in output strings should be ignored
+     */
+    public void setIgnorePunctuation(boolean newValue) {
+        ignorePunctuation = newValue;
     }
 
     /**
