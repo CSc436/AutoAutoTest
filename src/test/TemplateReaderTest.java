@@ -112,4 +112,13 @@ public class TemplateReaderTest {
         System.out.println(str);
         assertTrue(str.equals(expected));
     }
+    
+    /**
+     * Asks for the contents of a non-existent file. Should receive a blank.
+     */
+    @Test
+    public void testFileNotFound() {
+        String actual = TemplateReader.readTemplate("FileNotFound.txt");
+        assertEquals("", actual);
+    }
 }

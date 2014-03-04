@@ -1,7 +1,5 @@
 package model;
 
-import java.io.FileNotFoundException;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
@@ -41,16 +39,10 @@ public class StockedStandardInput {
      */
     @Override
     public String toString() {
-        try {
-            String template = TemplateReader.readInput();
-            String escapedInput = StringEscapeUtils.escapeJava(inputString);
-            escapedInput = "\"" + escapedInput + "\"";
-            template = template.replace("INPUT", escapedInput);
-            return template;
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
+        String template = TemplateReader.readInput();
+        String escapedInput = StringEscapeUtils.escapeJava(inputString);
+        escapedInput = "\"" + escapedInput + "\"";
+        template = template.replace("INPUT", escapedInput);
+        return template;
     }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.io.FileNotFoundException;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
@@ -52,15 +50,10 @@ public class ExpectedStandardOut {
      *         standardOutValue);
      */
     public String toString() {
-        try {
-            String template = TemplateReader.readOutput();
-            String output = StringEscapeUtils.escapeJava(standardOutValue);
-            output = "\"" + output + "\"";
-            template = template.replace("EXPECTED", output);
-            return template;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String template = TemplateReader.readOutput();
+        String output = StringEscapeUtils.escapeJava(standardOutValue);
+        output = "\"" + output + "\"";
+        template = template.replace("EXPECTED", output);
+        return template;
     }
 }

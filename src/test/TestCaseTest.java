@@ -29,8 +29,8 @@ public class TestCaseTest {
         String javaString = emptyCase.toString();
         assertTrue(javaString.startsWith("@Test"));
         assertTrue(javaString.contains("public void empty() {"));
-        assertTrue(javaString
-                .contains("FakeStandardOutput fso = new FakeStandardOutput();"));
+        assertTrue(javaString.contains(
+                "FakeStandardOutput fso = new FakeStandardOutput();"));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
                 .contains("FakeStandardInput fsi = new FakeStandardInput("));
@@ -51,9 +51,8 @@ public class TestCaseTest {
         returnCase.setExpectedReturn("12345678");
         assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
-        assertTrue(javaString.contains(
-                "relaxedAssertEquals(returnValue, 12345678"
-        ));
+        assertTrue(javaString
+                .contains("relaxedAssertEquals(returnValue, 12345678"));
     }
 
     /**
@@ -106,7 +105,8 @@ public class TestCaseTest {
         classCase.setClassName("Byte");
         assertEquals("Byte", classCase.getClassName());
         String javaString = classCase.toString();
-        assertTrue(javaString, javaString.contains("Byte classInstance = new Byte();"));
+        assertTrue(javaString,
+                javaString.contains("Byte classInstance = new Byte();"));
     }
 
     /**
@@ -131,7 +131,7 @@ public class TestCaseTest {
         timeoutCase.setTimeoutTime(2000);
         assertEquals(2000, timeoutCase.getTimeoutTime());
     }
-    
+
     /**
      * Ensure that whitespace flag can be set and fetched.
      */
@@ -143,5 +143,5 @@ public class TestCaseTest {
         whitespaceCase.setIgnoreWhitespace(false);
         assertFalse(whitespaceCase.isIgnoreWhitespace());
     }
-    
+
 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.io.FileNotFoundException;
 
 /**
  * Class representing one test case.
@@ -183,21 +182,16 @@ public class TestCase {
      */
     @Override
     public String toString() {
-        try {
-            String template = TemplateReader.readTest();
-            template = template.replace("CALL_LINE", TemplateReader.readCall());
-            template = template.replace("RETURN_LINE", expectedReturn.toString());
-            template = template.replace("OUTPUT_LINE", expectedOutput.toString());
-            template = template.replace("INPUT_LINE", stockedInput.toString());
-            template = template.replace("ARGS", arguments.toString());
-            template = template.replace("CLASS", className);
-            template = template.replace("METHOD", methodName);
-            template = template.replace("NAME", testName);
-            return template;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String template = TemplateReader.readTest();
+        template = template.replace("CALL_LINE", TemplateReader.readCall());
+        template = template.replace("RETURN_LINE", expectedReturn.toString());
+        template = template.replace("OUTPUT_LINE", expectedOutput.toString());
+        template = template.replace("INPUT_LINE", stockedInput.toString());
+        template = template.replace("ARGS", arguments.toString());
+        template = template.replace("CLASS", className);
+        template = template.replace("METHOD", methodName);
+        template = template.replace("NAME", testName);
+        return template;
     }
 
 }
