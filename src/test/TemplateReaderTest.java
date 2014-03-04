@@ -1,9 +1,13 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 
 import model.TemplateReader;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 
 
@@ -24,9 +28,9 @@ public class TemplateReaderTest {
     @Test
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
-        String expected = "Object returnValue = ClassInstance.METHOD(ARGS);";
+        String expected = "Object returnValue = classInstance.METHOD(ARGS);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(expected, str);
     }
 
     /**
@@ -39,10 +43,10 @@ public class TemplateReaderTest {
         String str = TemplateReader.readInput();
         String expected = 
                 "FakeStandardInput fsi = new FakeStandardInput();\n"
-                + "fsi.setString(INPUT);\n" 
-                + "System.setIn(fis);";
+                + "fsi.setString(INPUT);\n"
+                + "System.setIn(fsi);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(expected, str);
     }
 
     /**
@@ -53,7 +57,7 @@ public class TemplateReaderTest {
     @Test
     public void testOutput() throws FileNotFoundException {
         String str = TemplateReader.readOutput();
-        String expected = "assertEquals(fso.getOutput(), EXPECTED);";
+        String expected = "relaxedAssertEquals(fso.getOutput(), EXPECTED);";
         System.out.println(str);
         assertTrue(str.equals(expected));
     }
@@ -66,7 +70,7 @@ public class TemplateReaderTest {
     @Test
     public void testReturn() throws FileNotFoundException {
         String str = TemplateReader.readReturn();
-        String expected = "assertEquals(returnValue, EXPECTED);";
+        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
         assertTrue(str.equals(expected));
     }
@@ -85,13 +89,13 @@ public class TemplateReaderTest {
                 + "   INPUT_LINE\n"
                 + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
                 + "   System.setOut(fso);\n"
-                + "   CLASS ClassInstance = new CLASS();\n"
+                + "   CLASS classInstance = new CLASS();\n"
                 + "   CALL_LINE\n"
                 + "   RETURN_LINE\n"
                 + "   OUTPUT_LINE\n"
                 + "}";
-        System.out.println(str);
-        assertTrue(str.equals(expected));
+        System.out.println(StringEscapeUtils.escapeJava(str));
+        assertEquals(expected, str);
     }    
     
     
@@ -104,7 +108,7 @@ public class TemplateReaderTest {
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
         String str = TemplateReader.readTemplate("return.txt");
-        String expected = "assertEquals(returnValue, EXPECTED);";
+        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
         assertTrue(str.equals(expected));
     }

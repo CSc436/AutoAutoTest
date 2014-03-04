@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileNotFoundException;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * Wrapper class holds a standard out value as a string. When toString is
  * called, converts the standardOutValue to
@@ -48,7 +52,15 @@ public class ExpectedStandardOut {
      *         standardOutValue);
      */
     public String toString() {
-        return "assertEquals(" + TestingNameConstants.STANDARD_OUT_VALUE + ", "
-                + standardOutValue + ");";
+        try {
+            String template = TemplateReader.readOutput();
+            String output = StringEscapeUtils.escapeJava(standardOutValue);
+            output = "\"" + output + "\"";
+            template = template.replace("EXPECTED", output);
+            return template;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

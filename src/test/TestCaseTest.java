@@ -30,16 +30,16 @@ public class TestCaseTest {
         assertTrue(javaString.startsWith("@Test"));
         assertTrue(javaString.contains("public void empty() {"));
         assertTrue(javaString
-                .contains("FakeStandardOut fso = new FakeStandardOut();"));
+                .contains("FakeStandardOutput fso = new FakeStandardOutput();"));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
-                .contains("FakeStandardInput stdin = new FakeStandardInput("));
-        assertTrue(javaString.contains("System.setIn(stdin);"));
-        assertTrue(javaString.contains("studentObject = "));
+                .contains("FakeStandardInput fsi = new FakeStandardInput("));
+        assertTrue(javaString.contains("System.setIn(fsi);"));
+        assertTrue(javaString.contains("classInstance = "));
         assertTrue(javaString.contains("Object returnValue = "));
-        assertTrue(javaString.contains("assertEquals(returnValue,"));
-        assertTrue(javaString.contains("assertEquals("));
-        assertTrue(javaString.endsWith(");\n}\n"));
+        assertTrue(javaString.contains("relaxedAssertEquals(returnValue,"));
+        assertTrue(javaString.contains("relaxedAssertEquals("));
+        assertTrue(javaString.endsWith(");\n}"));
     }
 
     /**
@@ -51,7 +51,9 @@ public class TestCaseTest {
         returnCase.setExpectedReturn("12345678");
         assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
-        assertTrue(javaString.contains("assertEquals(returnValue, 12345678"));
+        assertTrue(javaString.contains(
+                "relaxedAssertEquals(returnValue, 12345678"
+        ));
     }
 
     /**
@@ -64,7 +66,7 @@ public class TestCaseTest {
         assertEquals("Hello", inputCase.getStockedInput());
         String javaString = inputCase.toString();
         String s;
-        s = "FakeStandardInput stdin = new FakeStandardInput(\"Hello\")";
+        s = "fsi.setString(\"Hello\")";
         assertTrue(javaString.contains(s));
     }
 
@@ -74,11 +76,12 @@ public class TestCaseTest {
     @Test
     public void testSettingOutput() {
         TestCase outputCase = new TestCase();
-        outputCase.setExpectedStandardOutput("\"Hello\"");
-        assertEquals("\"Hello\"", outputCase.getExpectedStandardOutput());
+        outputCase.setExpectedStandardOutput("Hello");
+        assertEquals("Hello", outputCase.getExpectedStandardOutput());
         String javaString = outputCase.toString();
+        System.out.println(javaString);
         assertTrue(javaString
-                .contains("assertEquals(fos.getString(), \"Hello\");"));
+                .contains("relaxedAssertEquals(fso.getOutput(), \"Hello\");"));
     }
 
     /**
@@ -103,7 +106,7 @@ public class TestCaseTest {
         classCase.setClassName("Byte");
         assertEquals("Byte", classCase.getClassName());
         String javaString = classCase.toString();
-        assertTrue(javaString.contains("Byte studentObject = new Byte();"));
+        assertTrue(javaString, javaString.contains("Byte classInstance = new Byte();"));
     }
 
     /**
@@ -140,5 +143,5 @@ public class TestCaseTest {
         whitespaceCase.setIgnoreWhitespace(false);
         assertFalse(whitespaceCase.isIgnoreWhitespace());
     }
-
+    
 }

@@ -95,12 +95,8 @@ public class TemplateReader {
         // add directory to path
         inputFile = Paths.get("Templates", inputFile).toString();
         Scanner scanner = new Scanner(new File(inputFile), "UTF8");
-
-        String str = "";
-        while (scanner.hasNextLine()) {
-            str = str.concat(scanner.nextLine() + "\n");
-        }
-        str = str.trim();
+        scanner.useDelimiter("\\Z");
+        String str = scanner.next();
         scanner.close();
         return str;
     }

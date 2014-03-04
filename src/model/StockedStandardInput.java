@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileNotFoundException;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * Contains the input string that should be placed in standard in for a given
  * test case.
@@ -37,10 +41,16 @@ public class StockedStandardInput {
      */
     @Override
     public String toString() {
-        String template = "FakeStandardInput stdin " 
-                + "= new FakeStandardInput(\"INPUT\");\n"
-                + "System.setIn(stdin);\n";
-        template = template.replace("INPUT", inputString);
-        return template;
+        try {
+            String template = TemplateReader.readInput();
+            String escapedInput = StringEscapeUtils.escapeJava(inputString);
+            escapedInput = "\"" + escapedInput + "\"";
+            template = template.replace("INPUT", escapedInput);
+            return template;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileNotFoundException;
+
 /**
  * Class representing one test case.
  * 
@@ -181,20 +183,21 @@ public class TestCase {
      */
     @Override
     public String toString() {
-        String template = "@Test\n" + "public void TESTNAME() {\n"
-                + "    FakeStandardOut fso = new FakeStandardOut();\n"
-                + "    System.setOut(fso);\n" + "    INPUT_LINE\n"
-                + "    CLASSNAME studentObject = new CLASSNAME();\n"
-                + "    Object returnValue = studentObject.METHOD(ARGS);\n"
-                + "    RETURN_LINE\n" + "    OUTPUT_LINE\n" + "}\n";
-        template = template.replace("RETURN_LINE", expectedReturn.toString());
-        template = template.replace("OUTPUT_LINE", expectedOutput.toString());
-        template = template.replace("INPUT_LINE", stockedInput.toString());
-        template = template.replace("ARGS", arguments.toString());
-        template = template.replace("CLASSNAME", className);
-        template = template.replace("METHOD", methodName);
-        template = template.replace("TESTNAME", testName);
-        return template;
+        try {
+            String template = TemplateReader.readTest();
+            template = template.replace("CALL_LINE", TemplateReader.readCall());
+            template = template.replace("RETURN_LINE", expectedReturn.toString());
+            template = template.replace("OUTPUT_LINE", expectedOutput.toString());
+            template = template.replace("INPUT_LINE", stockedInput.toString());
+            template = template.replace("ARGS", arguments.toString());
+            template = template.replace("CLASS", className);
+            template = template.replace("METHOD", methodName);
+            template = template.replace("NAME", testName);
+            return template;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

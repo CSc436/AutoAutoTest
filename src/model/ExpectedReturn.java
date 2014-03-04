@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileNotFoundException;
+
 /**
  * Wrapper class for return values. Holds them as strings.
  * 
@@ -41,10 +43,17 @@ public class ExpectedReturn {
     }
 
     /**
-     * @return assertEquals(TestingNameConstants.RETURN_VALUE, returnValue);
+     * @return a string that verifies the return value is the expected value.
      */
     public String toString() {
-        return "assertEquals(" + TestingNameConstants.RETURN_VALUE + ", "
-                + returnValue + ");";
+        try {
+            String result = TemplateReader.readReturn();
+            result = result.replace("EXPECTED", returnValue);
+            return result;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

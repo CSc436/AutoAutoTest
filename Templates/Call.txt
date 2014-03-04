@@ -1,1 +1,1 @@
-Object returnValue = ClassInstance.METHOD(ARGS);
+Object returnValue = classInstance.METHOD(ARGS);
