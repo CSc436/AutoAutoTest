@@ -1,6 +1,7 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import model.TestCase;
 
 import org.junit.Test;
 
@@ -20,8 +21,7 @@ public class ViewControllerTest {
 	@Test
 	public void testCreateController() {
 		ViewController VC = new ViewController();
-		VC.setAllFields("name");
-		VC.generateTest();
+		assertTrue(VC != null);
 	}
 	
 	
@@ -34,9 +34,11 @@ public class ViewControllerTest {
 		ViewController VC = new ViewController();
 		for (int i = 0; i < 10000; i++) {
 			VC.setAllFields(Integer.toString(i));
-			VC.generateTest();
+			TestCase T = VC.generateTest();
+			assertEquals(VC.TC.getTest(i), T);
 		}
 		assertEquals(10000, VC.getNumberOfTests());
 	}
+	
 	
 }

@@ -63,7 +63,7 @@
 		
 		<HBox spacing="10" alignment="bottom_right" 
 	        GridPane.columnIndex="0" GridPane.rowIndex="8">
-	        <Button text="Delete Last Test"     
+	        <Button text="Delete Selected Test"     
 	        onAction="#handleDeleteButtonAction"/>
 		</HBox>
 		

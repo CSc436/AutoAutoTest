@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
  * interacting between the model and the view.
  */
 public class ViewController {
-	private TestCollection TC;
+	public TestCollection TC;
 	private String testname;
 	private String methodname;
 	private String classname;
@@ -57,7 +57,8 @@ public class ViewController {
      */
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
     	if (listView != null) {
-        	generateTest();
+        	getAllData(); // get all the data from the text fields
+    		generateTest();
         	updateListView();
         }
     }
@@ -69,8 +70,9 @@ public class ViewController {
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
     	if (listView != null) {
-    		if (listView.getSelectionModel() != null) { // if selected test is not null
-    			int testIndex = listView.getSelectionModel().getSelectedIndex();
+			int testIndex = listView.getSelectionModel().getSelectedIndex();
+    		if (testIndex > 0) { // if selected test is not null
+
     			deleteTest(testIndex);
     			updateListView();
     		}
@@ -78,13 +80,15 @@ public class ViewController {
     }
     
     
-    /** This method is a sub method to make the model generate a new test.
-     * 
+    /** This method is a sub method to make the model generate a new test. A new test is created
+     * and all of the required data is sent it.
+     * @return
+     * Returns the newly created testcase. This is mostly for testing purposes.
      */
-    public void generateTest() {
-    	getAllData(); // get all the data from the text fields
+    public TestCase generateTest() {
     	TestCase T = TC.newTest(); // add the test case to the test collection
-    	sendAllDataToModel(T); // give data to model to new test
+    	sendAllDataToTestCase(T); // give data to model to new test
+    	return T;
     }
     
     /** Deletes the test from the TestCollection at the specified index.
@@ -116,7 +120,7 @@ public class ViewController {
      * @param
      * An individual test case.
      */
-    private void sendAllDataToModel(TestCase T) {
+    private void sendAllDataToTestCase(TestCase T) {
     	T.setArgs(params);
     	T.setClassName(classname);
     	T.setExpectedReturn(testreturn);
