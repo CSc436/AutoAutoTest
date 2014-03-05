@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import java.io.FileNotFoundException;
 
@@ -25,21 +26,23 @@ public class TemplateReaderTest {
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
         String expected = 
-                    "Thread timeOut = new Thread() {\n" 
+                    "Object returnValue;\n"
+                  + "Thread studentMethodRunner = new Thread() {\n" 
                   + "    public void run() {\n"
-                  + "        Object returnValue = ClassInstance.METHOD(ARGS);\n"
+                  + "        returnValue = ClassInstance.METHOD(ARGS);\n"
                   + "    }\n"
                   + "};\n"
-                  + "timeOut.start();\n"
-                  + "try {Thread.sleep(TimeoutTime);}\n" 
-                  + "catch (Exception e) {}\n"
-                  + "if(timeOut.isAlive()) {\n"
-                  + "    timeOut.stop();\n"
+                  + "int timeout = TIMEOUT_TIME;\n"
+                  + "studentMethodRunner.start();\n"
+                  + "try {Thread.sleep(timeout);}\n" 
+                  + "catch (InterruptedException e) {fail();}\n"
+                  + "if(studentMethodRunner.isAlive()) {\n"
+                  + "    studentMethodRunner.stop();\n"
                   + "    fail();\n"
                   + "}";
 
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }
 
     /**
@@ -55,7 +58,7 @@ public class TemplateReaderTest {
                 + "fsi.setString(INPUT);\n" 
                 + "System.setIn(fis);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }
 
     /**
@@ -68,7 +71,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readOutput();
         String expected = "assertEquals(fso.getOutput(), EXPECTED);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }
     
     /**
@@ -81,7 +84,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readReturn();
         String expected = "assertEquals(returnValue, EXPECTED);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }
 
     /**
@@ -104,7 +107,7 @@ public class TemplateReaderTest {
                 + "   OUTPUT_LINE\n"
                 + "}";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }    
     
     
@@ -119,6 +122,6 @@ public class TemplateReaderTest {
         String str = TemplateReader.readTemplate("return.txt");
         String expected = "assertEquals(returnValue, EXPECTED);";
         System.out.println(str);
-        assertTrue(str.equals(expected));
+        assertEquals(str, expected);
     }
 }

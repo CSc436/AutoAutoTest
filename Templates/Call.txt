@@ -1,12 +1,14 @@
-Thread timeOut = new Thread() {
+Object returnValue;
+Thread studentMethodRunner = new Thread() {
     public void run() {
-        Object returnValue = ClassInstance.METHOD(ARGS);
+        returnValue = ClassInstance.METHOD(ARGS);
     }
 };
-timeOut.start();
-try {Thread.sleep(TimeoutTime);}
-catch (Exception e) {}
-if(timeOut.isAlive()) {
-    timeOut.stop();
+int timeout = TIMEOUT_TIME;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
     fail();
 }
