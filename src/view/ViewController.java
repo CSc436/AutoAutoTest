@@ -71,12 +71,17 @@ public class ViewController {
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
     	if (listView != null) {
 			int testIndex = listView.getSelectionModel().getSelectedIndex();
-    		if (testIndex > 0) { // if selected test is not null
+    		if (testIndex >= 0) { // if selected test is not null
 
     			deleteTest(testIndex);
     			updateListView();
     		}
     	}
+    }
+    
+    
+    @FXML protected void handleSaveButtonAction(ActionEvent event) {
+    	System.out.println("save");
     }
     
     

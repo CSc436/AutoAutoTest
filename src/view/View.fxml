@@ -16,6 +16,14 @@
 	<ListView fx:id="listView" GridPane.columnIndex="1" GridPane.rowIndex="0">
 			
 	</ListView>
+	
+	
+	
+	<HBox spacing="10" alignment="bottom_right" 
+        GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Button text="Save All Tests"     
+        onAction="#handleSaveButtonAction"/>
+	</HBox>
 
 
 
@@ -68,7 +76,6 @@
 		</HBox>
 		
 		
-	
 		<Text fx:id="actiontarget"
 			GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 			
