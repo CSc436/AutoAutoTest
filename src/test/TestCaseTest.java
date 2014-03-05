@@ -130,6 +130,18 @@ public class TestCaseTest {
     }
     
     /**
+     * Ensure that ignore casing flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingCasingFlag() {
+        TestCase casingCase = new TestCase();
+        casingCase.setIgnoreCasing(true);
+        assertTrue(casingCase.isIgnoreCasing());
+        casingCase.setIgnoreCasing(false);
+        assertFalse(casingCase.isIgnoreCasing());
+    }
+
+    /**
      * Ensure that ignore whitespace flag can be set and fetched.
      */
     @Test
