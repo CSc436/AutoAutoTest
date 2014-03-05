@@ -90,7 +90,7 @@
                 </sourcefiles>
             </structure>
             <check>
-                <rule element="CLASS" excludes="package-info:*Constants*:*ExceptionsTest">
+                <rule element="CLASS" excludes="package-info:*Constants*">
                     <limit counter="INSTRUCTION" value="COVEREDRATIO" minimum="1.00"/>
                     <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
                 </rule>
@@ -106,10 +106,7 @@
     </target>
 
     <target name="findbugs" depends="compile">
-        <findbugs home="${dev}/findbugs-2.0.3"
-                output="text"
-                failOnError="true"
-                excludefilter="${config}/findbugs_ignore_tests.xml">
+        <findbugs home="${dev}/findbugs-2.0.3" output="text" failOnError="true">
             <auxClassPath path="${dev}"/>
             <sourcePath path="${src}"/>
             <class location="${bin}"/>

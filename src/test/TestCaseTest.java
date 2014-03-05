@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import model.TestCase;
 
@@ -117,52 +116,6 @@ public class TestCaseTest {
         assertEquals("jump", methodCase.getMethodName());
         String javaString = methodCase.toString();
         assertTrue(javaString.contains("jump("));
-    }
-
-    /**
-     * Ensure that timeout can be set and fetched.
-     */
-    @Test
-    public void testSettingTimeoutTime() {
-        TestCase timeoutCase = new TestCase();
-        timeoutCase.setTimeoutTime(2000);
-        assertEquals(2000, timeoutCase.getTimeoutTime());
-    }
-    
-    /**
-     * Ensure that ignore casing flag can be set and fetched.
-     */
-    @Test
-    public void testGettingAndSettingCasingFlag() {
-        TestCase casingCase = new TestCase();
-        casingCase.setIgnoreCasing(true);
-        assertTrue(casingCase.isIgnoreCasing());
-        casingCase.setIgnoreCasing(false);
-        assertFalse(casingCase.isIgnoreCasing());
-    }
-
-    /**
-     * Ensure that ignore whitespace flag can be set and fetched.
-     */
-    @Test
-    public void testGettingAndSettingWhitespaceFlag() {
-        TestCase whitespaceCase = new TestCase();
-        whitespaceCase.setIgnoreWhitespace(true);
-        assertTrue(whitespaceCase.isIgnoreWhitespace());
-        whitespaceCase.setIgnoreWhitespace(false);
-        assertFalse(whitespaceCase.isIgnoreWhitespace());
-    }
-
-    /**
-     * Ensure that ignore punctuation flag can be set and fetched.
-     */
-    @Test
-    public void testGettingAndSettingPunctuationFlag() {
-        TestCase punctuationCase = new TestCase();
-        punctuationCase.setIgnorePunctuation(true);
-        assertTrue(punctuationCase.isIgnorePunctuation());
-        punctuationCase.setIgnorePunctuation(false);
-        assertFalse(punctuationCase.isIgnorePunctuation());
     }
 
 }

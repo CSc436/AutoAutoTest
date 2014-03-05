@@ -1,3 +1,0 @@
-FakeStandardInput fsi = new FakeStandardInput();
-fsi.setString(INPUT);
-System.setIn(fis);
