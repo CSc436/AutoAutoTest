@@ -10,11 +10,8 @@ import model.TestCase;
 import model.TestCollection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
  
 /**
@@ -25,7 +22,6 @@ import javafx.scene.text.Text;
  */
 public class ViewController {
 	private TestCollection TC;
-	private int testcounter = 0;
 	private String testname;
 	private String methodname;
 	private String classname;
@@ -42,10 +38,9 @@ public class ViewController {
     @FXML private TextField stdoutfield;
     @FXML private TextField methodnamefield;
     @FXML private TextField classnamefield;
-    // @FXML private Label label;
-    @FXML private ListView<String> listView;// maybe of strings?
+    @FXML private ListView<String> listView;
     
-    // add more inputs for timeouts etc.
+    // add save process
     
     
     /**
@@ -61,38 +56,24 @@ public class ViewController {
      * This method generates a new test when the button is pressed.
      */
     @FXML protected void handleGenerateButtonAction(ActionEvent event) {
-    	System.out.println("A");
     	if (listView != null) {
-        	System.out.println("B");
-        	generateTest(); // add a test to the model
-        	//String newTestString = getTestForView();
-        	//listView.getChildren().add(testcounter, label); // insert it to the list
-        	//listView.getItems().add(newTestString);
+        	generateTest();
         	updateListView();
-        	testcounter++; //not needed?
         }
     }
     
     
-    // TODO get the selected item from the list, delete that item from the model
-    	// maybe base it off of a given id at creation
     /**This method is the response to the user clicking the 'Delete Button'. The selected
      * test in the listview is deleted from the TestCollection data structure, and is then removed from the list.
      * @param event
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
     	if (listView != null) {
-    		if (testcounter > 0) {
-    			testcounter--;
-    			deleteTest(testcounter);
-    			//listView.getChildren().get(testcounter).setVisible(false);
-    			//listView.getItems().remove(testcounter); // only removes the most recent one, we need to remove the selected one, and remove it from the TC
+    		if (listView.getSelectionModel() != null) { // if selected test is not null
+    			int testIndex = listView.getSelectionModel().getSelectedIndex();
+    			deleteTest(testIndex);
     			updateListView();
     		}
-
-    		// get selected test from the list
-    		// delete that test from the test collection
-    	
     	}
     }
     
@@ -146,54 +127,6 @@ public class ViewController {
     }
     
     
-//    /**
-//     * 
-//     * @param pname
-//     * Gives the name value to the model.
-//     */
-//    private void sendNameToModel(String pname) {
-//    	// give the name to the model
-//    }
-//    
-//    
-//    /**
-//     * 
-//     * @param pparams
-//     * Gives the parameter value to the model.
-//     */
-//    private void sendParamsToModel(String pparams) {
-//    	// give the params to the model
-//    }
-//    
-//    
-//    /**
-//     * @param ptestreturn
-//     * Gives the return value to the model.
-//     */
-//    private void sendReturnToModel(String ptestreturn) {
-//    	// give the testreturn to the model
-//    }
-//    
-//    
-//    /**
-//     * @param pstdin
-//     * Gives the standard in value to the model.
-//     */
-//    private void sendStdInToModel(String pstdin) {
-//    	// give the stdin to the model
-//    }
-//    
-//    
-//    /**
-//     * @param pstdout
-//     * Gives the standard out value to the model.
-//     */
-//    private void sendStdOutToModel(String pstdout) {
-//    	// give the stdout to the model
-//    }
-//    
-//    
-    
     /**Updates the listview to match the TestCollection data structure.
      * Can be used after deleting or adding a test instead of seperate methods to
      * do both.
@@ -203,7 +136,7 @@ public class ViewController {
     	int length = TC.testCount();
     	listView.getItems().clear(); // clear the list
     	for (int i = 0; i < length; i++) { // for all the tests
-    		String anotherTest = TC.getTest(i).toString(); // get the string representation
+    		String anotherTest = getTestForView(TC.getTest(i)); // get the string representation
     		listView.getItems().add(anotherTest); // add it to the listview
     	}
     }
@@ -212,22 +145,15 @@ public class ViewController {
     
     
     
-    /**
+    /**Gets a string representation of the given test case for the listview.
+     * @param
+     * The test to get info for.
      * @return message
      * This method creates a string that is used for the list view.
-     * It calls the toString() method of the last TestCase in the TestCollection.
      */
-    String getTestForView() {
-    	//String message = "------------------------------";
-    		//String message = "\nTest #" + testcounter;
-    		//message += "Name:	" + testname + "(" + params + ")";
-    	//message += "\nStdIn:	" + stdin;
-    	//message += "\nStdOut:	" + stdout;
-    	//message += "\nReturns:	" + testreturn;
-    	//message += "\nMethod Name:     " + methodname;
-    	//message += "\nClass Name:     " + classname;
-    	//message += "\n------------------------------";
-    	String message = TC.getTest(getNumberOfTests()-1).toString(); // gets the tostring of the last test in the list
+    String getTestForView(TestCase T) {
+    	String lname = T.getTestName();
+   		String message = "Test Name: " + lname;
     	return message;
     }
     
