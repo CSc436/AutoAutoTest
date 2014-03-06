@@ -25,7 +25,10 @@ import javafx.stage.Stage;
  * interacting between the model and the view.
  */
 public class ViewController {
-	private TestCollection TC;
+	/**The total collection of tests.
+	 * 
+	 */
+	public TestCollection TC;
 	private String testname;
 	private String methodname;
 	private String classname;
