@@ -1,13 +1,11 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 
 import model.TemplateReader;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 
 
