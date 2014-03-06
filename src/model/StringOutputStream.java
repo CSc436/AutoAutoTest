@@ -3,6 +3,9 @@ package model;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * This is a class that returns a string instance variable that
  *         was created using a byte array.
@@ -13,6 +16,8 @@ import java.io.OutputStream;
 public class StringOutputStream extends OutputStream {
 
     private String outputBuffer;
+    
+    private static final Logger log = LogManager.getRootLogger();
 
     /**
      * This is the constructor for the StringOutputStream class.
@@ -33,12 +38,9 @@ public class StringOutputStream extends OutputStream {
         try {
             bytesAsString = new String(array, "UTF8");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("writing error in the void write(byte[] array) method");
         }
-//        System.out.println("outputbuffer = " + outputBuffer);
         outputBuffer += bytesAsString;
-//        System.out.println("outputbuffer = " + outputBuffer);
     } 
 
     /**

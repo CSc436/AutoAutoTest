@@ -3,6 +3,9 @@ package model;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 //Carlos Gallego
 //Feb 7, 2014
@@ -19,6 +22,8 @@ public class FakeStandardOutput extends PrintStream {
      * This is an instance variable that will get returned.
      */
     private StringOutputStream innerStream;
+    
+    private static final Logger log = LogManager.getRootLogger();
 
     /**
      * Summary: This is a constructor to create a FakeStandardOutput.
@@ -44,7 +49,7 @@ public class FakeStandardOutput extends PrintStream {
 
     /**
      * This is a method that will take in an string, and put it into an
-     * instance variable it as a string.
+     * instance variable as a string.
      * 
      * @param blah
      *            is an object that can be passed in and converted to a string.
@@ -53,8 +58,7 @@ public class FakeStandardOutput extends PrintStream {
         try {
             innerStream.write(blah.getBytes("UTF8"));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Exception: void print(String blah) method");
         }
     } 
 

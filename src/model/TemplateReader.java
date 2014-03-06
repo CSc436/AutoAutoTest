@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * TemplateReader reads somes text files and returns them as strings. The files
  * are templates for a generic test.
@@ -15,6 +18,8 @@ import java.util.Scanner;
 public class TemplateReader {
 
     private static TemplateReader templateReader = new TemplateReader();
+    
+    private static final Logger log = LogManager.getRootLogger();
 
     /**
      * private constructor prevents template readers from being made.
@@ -92,8 +97,7 @@ public class TemplateReader {
             scanner.close();
             return str;
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("FileNotFoundException in the private doRead method");
         }
         return "";
     }
