@@ -6,6 +6,8 @@
 
 package view;
 
+import java.io.File;
+
 import model.TestCase;
 import model.TestCollection;
 import javafx.event.ActionEvent;
@@ -13,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
  
 /**
  * @author dillon
@@ -21,7 +25,7 @@ import javafx.scene.text.Text;
  * interacting between the model and the view.
  */
 public class ViewController {
-	public TestCollection TC;
+	private TestCollection TC;
 	private String testname;
 	private String methodname;
 	private String classname;
@@ -40,8 +44,8 @@ public class ViewController {
     @FXML private TextField classnamefield;
     @FXML private ListView<String> listView;
     
-    // add save process
-    
+
+
     
     /**
      * Generic constructor used for tests.
@@ -67,6 +71,7 @@ public class ViewController {
     /**This method is the response to the user clicking the 'Delete Button'. The selected
      * test in the listview is deleted from the TestCollection data structure, and is then removed from the list.
      * @param event
+     * The event that triggers this method. In this case, pressing the 'Delete' button.
      */
     @FXML protected void handleDeleteButtonAction(ActionEvent event) {
     	if (listView != null) {
@@ -80,8 +85,20 @@ public class ViewController {
     }
     
     
-    @FXML protected void handleSaveButtonAction(ActionEvent event) {
-    	System.out.println("save");
+    /**This method saves all of the created tests.
+     * 
+     * @param event
+     * The event that triggers this method. In this case, pressing
+     * the 'Save' button.
+     * @throws Exception
+     * Throws an exception if the file is not found.
+     */
+    @FXML protected void handleSaveButtonAction(ActionEvent event) throws Exception {
+    	FileChooser FC = new FileChooser();
+    	FC.setTitle("Save Tests");
+    	File file = FC.showOpenDialog(new Stage());
+    	String filePath = file.getAbsolutePath();
+    	TC.save(filePath); // give the file path to the TC
     }
     
     
@@ -98,8 +115,8 @@ public class ViewController {
     
     /** Deletes the test from the TestCollection at the specified index.
      * 
-     * @param
-     * The integer index of the desired TestCase
+     * @param pindex
+     * The integer index of the desired TestCase.
      */
     public void deleteTest(int pindex) {
     	TC.removeTest(pindex);
@@ -155,7 +172,7 @@ public class ViewController {
     
     
     /**Gets a string representation of the given test case for the listview.
-     * @param
+     * @param T
      * The test to get info for.
      * @return message
      * This method creates a string that is used for the list view.
