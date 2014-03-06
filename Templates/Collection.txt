@@ -11,7 +11,7 @@ public class CLASSNAME {
 		} else if(expected instanceof String) {
 		    RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
 		          IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, IS_IGNORE_PUNCTUATION, FLOAT_PRECISION
-		          );
+		    );
             if(checker.isAcceptable((String) expected, (String) actual) == false) {
                 fail();
             }  
