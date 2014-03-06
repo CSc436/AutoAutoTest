@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import model.TestCase;
 
@@ -28,17 +29,17 @@ public class TestCaseTest {
         String javaString = emptyCase.toString();
         assertTrue(javaString.startsWith("@Test"));
         assertTrue(javaString.contains("public void empty() {"));
-        assertTrue(javaString
-                .contains("FakeStandardOut fso = new FakeStandardOut();"));
+        assertTrue(javaString.contains(
+                "FakeStandardOutput fso = new FakeStandardOutput();"));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
-                .contains("FakeStandardInput stdin = new FakeStandardInput("));
-        assertTrue(javaString.contains("System.setIn(stdin);"));
-        assertTrue(javaString.contains("studentObject = "));
-        assertTrue(javaString.contains("Object returnValue = "));
-        assertTrue(javaString.contains("assertEquals(returnValue,"));
-        assertTrue(javaString.contains("assertEquals("));
-        assertTrue(javaString.endsWith(");\n}\n"));
+                .contains("FakeStandardInput fsi = new FakeStandardInput("));
+        assertTrue(javaString.contains("System.setIn(fsi);"));
+        assertTrue(javaString.contains("classInstance = "));
+        assertTrue(javaString.contains("returnValue = "));
+        assertTrue(javaString.contains("relaxedAssertEquals(returnValue,"));
+        assertTrue(javaString.contains("relaxedAssertEquals("));
+        assertTrue(javaString.endsWith(");\n}"));
     }
 
     /**
@@ -50,7 +51,8 @@ public class TestCaseTest {
         returnCase.setExpectedReturn("12345678");
         assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
-        assertTrue(javaString.contains("assertEquals(returnValue, 12345678"));
+        assertTrue(javaString
+                .contains("relaxedAssertEquals(returnValue, 12345678"));
     }
 
     /**
@@ -63,7 +65,7 @@ public class TestCaseTest {
         assertEquals("Hello", inputCase.getStockedInput());
         String javaString = inputCase.toString();
         String s;
-        s = "FakeStandardInput stdin = new FakeStandardInput(\"Hello\")";
+        s = "fsi.setString(\"Hello\")";
         assertTrue(javaString.contains(s));
     }
 
@@ -73,11 +75,12 @@ public class TestCaseTest {
     @Test
     public void testSettingOutput() {
         TestCase outputCase = new TestCase();
-        outputCase.setExpectedStandardOutput("\"Hello\"");
-        assertEquals("\"Hello\"", outputCase.getExpectedStandardOutput());
+        outputCase.setExpectedStandardOutput("Hello");
+        assertEquals("Hello", outputCase.getExpectedStandardOutput());
         String javaString = outputCase.toString();
+        System.out.println(javaString);
         assertTrue(javaString
-                .contains("assertEquals(fos.getString(), \"Hello\");"));
+                .contains("relaxedAssertEquals(fso.getOutput(), \"Hello\");"));
     }
 
     /**
@@ -102,7 +105,8 @@ public class TestCaseTest {
         classCase.setClassName("Byte");
         assertEquals("Byte", classCase.getClassName());
         String javaString = classCase.toString();
-        assertTrue(javaString.contains("Byte studentObject = new Byte();"));
+        assertTrue(javaString,
+                javaString.contains("Byte classInstance = new Byte();"));
     }
 
     /**
@@ -116,6 +120,52 @@ public class TestCaseTest {
         assertEquals("jump", methodCase.getMethodName());
         String javaString = methodCase.toString();
         assertTrue(javaString.contains("jump("));
+    }
+
+    /**
+     * Ensure that timeout can be set and fetched.
+     */
+    @Test
+    public void testSettingTimeoutTime() {
+        TestCase timeoutCase = new TestCase();
+        timeoutCase.setTimeoutTime(2000);
+        assertEquals(2000, timeoutCase.getTimeoutTime());
+    }
+
+    /**
+     * Ensure that ignore casing flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingCasingFlag() {
+        TestCase casingCase = new TestCase();
+        casingCase.setIgnoreCasing(true);
+        assertTrue(casingCase.isIgnoreCasing());
+        casingCase.setIgnoreCasing(false);
+        assertFalse(casingCase.isIgnoreCasing());
+    }
+
+    /**
+     * Ensure that ignore whitespace flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingWhitespaceFlag() {
+        TestCase whitespaceCase = new TestCase();
+        whitespaceCase.setIgnoreWhitespace(true);
+        assertTrue(whitespaceCase.isIgnoreWhitespace());
+        whitespaceCase.setIgnoreWhitespace(false);
+        assertFalse(whitespaceCase.isIgnoreWhitespace());
+    }
+
+    /**
+     * Ensure that ignore punctuation flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingPunctuationFlag() {
+        TestCase punctuationCase = new TestCase();
+        punctuationCase.setIgnorePunctuation(true);
+        assertTrue(punctuationCase.isIgnorePunctuation());
+        punctuationCase.setIgnorePunctuation(false);
+        assertFalse(punctuationCase.isIgnorePunctuation());
     }
 
 }

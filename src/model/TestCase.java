@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Class representing one test case.
  * 
@@ -19,6 +20,10 @@ public class TestCase {
     private String className;
     private String methodName;
     private String testName;
+    private boolean ignoreCasing;
+    private boolean ignorePunctuation;
+    private boolean ignoreWhitespace;
+    private int timeoutTime;
 
     /**
      * Create a new empty test.
@@ -33,6 +38,10 @@ public class TestCase {
         setClassName("Class");
         setMethodName("method");
         setTestName("test");
+        setTimeoutTime(1000);
+        setIgnoreCasing(false);
+        setIgnorePunctuation(false);
+        setIgnoreWhitespace(false);
     }
 
     /**
@@ -41,9 +50,10 @@ public class TestCase {
     public String getArgs() {
         return arguments.getArgsValue();
     }
-    
+
     /**
-     * @param newValue The new arguments for the current test
+     * @param newValue
+     *            The new arguments for the current test
      */
     public void setArgs(String newValue) {
         arguments.setArgsValue(newValue);
@@ -55,9 +65,10 @@ public class TestCase {
     public String getExpectedReturn() {
         return expectedReturn.getReturnValue();
     }
-    
+
     /**
-     * @param newValue the expected return value for this TestCase
+     * @param newValue
+     *            the expected return value for this TestCase
      */
     public void setExpectedReturn(String newValue) {
         expectedReturn.setReturnValue(newValue);
@@ -69,12 +80,73 @@ public class TestCase {
     public String getExpectedStandardOutput() {
         return expectedOutput.getStandardOutValue();
     }
-    
+
     /**
-     * @param newValue The expected standard out for this TestCase
+     * @param newValue
+     *            The expected standard out for this TestCase
      */
     public void setExpectedStandardOutput(String newValue) {
         expectedOutput.setStandardOutValue(newValue);
+    }
+
+    /**
+     * @return Whether to use timeout or not
+     */
+    public int getTimeoutTime() {
+        return timeoutTime;
+    }
+
+    /**
+     * @param newValue
+     *            Whether to use timeout or not
+     */
+    public void setTimeoutTime(int newValue) {
+        this.timeoutTime = newValue;
+    }
+
+    /**
+     * @return True if this TestCase will ignore casing in output
+     */
+    public boolean isIgnoreCasing() {
+        return ignoreCasing;
+    }
+
+    /**
+     * @param newValue
+     *            whether or not this TestCase should ignore casing in output
+     */
+    public void setIgnoreCasing(boolean newValue) {
+        this.ignoreCasing = newValue;
+    }
+
+    /**
+     * @return true if this TestCase will ignore whitespace in strings
+     */
+    public boolean isIgnoreWhitespace() {
+        return ignoreWhitespace;
+    }
+
+    /**
+     * @param newValue
+     *            true to have this TestCase ignore whitespace False otherwise.
+     */
+    public void setIgnoreWhitespace(boolean newValue) {
+        ignoreWhitespace = newValue;
+    }
+
+    /**
+     * @return the true if punctuation in strings will be ignored
+     */
+    public boolean isIgnorePunctuation() {
+        return ignorePunctuation;
+    }
+
+    /**
+     * @param newValue
+     *            true if punctuation in output strings should be ignored
+     */
+    public void setIgnorePunctuation(boolean newValue) {
+        ignorePunctuation = newValue;
     }
 
     /**
@@ -83,9 +155,10 @@ public class TestCase {
     public String getStockedInput() {
         return stockedInput.getInputString();
     }
-    
+
     /**
-     * @param newValue the standard input for this TestCase
+     * @param newValue
+     *            the standard input for this TestCase
      */
     public void setStockedInput(String newValue) {
         stockedInput.setInput(newValue);
@@ -99,7 +172,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new name of the class
+     * @param newName
+     *            the new name of the class
      */
     public void setClassName(String newName) {
         this.className = newName;
@@ -113,7 +187,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new test name
+     * @param newName
+     *            the new test name
      */
     public void setTestName(String newName) {
         this.testName = newName;
@@ -127,7 +202,8 @@ public class TestCase {
     }
 
     /**
-     * @param newName the new method name
+     * @param newName
+     *            the new method name
      */
     public void setMethodName(String newName) {
         this.methodName = newName;
@@ -139,19 +215,15 @@ public class TestCase {
      */
     @Override
     public String toString() {
-        String template = "@Test\n" + "public void TESTNAME() {\n"
-                + "    FakeStandardOut fso = new FakeStandardOut();\n"
-                + "    System.setOut(fso);\n" + "    INPUT_LINE\n"
-                + "    CLASSNAME studentObject = new CLASSNAME();\n"
-                + "    Object returnValue = studentObject.METHOD(ARGS);\n"
-                + "    RETURN_LINE\n" + "    OUTPUT_LINE\n" + "}\n";
+        String template = TemplateReader.readTest();
+        template = template.replace("CALL_LINE", TemplateReader.readCall());
         template = template.replace("RETURN_LINE", expectedReturn.toString());
         template = template.replace("OUTPUT_LINE", expectedOutput.toString());
         template = template.replace("INPUT_LINE", stockedInput.toString());
         template = template.replace("ARGS", arguments.toString());
-        template = template.replace("CLASSNAME", className);
+        template = template.replace("CLASS", className);
         template = template.replace("METHOD", methodName);
-        template = template.replace("TESTNAME", testName);
+        template = template.replace("NAME", testName);
         return template;
     }
 

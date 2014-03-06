@@ -1,132 +1,3 @@
-<<<<<<< HEAD
-<project
-        name="AutoAutoTesting"
-        default="all"
-        basedir="."
-        xmlns:jacoco="antlib:org.jacoco.ant">
-
-    <description>
-        build file for Automated Automated testing
-    </description>
-
-    <!--============================ Properties ===========================-->
-    <property name="basedir" location="."/>
-    <property name="src" location="src"/>
-    <property name="bin" location="bin"/>
-    <property name="dist" location="dist"/>
-    <property name="dev" location="dev"/>
-    <property name="lib" location="lib"/>
-    <property name="config" location="config"/>
-    <property name="test.output" location="test_output"/>
-    <property name="jacoco.report" location="jacoco.exec"/>
-
-    <path id="project.test.class.path">
-        <fileset dir="${dev}" includes="**/*.jar"/>
-        <fileset dir="${lib}" includes="**/*.jar"/>
-        <pathelement location="${bin}"/>
-    </path>
-
-    <!--============================= Plugins =============================-->
-    <taskdef resource="checkstyletask.properties" classpath="${dev}/checkstyle-5.6-all.jar"/>
-    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
-        <classpath path="${dev}/findbugs-ant.jar"/>
-    </taskdef>
-
-    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="${dev}/jacocoant.jar"/>
-    </taskdef>
-
-    <!--============================= Targets =============================-->
-    <target name="clean">
-        <delete dir="${bin}"/>
-        <delete dir="${dist}"/>
-        <delete dir="${test.output}"/>
-        <delete file="${jacoco.report}"/>
-    </target>
-
-    <target name="init" depends="clean">
-        <echo message="${basedir}"/>
-        <tstamp/>
-        <mkdir dir="${bin}"/>
-        <mkdir dir="${dist}"/>
-        <mkdir dir="${test.output}"/>
-    </target>
-
-    <target name="compile" depends="init">
-        <javac srcdir="${src}" destdir="${bin}" includeantruntime="false" debug="true">
-            <classpath refid="project.test.class.path"/>
-        </javac>
-    </target>
-
-    <target name="test" depends="compile">
-        <junit printsummary="yes" haltonfailure="yes" fork="yes" forkmode="once">
-            <classpath refid="project.test.class.path"/>
-            <formatter type="plain"/>
-            <batchtest todir="${test.output}">
-                <fileset dir="${src}" includes="**/*Test.java"/>
-            </batchtest>
-        </junit>
-    </target>
-
-    <target name="coverage" depends="compile">
-        <jacoco:coverage destfile="${jacoco.report}">
-            <junit printsummary="yes" haltonfailure="yes" fork="yes" forkmode="once">
-                <classpath refid="project.test.class.path"/>
-                <formatter type="plain"/>
-                <batchtest todir="${test.output}">
-                    <fileset dir="${src}" includes="**/*Test.java"/>
-                </batchtest>
-            </junit>
-        </jacoco:coverage>
-        <jacoco:report>
-            <executiondata>
-                <file file="${jacoco.report}"/>
-            </executiondata>
-            <structure name="AutoAutoTest">
-                <classfiles>
-                    <fileset dir="${bin}"/>
-                </classfiles>
-                <sourcefiles encoding="UTF-8">
-                    <fileset dir="src"/>
-                </sourcefiles>
-            </structure>
-            <check>
-                <rule element="CLASS" excludes="package-info:*Constants*:*View*">
-                    <limit counter="INSTRUCTION" value="COVEREDRATIO" minimum="1.00"/>
-                    <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
-                </rule>
-            </check>
-        </jacoco:report>
-    </target>
-
-    <target name="checkstyle" depends="init">
-        <checkstyle config="${config}/sun_checks.xml">
-            <classpath refid="project.test.class.path"/>
-            <fileset dir="${src}" includes="**/*.java"/>
-        </checkstyle>
-    </target>
-
-    <target name="findbugs" depends="compile">
-        <findbugs home="${dev}/findbugs-2.0.3" output="text" failOnError="true">
-            <auxClassPath path="${dev}"/>
-            <sourcePath path="${src}"/>
-            <class location="${bin}"/>
-        </findbugs>
-    </target>
-
-    <target name="dist" depends="compile">
-        <jar destfile="${dist}/AutoAutoTest.jar">
-            <fileset dir="${bin}" excludes="**/Test/*.java"/>
-            <!-- <zipfileset dir="${lib}/**/*.jar"/> -->
-            <manifest>
-                <attribute name="Main-Class" value="Main"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="all" depends="coverage,checkstyle,findbugs,dist"/>
-</project>
-=======
 <project
         name="AutoAutoTesting"
         default="all"
@@ -235,8 +106,11 @@
     </target>
 
     <target name="findbugs" depends="compile">
-        <findbugs home="${dev}/findbugs-2.0.3" output="text" failOnError="true">
-            <auxClassPath path="${dev}"/>
+        <findbugs home="${dev}/findbugs-2.0.3"
+                output="text"
+                failOnError="true"
+                excludefilter="${config}/findbugs_ignore_tests.xml">
+            <auxClassPath path="${dev};${lib}"/>
             <sourcePath path="${src}"/>
             <class location="${bin}"/>
         </findbugs>
@@ -254,4 +128,3 @@
 
     <target name="all" depends="coverage,checkstyle,findbugs,dist"/>
 </project>
->>>>>>> 176bdb3b937abb9663a13c6de73dd7a58b4854d6

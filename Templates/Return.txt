@@ -1,1 +1,1 @@
-assertEquals(returnValue, EXPECTED);
+relaxedAssertEquals(returnValue, EXPECTED);

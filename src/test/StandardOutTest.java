@@ -1,8 +1,8 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import model.ExpectedStandardOut;
-import model.TestingNameConstants;
 
 import org.junit.Test;
 
@@ -50,9 +50,8 @@ public class StandardOutTest {
     public void standardOutToStringTest() {
         ExpectedStandardOut so = new ExpectedStandardOut(
                 "a different\n message");
-
-        assertTrue(so.toString().equals(
-                "assertEquals(" + TestingNameConstants.STANDARD_OUT_VALUE
-                        + ", " + so.getStandardOutValue() + ");"));
+        String expected = "relaxedAssertEquals(fso.getOutput(), "
+                + "\"a different\\n message\");";
+        assertEquals(expected, so.toString());
     }
 }
