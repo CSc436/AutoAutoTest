@@ -2,11 +2,9 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import model.FakeStandardIn;
-import model.TemplateReader;
 import model.TestCollection;
 
 import org.junit.Test;
@@ -20,16 +18,7 @@ import org.junit.Test;
  */
 public class ExceptionsTest {
 
-    /**
-     * Asks for the contents of a non-existent file. Should receive a blank.
-     * 
-     * @throws FileNotFoundException
-     *             when file is not found
-     */
-    @Test(expected = FileNotFoundException.class)
-    public void testFileNotFound() throws FileNotFoundException {
-        TemplateReader.readTemplate("FileNotFound.txt");
-    }
+
 
     /**
      * Ensure that an exception is thrown when trying to write to a non .java

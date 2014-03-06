@@ -1,4 +1,17 @@
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
 public class CLASSNAME {
+
+	public void relaxedAssertEquals(Object expected, Object actual) {
+		if (expected instanceof Double || expected instanceof Float) {
+			double expectedValue = (double) expected;
+			double actualValue = (double) actual;
+			assertEquals(expectedValue, actualValue, 1e-(FLOAT_PRECISION));
+		} else {
+			assertEquals(expected, actual);
+		}
+	}
 
 TESTS
 

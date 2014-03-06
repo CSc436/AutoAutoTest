@@ -110,7 +110,7 @@
                 output="text"
                 failOnError="true"
                 excludefilter="${config}/findbugs_ignore_tests.xml">
-            <auxClassPath path="${dev}"/>
+            <auxClassPath path="${dev};${lib}"/>
             <sourcePath path="${src}"/>
             <class location="${bin}"/>
         </findbugs>

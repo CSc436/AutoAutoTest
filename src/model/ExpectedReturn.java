@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Wrapper class for return values. Holds them as strings.
  * 
@@ -41,10 +42,11 @@ public class ExpectedReturn {
     }
 
     /**
-     * @return assertEquals(TestingNameConstants.RETURN_VALUE, returnValue);
+     * @return a string that verifies the return value is the expected value.
      */
     public String toString() {
-        return "assertEquals(" + TestingNameConstants.RETURN_VALUE + ", "
-                + returnValue + ");";
+        String result = TemplateReader.readReturn();
+        result = result.replace("EXPECTED", returnValue);
+        return result;
     }
 }

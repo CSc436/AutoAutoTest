@@ -1,9 +1,11 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.FileNotFoundException;
 
 import model.TemplateReader;
+
 import org.junit.Test;
 
 
@@ -54,10 +56,10 @@ public class TemplateReaderTest {
         String str = TemplateReader.readInput();
         String expected = 
                 "FakeStandardInput fsi = new FakeStandardInput();\n"
-                + "fsi.setString(INPUT);\n" 
-                + "System.setIn(fis);";
+                + "fsi.setString(INPUT);\n"
+                + "System.setIn(fsi);";
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }
 
     /**
@@ -68,7 +70,7 @@ public class TemplateReaderTest {
     @Test
     public void testOutput() throws FileNotFoundException {
         String str = TemplateReader.readOutput();
-        String expected = "assertEquals(fso.getOutput(), EXPECTED);";
+        String expected = "relaxedAssertEquals(fso.getOutput(), EXPECTED);";
         System.out.println(str);
         assertEquals(str, expected);
     }
@@ -81,7 +83,7 @@ public class TemplateReaderTest {
     @Test
     public void testReturn() throws FileNotFoundException {
         String str = TemplateReader.readReturn();
-        String expected = "assertEquals(returnValue, EXPECTED);";
+        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
         assertEquals(str, expected);
     }
@@ -100,7 +102,7 @@ public class TemplateReaderTest {
                 + "   INPUT_LINE\n"
                 + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
                 + "   System.setOut(fso);\n"
-                + "   CLASS ClassInstance = new CLASS();\n"
+                + "   CLASS classInstance = new CLASS();\n"
                 + "   CALL_LINE\n"
                 + "   RETURN_LINE\n"
                 + "   OUTPUT_LINE\n"
@@ -119,8 +121,17 @@ public class TemplateReaderTest {
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
         String str = TemplateReader.readTemplate("return.txt");
-        String expected = "assertEquals(returnValue, EXPECTED);";
+        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
         assertEquals(str, expected);
+    }
+    
+    /**
+     * Asks for the contents of a non-existent file. Should receive a blank.
+     */
+    @Test
+    public void testFileNotFound() {
+        String actual = TemplateReader.readTemplate("FileNotFound.txt");
+        assertEquals("", actual);
     }
 }
