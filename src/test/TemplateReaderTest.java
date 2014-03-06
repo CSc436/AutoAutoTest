@@ -1,11 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-<<<<<<< HEAD
 import static org.junit.Assert.assertTrue;
 
-=======
->>>>>>> master
 import java.io.FileNotFoundException;
 
 import model.TemplateReader;

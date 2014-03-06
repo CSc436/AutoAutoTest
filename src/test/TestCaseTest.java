@@ -36,7 +36,7 @@ public class TestCaseTest {
                 .contains("FakeStandardInput fsi = new FakeStandardInput("));
         assertTrue(javaString.contains("System.setIn(fsi);"));
         assertTrue(javaString.contains("classInstance = "));
-        assertTrue(javaString.contains("Object returnValue = "));
+        assertTrue(javaString.contains("returnValue = "));
         assertTrue(javaString.contains("relaxedAssertEquals(returnValue,"));
         assertTrue(javaString.contains("relaxedAssertEquals("));
         assertTrue(javaString.endsWith(");\n}"));
