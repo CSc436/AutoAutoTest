@@ -20,6 +20,8 @@ public class TestCase {
     private String className;
     private String methodName;
     private String testName;
+    private boolean ignoreCasing;
+    private boolean ignorePunctuation;
     private boolean ignoreWhitespace;
     private int timeoutTime;
 
@@ -37,6 +39,8 @@ public class TestCase {
         setMethodName("method");
         setTestName("test");
         setTimeoutTime(1000);
+        setIgnoreCasing(false);
+        setIgnorePunctuation(false);
         setIgnoreWhitespace(false);
     }
 
@@ -101,6 +105,21 @@ public class TestCase {
     }
 
     /**
+     * @return True if this TestCase will ignore casing in output
+     */
+    public boolean isIgnoreCasing() {
+        return ignoreCasing;
+    }
+
+    /**
+     * @param newValue
+     *            whether or not this TestCase should ignore casing in output
+     */
+    public void setIgnoreCasing(boolean newValue) {
+        this.ignoreCasing = newValue;
+    }
+
+    /**
      * @return true if this TestCase will ignore whitespace in strings
      */
     public boolean isIgnoreWhitespace() {
@@ -109,11 +128,25 @@ public class TestCase {
 
     /**
      * @param newValue
-     *            true to have this TestCase ignore whitespace.
-     *            False otherwise.
+     *            true to have this TestCase ignore whitespace False otherwise.
      */
     public void setIgnoreWhitespace(boolean newValue) {
         ignoreWhitespace = newValue;
+    }
+
+    /**
+     * @return the true if punctuation in strings will be ignored
+     */
+    public boolean isIgnorePunctuation() {
+        return ignorePunctuation;
+    }
+
+    /**
+     * @param newValue
+     *            true if punctuation in output strings should be ignored
+     */
+    public void setIgnorePunctuation(boolean newValue) {
+        ignorePunctuation = newValue;
     }
 
     /**

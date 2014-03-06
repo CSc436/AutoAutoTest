@@ -133,7 +133,19 @@ public class TestCaseTest {
     }
 
     /**
-     * Ensure that whitespace flag can be set and fetched.
+     * Ensure that ignore casing flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingCasingFlag() {
+        TestCase casingCase = new TestCase();
+        casingCase.setIgnoreCasing(true);
+        assertTrue(casingCase.isIgnoreCasing());
+        casingCase.setIgnoreCasing(false);
+        assertFalse(casingCase.isIgnoreCasing());
+    }
+
+    /**
+     * Ensure that ignore whitespace flag can be set and fetched.
      */
     @Test
     public void testGettingAndSettingWhitespaceFlag() {
@@ -142,6 +154,18 @@ public class TestCaseTest {
         assertTrue(whitespaceCase.isIgnoreWhitespace());
         whitespaceCase.setIgnoreWhitespace(false);
         assertFalse(whitespaceCase.isIgnoreWhitespace());
+    }
+
+    /**
+     * Ensure that ignore punctuation flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingPunctuationFlag() {
+        TestCase punctuationCase = new TestCase();
+        punctuationCase.setIgnorePunctuation(true);
+        assertTrue(punctuationCase.isIgnorePunctuation());
+        punctuationCase.setIgnorePunctuation(false);
+        assertFalse(punctuationCase.isIgnorePunctuation());
     }
 
 }
