@@ -18,7 +18,10 @@ import org.junit.Test;
  * 
  */
 public class TemplateReaderTest {
-
+    
+    /**
+     * Private instance variable of a logger, used to log.
+     */
     private static final Logger log = LogManager.getRootLogger();
 
     /**
@@ -44,7 +47,6 @@ public class TemplateReaderTest {
                   + "    studentMethodRunner.stop();\n"
                   + "    fail();\n"
                   + "}";
-
         log.info(str);
         assertEquals(str, expected);
     }
