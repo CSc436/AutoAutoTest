@@ -26,9 +26,10 @@ public class StandardOutTest {
      */
     @Test
     public void standardOutNonEmptyConstructorTest() {
-        ExpectedStandardOut so = new ExpectedStandardOut(
-                "a different" + System.lineSeparator() + " message");
-        assertEquals("a different" + System.lineSeparator() + " message", so.getStandardOutValue());
+        ExpectedStandardOut so = new ExpectedStandardOut("a different"
+                + System.lineSeparator() + " message");
+        assertEquals("a different" + System.lineSeparator() + " message",
+                so.getStandardOutValue());
     }
 
     /**
@@ -48,7 +49,8 @@ public class StandardOutTest {
     @Test
     public void standardOutToStringTest() {
         ExpectedStandardOut so = new ExpectedStandardOut("a different message");
-        String expected = "relaxedAssertEquals(\"a different message\", fso.getOutput());";
+        String expected = "relaxedAssertEquals(\"a different message\"," 
+                + " fso.getOutput());";
         assertEquals(expected, so.toString());
     }
 }

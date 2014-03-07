@@ -30,7 +30,7 @@ public class ExpectedReturnTest {
         assertEquals("3.14", value.getReturnValue());
 
         System.out.println(value.toString());
-        assertEquals("relaxedAssertEquals(" + value.getReturnValue()
-                + ", " + TestingNameConstants.RETURN_VALUE + ");", value.toString());
+        assertEquals("relaxedAssertEquals(" + value.getReturnValue() + ", "
+                + TestingNameConstants.RETURN_VALUE + ");", value.toString());
     }
 }
