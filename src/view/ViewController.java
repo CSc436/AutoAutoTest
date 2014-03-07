@@ -123,7 +123,8 @@ public class ViewController {
      * @throws Exception
      * Throws an exception if the file is not found.
      */
-    @FXML protected void handleSaveButtonAction(ActionEvent event) throws Exception {
+    @FXML
+    public void handleSaveButtonAction(ActionEvent event) throws Exception {
     	FileChooser FC = new FileChooser();
     	FC.setTitle("Save Tests");
     	File file = FC.showOpenDialog(new Stage());

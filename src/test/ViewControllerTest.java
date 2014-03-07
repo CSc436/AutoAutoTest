@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.*;
+
 import java.lang.reflect.Field;
 
 import javafx.fxml.FXML;
@@ -127,13 +129,16 @@ public class ViewControllerTest {
 		ViewController VC = new ViewController();
 		VC.handleDeleteButtonAction(null);
 		
-		
 		Class<ViewController> vc = ViewController.class;
 		Field F = vc.getField("listView");
 		F.setAccessible(true);
 		F.set(VC, new ListView<String>());
 		VC.handleDeleteButtonAction(null);
 	}
+	
+	
+	
+	
 	
 	
 	
