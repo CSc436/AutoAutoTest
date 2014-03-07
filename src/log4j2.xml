@@ -3,7 +3,7 @@
  <Appenders>
    <File name="myFile" fileName="AutoAutoTest.log">
      <PatternLayout 
-     	pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+     	pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n"/>
    </File>
  </Appenders>
  <Loggers>

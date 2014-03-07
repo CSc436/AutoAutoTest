@@ -49,14 +49,14 @@ public class FakeStandardOutput extends PrintStream {
 
     /**
      * This is a method that will take in an string, and put it into an
-     * instance variable as a string.
+     * instance variable it as a string.
      * 
-     * @param blah
+     * @param someString
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(String blah) {
+    public void print(String someString) {
         try {
-            innerStream.write(blah.getBytes("UTF8"));
+            innerStream.write(someString.getBytes("UTF8"));
         } catch (Exception e) {
             log.error("Exception: void print(String blah) method");
         }
@@ -66,66 +66,66 @@ public class FakeStandardOutput extends PrintStream {
      * This is a method that will take in an int, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someInt
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(int blah) {
-        print(blah + "");
+    public void print(int someInt) {
+        print(someInt + "");
     } 
 
     /**
      * This is a method that will take in a double, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someDouble
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(double blah) {
-        print(blah + "");
+    public void print(double someDouble) {
+        print(someDouble + "");
     }
 
     /**
      * This is a method that will take in a float, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someFloat
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(float blah) {
-        print(blah + "");
+    public void print(float someFloat) {
+        print(someFloat + "");
     } 
 
     /**
      * This is a method that will take in a long, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someLong
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(long blah) {
-        print(blah + "");
+    public void print(long someLong) {
+        print(someLong + "");
     }
 
     /**
      * This is a method that will take in a boolean, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someBoolean
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(boolean blah) {
-        print(blah + "");
+    public void print(boolean someBoolean) {
+        print(someBoolean + "");
     }
 
     /**
      * This is a method that will take in a char, and put it into an
      * instance variable as a string.
      * 
-     * @param blah
+     * @param someChar
      *            is an object that can be passed in and converted to a string.
      */
-    public void print(char blah) {
-        print(blah + "");
+    public void print(char someChar) {
+        print(someChar + "");
     }
 
     /**
@@ -138,4 +138,4 @@ public class FakeStandardOutput extends PrintStream {
         return innerStream.getString();
     }
 
-} 
+}

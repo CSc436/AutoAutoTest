@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 /**
  * TemplateReader reads somes text files and returns them as strings. The files
  * are templates for a generic test.
@@ -94,6 +95,7 @@ public class TemplateReader {
             Scanner scanner = new Scanner(new File(inputFile), "UTF8");
             scanner.useDelimiter("\\Z");
             String str = scanner.next();
+            str = str.replace("\r\n", "\n").replace("\r", "\n");
             scanner.close();
             return str;
         } catch (FileNotFoundException e) {
