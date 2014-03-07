@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import model.Args;
 
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class ArgsTest {
     @Test
     public void argsEmptyConstructorTest() {
         Args args = new Args();
-        assertTrue(args.getArgsValue().equals(""));
+        assertEquals("", args.getArgsValue());
     }
 
     /**
@@ -28,7 +28,7 @@ public class ArgsTest {
     public void argsSetterTest() {
         Args args = new Args();
         args.setArgsValue("x, false, 3.14");
-        assertTrue(args.getArgsValue().equals("x, false, 3.14"));
+        assertEquals("x, false, 3.14", args.getArgsValue());
     }
 
     /**
@@ -37,7 +37,7 @@ public class ArgsTest {
     @Test
     public void argsParameterizedConstructorTest() {
         Args args = new Args("\"indubitably\"");
-        assertTrue(args.getArgsValue().equals("\"indubitably\""));
+        assertEquals("\"indubitably\"", args.getArgsValue());
     }
 
     /**
@@ -46,7 +46,7 @@ public class ArgsTest {
     @Test
     public void argsToStringTest() {
         Args args = new Args("bant");
-        assertTrue(args.toString().equals("bant"));
+        assertEquals("bant", args.getArgsValue());
     }
 
 }

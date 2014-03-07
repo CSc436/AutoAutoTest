@@ -27,6 +27,7 @@ public class TestCaseTest {
         emptyCase.setTestName("empty");
         assertEquals("empty", emptyCase.getTestName());
         String javaString = emptyCase.toString();
+        System.out.println(javaString);
         assertTrue(javaString.startsWith("@Test"));
         assertTrue(javaString.contains("public void empty() {"));
         assertTrue(javaString.contains(
@@ -37,7 +38,7 @@ public class TestCaseTest {
         assertTrue(javaString.contains("System.setIn(fsi);"));
         assertTrue(javaString.contains("classInstance = "));
         assertTrue(javaString.contains("returnValue = "));
-        assertTrue(javaString.contains("relaxedAssertEquals(returnValue,"));
+        assertTrue(javaString.contains("relaxedAssertEquals(, returnValue"));
         assertTrue(javaString.contains("relaxedAssertEquals("));
         assertTrue(javaString.endsWith(");\n}"));
     }
@@ -52,7 +53,7 @@ public class TestCaseTest {
         assertEquals("12345678", returnCase.getExpectedReturn());
         String javaString = returnCase.toString();
         assertTrue(javaString
-                .contains("relaxedAssertEquals(returnValue, 12345678"));
+                .contains("relaxedAssertEquals(12345678, returnValue"));
     }
 
     /**
@@ -80,7 +81,7 @@ public class TestCaseTest {
         String javaString = outputCase.toString();
         System.out.println(javaString);
         assertTrue(javaString
-                .contains("relaxedAssertEquals(fso.getOutput(), \"Hello\");"));
+                .contains("relaxedAssertEquals(\"Hello\", fso.getOutput());"));
     }
 
     /**
