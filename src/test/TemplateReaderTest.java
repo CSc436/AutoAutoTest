@@ -120,7 +120,7 @@ public class TemplateReaderTest {
      */
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
-        String str = TemplateReader.readTemplate("return.txt");
+        String str = TemplateReader.readTemplate("Return.txt");
         String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
         assertEquals(str, expected);
