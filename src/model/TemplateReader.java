@@ -89,6 +89,7 @@ public class TemplateReader {
             Scanner scanner = new Scanner(new File(inputFile), "UTF8");
             scanner.useDelimiter("\\Z");
             String str = scanner.next();
+            str = str.replace("\r\n", "\n").replace("\r", "\n");
             scanner.close();
             return str;
         } catch (FileNotFoundException e) {
