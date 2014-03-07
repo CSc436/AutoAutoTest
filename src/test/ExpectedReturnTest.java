@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import model.ExpectedReturn;
 import model.TestingNameConstants;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
 /**
@@ -29,7 +30,8 @@ public class ExpectedReturnTest {
         value = new ExpectedReturn("3.14");
         assertTrue(value.getReturnValue().equals("3.14"));
 
-        System.out.println(value.toString());
+        LogManager.getRootLogger().info(value.toString());
+        
         assertTrue(value.toString(), value.toString().equals(
                 "relaxedAssertEquals(" + TestingNameConstants.RETURN_VALUE
                 + ", " + value.getReturnValue() + ");"));

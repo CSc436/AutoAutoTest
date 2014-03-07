@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -19,8 +18,6 @@ import org.apache.logging.log4j.Logger;
 public class TemplateReader {
 
     private static TemplateReader templateReader = new TemplateReader();
-    
-    private static final Logger log = LogManager.getRootLogger();
 
     /**
      * private constructor prevents template readers from being made.
@@ -99,8 +96,10 @@ public class TemplateReader {
             scanner.close();
             return str;
         } catch (FileNotFoundException e) {
-            log.error("FileNotFoundException in the private doRead method");
+            LogManager.getRootLogger().error("FileNotFoundException in the " 
+        + "private doRead method");
         }
         return "";
     }
 }
+
