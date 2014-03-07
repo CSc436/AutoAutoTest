@@ -38,14 +38,39 @@ public class ViewController {
 	private String stdout;
 	
     @FXML private Text actiontarget;
-    @FXML private TextField namefield;
-    @FXML private TextField paramsfield;
-    @FXML private TextField returnfield;
-    @FXML private TextField stdinfield;
-    @FXML private TextField stdoutfield;
-    @FXML private TextField methodnamefield;
-    @FXML private TextField classnamefield;
-    @FXML private ListView<String> listView;
+    /**Field for entering the name.
+     * 
+     */
+    @FXML public TextField namefield;
+    /**Field for entering the name.
+     * 
+     */
+    @FXML public TextField paramsfield;
+    /**Field for entering the parameters.
+     * 
+     */
+    @FXML public TextField returnfield;
+    /**Field for entering the return.
+     * 
+     */
+    @FXML public TextField stdinfield;
+    /**Field for entering the standard in.
+     * 
+     */
+    @FXML public TextField stdoutfield;
+    /**Field for entering the standard out.
+     * 
+     */
+    @FXML public TextField methodnamefield;
+    /**Field for entering the class name.
+     * 
+     */
+    @FXML public TextField classnamefield;
+    /**A view of our tests in a list.
+     * 
+     */
+    @FXML
+	public ListView<String> listView;
     
 
 
@@ -62,7 +87,8 @@ public class ViewController {
      * @param event
      * This method generates a new test when the button is pressed.
      */
-    @FXML protected void handleGenerateButtonAction(ActionEvent event) {
+    @FXML
+	public void handleGenerateButtonAction(ActionEvent event) {
     	if (listView != null) {
         	getAllData(); // get all the data from the text fields
     		generateTest();
@@ -76,7 +102,8 @@ public class ViewController {
      * @param event
      * The event that triggers this method. In this case, pressing the 'Delete' button.
      */
-    @FXML protected void handleDeleteButtonAction(ActionEvent event) {
+    @FXML
+    public void handleDeleteButtonAction(ActionEvent event) {
     	if (listView != null) {
 			int testIndex = listView.getSelectionModel().getSelectedIndex();
     		if (testIndex >= 0) { // if selected test is not null
