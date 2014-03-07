@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import model.ExpectedReturn;
 import model.TestingNameConstants;
 
@@ -21,17 +21,16 @@ public class ExpectedReturnTest {
     public void returnValuesTest() {
 
         ExpectedReturn value = new ExpectedReturn();
-        assertTrue(value.getReturnValue().equals(""));
+        assertEquals("", value.getReturnValue());
 
         value.setReturnValue("false");
-        assertTrue(value.getReturnValue().equals("false"));
+        assertEquals("false", value.getReturnValue());
 
         value = new ExpectedReturn("3.14");
-        assertTrue(value.getReturnValue().equals("3.14"));
+        assertEquals("3.14", value.getReturnValue());
 
         System.out.println(value.toString());
-        assertTrue(value.toString(), value.toString().equals(
-                "relaxedAssertEquals(" + TestingNameConstants.RETURN_VALUE
-                + ", " + value.getReturnValue() + ");"));
+        assertEquals("relaxedAssertEquals(" + value.getReturnValue()
+                + ", " + TestingNameConstants.RETURN_VALUE + ");", value.toString());
     }
 }

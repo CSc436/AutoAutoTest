@@ -1,1 +1,1 @@
-relaxedAssertEquals(fso.getOutput(), EXPECTED);
+relaxedAssertEquals(EXPECTED, fso.getOutput());
