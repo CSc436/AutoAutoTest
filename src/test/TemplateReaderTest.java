@@ -43,7 +43,7 @@ public class TemplateReaderTest {
                   + "}";
 
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }
 
     /**
@@ -72,7 +72,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readOutput();
         String expected = "relaxedAssertEquals(fso.getOutput(), EXPECTED);";
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }
     
     /**
@@ -85,7 +85,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readReturn();
         String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }
 
     /**
@@ -108,7 +108,7 @@ public class TemplateReaderTest {
                 + "   OUTPUT_LINE\n"
                 + "}";
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }    
     
     
@@ -120,10 +120,10 @@ public class TemplateReaderTest {
      */
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
-        String str = TemplateReader.readTemplate("return.txt");
+        String str = TemplateReader.readTemplate("Return.txt");
         String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         System.out.println(str);
-        assertEquals(str, expected);
+        assertEquals(expected, str);
     }
     
     /**
