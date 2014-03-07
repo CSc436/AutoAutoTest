@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import model.TestCase;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
 /**
@@ -78,7 +79,7 @@ public class TestCaseTest {
         outputCase.setExpectedStandardOutput("Hello");
         assertEquals("Hello", outputCase.getExpectedStandardOutput());
         String javaString = outputCase.toString();
-        System.out.println(javaString);
+        LogManager.getRootLogger().info(javaString);
         assertTrue(javaString
                 .contains("relaxedAssertEquals(fso.getOutput(), \"Hello\");"));
     }
