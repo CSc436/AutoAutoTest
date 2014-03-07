@@ -19,9 +19,6 @@ import org.junit.Test;
  */
 public class TemplateReaderTest {
     
-    /**
-     * Private instance variable of a logger, used to log.
-     */
     private static final Logger log = LogManager.getRootLogger();
 
     /**
@@ -125,7 +122,7 @@ public class TemplateReaderTest {
      */
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
-        String str = TemplateReader.readTemplate("return.txt");
+        String str = TemplateReader.readTemplate("Return.txt");
         String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
         log.info(str);
         assertEquals(str, expected);
