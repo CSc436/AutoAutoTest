@@ -63,10 +63,12 @@ public class FakeStdInTest {
         String s = new String(new byte[] {charRead}, "UTF8");
         assertEquals("\n", s);
     }
-    
+
     /**
      * Test trying to fill our FakeStandardIn with an empty string.
-     * @throws IOException (This should never happen)
+     * 
+     * @throws IOException
+     *             (This should never happen)
      */
     @Test
     @SuppressWarnings("resource")

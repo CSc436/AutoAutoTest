@@ -7,8 +7,9 @@ import org.junit.Test;
 
 /**
  * Tests the Args wrapper class.
+ * 
  * @author Ricky
- *
+ * 
  */
 public class ArgsTest {
 

@@ -10,7 +10,7 @@ import java.io.InputStream;
  * @author William cohen
  */
 public class FakeStandardIn extends InputStream {
-    
+
     private String buffer;
     private int currentIndex;
 
@@ -24,8 +24,8 @@ public class FakeStandardIn extends InputStream {
     }
 
     /**
-     * Allow the buffer string to be created or reset.  The current index will
-     * be reset to 0 when this happens.
+     * Allow the buffer string to be created or reset. The current index will be
+     * reset to 0 when this happens.
      * 
      * @param inputStr
      *            The entire contents of the buffer, with each token separated
@@ -46,7 +46,7 @@ public class FakeStandardIn extends InputStream {
                 buffer = inputStr + "\n";
             }
             currentIndex = 0;
-        } 
+        }
     }
 
     /**
@@ -57,7 +57,8 @@ public class FakeStandardIn extends InputStream {
      * @return The number of characters actually read, or -1 if the buffer has
      *         been exhausted.
      * 
-     * @throws IOException (This should never actually happen).
+     * @throws IOException
+     *             (This should never actually happen).
      */
     @Override
     public int read() throws IOException {
@@ -80,10 +81,11 @@ public class FakeStandardIn extends InputStream {
      *            remaining number of characters in the buffer.
      * 
      * @return The number of characters actually read, or -1 if the buffer has
-     *         been exhausted.  If the length of b is 0, then no characters
-     *         are read.
+     *         been exhausted. If the length of b is 0, then no characters are
+     *         read.
      * 
-     * @throws IOException (This should never actually happen).
+     * @throws IOException
+     *             (This should never actually happen).
      */
     @Override
     public int read(byte[] b) throws IOException {
@@ -92,14 +94,13 @@ public class FakeStandardIn extends InputStream {
 
     /**
      * Attempts to read up to len bytes from the buffer, assuming that there are
-     * that many unprocessed characters remaining.  Bytes read are stored
+     * that many unprocessed characters remaining. Bytes read are stored
      * beginning at b[off].
      * 
      * @param b
      *            An array of type byte, which will be filled with the
-     *            characters from the buffer up to the lesser of
-     *            b.length-offset to len, or remaining unread characters in
-     *            the buffer.
+     *            characters from the buffer up to the lesser of b.length-offset
+     *            to len, or remaining unread characters in the buffer.
      * 
      * @param off
      *            The offset (number of array cells to skip) for storing the
@@ -113,7 +114,8 @@ public class FakeStandardIn extends InputStream {
      * @return The number of characters actually read, or -1 if the buffer has
      *         been exhausted.
      * 
-     * @throws IOException (This should never actually happen).
+     * @throws IOException
+     *             (This should never actually happen).
      */
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
@@ -124,19 +126,23 @@ public class FakeStandardIn extends InputStream {
         if (currentIndex >= buffer.length()) {
             return -1;
         }
-        
+
         return privateRead(b, off, len);
     }
-    
+
     /**
-     * Fill the given byte[] with bytes from the buffer. It is assumed that
-     * off and len are valid (non-negative) parameters.
+     * Fill the given byte[] with bytes from the buffer. It is assumed that off
+     * and len are valid (non-negative) parameters.
      * 
-     * @param b The byte array to fill
-     * @param off The starting index
-     * @param len The amount of characters to read
+     * @param b
+     *            The byte array to fill
+     * @param off
+     *            The starting index
+     * @param len
+     *            The amount of characters to read
      * @return The number of character read
-     * @throws IOException (This will never happen)
+     * @throws IOException
+     *             (This will never happen)
      */
     private int privateRead(byte[] b, int off, int len) throws IOException {
         int charsRead = 0;
