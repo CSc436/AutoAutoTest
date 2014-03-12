@@ -1,13 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import java.lang.reflect.Field;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.TestCase;
 
 import org.junit.Test;
 
@@ -59,18 +55,14 @@ public class ViewControllerTest {
 	}
 	
 	/**Tests the 'handleGenerateButtonAction' method.
-	 * @throws SecurityException
-	 * Due to reflection. 
 	 * @throws NoSuchFieldException
 	 * Due to reflection. 
 	 * @throws IllegalAccessException
 	 * Due to reflection. 
-	 * @throws IllegalArgumentException 
-	 * Due to reflection.
 	 * 
 	 */
 	@Test
-	public void testGenerateButtonAction() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testGenerateButtonAction() throws NoSuchFieldException, IllegalAccessException {
 		ViewController VC = new ViewController();
 		VC.handleGenerateButtonAction(null);
 		
@@ -114,18 +106,14 @@ public class ViewControllerTest {
 	
 	
 	/**Tests the 'deletebutton' action.
-	 * @throws SecurityException
-	 * Due to reflection.
 	 * @throws NoSuchFieldException
 	 * Due to reflection. 
 	 * @throws IllegalAccessException
 	 * Due to reflection. 
-	 * @throws IllegalArgumentException
-	 * Due to reflection. 
 	 * 
 	 */
 	@Test
-	public void testDeleteButtonAction() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public void testDeleteButtonAction() throws NoSuchFieldException, IllegalAccessException {
 		ViewController VC = new ViewController();
 		VC.handleDeleteButtonAction(null);
 		
