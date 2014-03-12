@@ -89,6 +89,7 @@ public class ViewController {
      */
     @FXML
 	public void handleGenerateButtonAction(ActionEvent event) {
+    	System.out.println("generate");
     	if (listView != null) {
         	getAllData(); // get all the data from the text fields
     		generateTest();
@@ -104,6 +105,7 @@ public class ViewController {
      */
     @FXML
     public void handleDeleteButtonAction(ActionEvent event) {
+    	System.out.println("delete");
     	if (listView != null) {
 			int testIndex = listView.getSelectionModel().getSelectedIndex();
     		if (testIndex >= 0) { // if selected test is not null
@@ -125,6 +127,7 @@ public class ViewController {
      */
     @FXML
     public void handleSaveButtonAction(ActionEvent event) throws Exception {
+    	System.out.println("save");
     	FileChooser FC = new FileChooser();
     	FC.setTitle("Save Tests");
     	File file = FC.showOpenDialog(new Stage());
