@@ -3,6 +3,8 @@ package model;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.logging.log4j.LogManager;
+
 /**
  * This is a class that returns a string instance variable that
  *         was created using a byte array.
@@ -33,12 +35,9 @@ public class StringOutputStream extends OutputStream {
         try {
             bytesAsString = new String(array, "UTF8");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogManager.getRootLogger().error(e);
         }
-//        System.out.println("outputbuffer = " + outputBuffer);
         outputBuffer += bytesAsString;
-//        System.out.println("outputbuffer = " + outputBuffer);
     } 
 
     /**
