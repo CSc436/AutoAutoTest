@@ -7,9 +7,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.junit.Test;
-
 import model.FakeStandardIn;
+
+import org.junit.Test;
 
 /**
  * Test class for FakeStandardIn.
