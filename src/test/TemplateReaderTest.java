@@ -31,7 +31,7 @@ public class TemplateReaderTest {
                     "Object returnValue;\n"
                   + "Thread studentMethodRunner = new Thread() {\n" 
                   + "    public void run() {\n"
-                  + "        returnValue = ClassInstance.METHOD(ARGS);\n"
+                  + "        returnValue = classInstance.METHOD(ARGS);\n"
                   + "    }\n"
                   + "};\n"
                   + "int timeout = TIMEOUT_TIME;\n"
