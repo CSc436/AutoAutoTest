@@ -2,6 +2,7 @@ package model;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import org.apache.logging.log4j.LogManager;
 
 //Carlos Gallego
 //Feb 7, 2014
@@ -52,8 +53,7 @@ public class FakeStandardOutput extends PrintStream {
         try {
             innerStream.write(someString.getBytes("UTF8"));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogManager.getRootLogger().error(e);
         }
     }
 

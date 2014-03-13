@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 
 import model.TemplateReader;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
 /**
@@ -37,8 +38,8 @@ public class TemplateReaderTest {
                 + "if(studentMethodRunner.isAlive()) {\n"
                 + "    studentMethodRunner.stop();\n" + "    fail();\n" + "}";
 
-        System.out.println(str);
-        assertEquals(str, expected);
+        LogManager.getRootLogger().info(str);
+        assertEquals(expected, str);
     }
 
     /**
@@ -51,9 +52,11 @@ public class TemplateReaderTest {
     @Test
     public void testInput() throws FileNotFoundException {
         String str = TemplateReader.readInput();
-        String expected = "FakeStandardInput fsi = new FakeStandardInput();\n"
-                + "fsi.setString(INPUT);\n" + "System.setIn(fsi);";
-        System.out.println(str);
+        String expected = 
+                "FakeStandardInput fsi = new FakeStandardInput();\n"
+                + "fsi.setString(INPUT);\n"
+                + "System.setIn(fsi);";
+        LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
 
@@ -67,9 +70,9 @@ public class TemplateReaderTest {
     @Test
     public void testOutput() throws FileNotFoundException {
         String str = TemplateReader.readOutput();
-        String expected = "relaxedAssertEquals(fso.getOutput(), EXPECTED);";
-        System.out.println(str);
-        assertEquals(str, expected);
+        String expected = "relaxedAssertEquals(EXPECTED, fso.getOutput());";
+        LogManager.getRootLogger().info(str);
+        assertEquals(expected, str);
     }
 
     /**
@@ -82,9 +85,9 @@ public class TemplateReaderTest {
     @Test
     public void testReturn() throws FileNotFoundException {
         String str = TemplateReader.readReturn();
-        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
-        System.out.println(str);
-        assertEquals(str, expected);
+        String expected = "relaxedAssertEquals(EXPECTED, returnValue);";
+        LogManager.getRootLogger().info(str);
+        assertEquals(expected, str);
     }
 
     /**
@@ -101,12 +104,16 @@ public class TemplateReaderTest {
                 + "   INPUT_LINE\n"
                 + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
                 + "   System.setOut(fso);\n"
-                + "   CLASS classInstance = new CLASS();\n" + "   CALL_LINE\n"
-                + "   RETURN_LINE\n" + "   OUTPUT_LINE\n" + "}";
-        System.out.println(str);
-        assertEquals(str, expected);
-    }
-
+                + "   CLASS classInstance = new CLASS();\n"
+                + "   CALL_LINE\n"
+                + "   RETURN_LINE\n"
+                + "   OUTPUT_LINE\n"
+                + "}";
+        LogManager.getRootLogger().info(str);
+        assertEquals(expected, str);
+    }    
+    
+    
     /**
      * reads the Return.txt file and ensures it was read correctly, prints it
      * out for user verification too.
@@ -117,9 +124,9 @@ public class TemplateReaderTest {
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
         String str = TemplateReader.readTemplate("Return.txt");
-        String expected = "relaxedAssertEquals(returnValue, EXPECTED);";
-        System.out.println(str);
-        assertEquals(str, expected);
+        String expected = "relaxedAssertEquals(EXPECTED, returnValue);";
+        LogManager.getRootLogger().info(str);
+        assertEquals(expected, str);
     }
 
     /**

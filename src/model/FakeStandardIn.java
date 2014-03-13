@@ -160,3 +160,4 @@ public class FakeStandardIn extends InputStream {
         return charsRead;
     }
 }
+
