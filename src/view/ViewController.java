@@ -1,8 +1,3 @@
-/**
- * dillon: need the code for TestCase and
- * TestCollection to advance controller code.
- */
-
 package view;
 
 import java.io.File;
@@ -18,15 +13,14 @@ import model.TestCase;
 import model.TestCollection;
 
 /**
- * @author dillon This is the main class for the controller code. It contains
- *         all of the methods and data for interacting between the model and the
- *         view.
+ * This is the main class for the controller code. It contains all of the
+ * methods and data for interacting between the model and the view.
+ * 
+ * @author: Dillon Jeffers
+ * 
  */
 public class ViewController {
-    /**
-     * The total collection of tests.
-     * 
-     */
+
     private TestCollection myTestCollection;
     private String testname;
     private String methodname;
@@ -38,57 +32,23 @@ public class ViewController {
 
     @FXML
     private Text actiontarget;
-    /**
-     * Field for entering the name.
-     * 
-     */
     @FXML
     private TextField namefield;
-    /**
-     * Field for entering the name.
-     * 
-     */
     @FXML
     private TextField paramsfield;
-    /**
-     * Field for entering the parameters.
-     * 
-     */
     @FXML
     private TextField returnfield;
-    /**
-     * Field for entering the return.
-     * 
-     */
     @FXML
     private TextField stdinfield;
-    /**
-     * Field for entering the standard in.
-     * 
-     */
     @FXML
     private TextField stdoutfield;
-    /**
-     * Field for entering the standard out.
-     * 
-     */
     @FXML
     private TextField methodnamefield;
-    /**
-     * Field for entering the class name.
-     * 
-     */
     @FXML
     private TextField classnamefield;
-    /**
-     * A view of our tests in a list.
-     * 
-     */
     @FXML
     private ListView<String> listView;
 
-    
-    
     /**
      * Generic constructor used for tests.
      */
@@ -103,9 +63,11 @@ public class ViewController {
     @FXML
     public void handleGenerateButtonAction(ActionEvent event) {
         if (listView != null) {
-            getAllData(); // get all the data from the text fields
+            getAllData();
             generateTest();
-            updateListView();
+            String anotherTest = getTestForView(myTestCollection
+                    .getTest(myTestCollection.testCount() - 1));
+            listView.getItems().add(anotherTest);
         }
     }
 
@@ -122,10 +84,9 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         if (listView != null) {
             int testIndex = listView.getSelectionModel().getSelectedIndex();
-            if (testIndex >= 0) { // if selected test is not null
-
+            if (testIndex >= 0) {
                 deleteTest(testIndex);
-                updateListView();
+                listView.getItems().remove(testIndex);
             }
         }
     }
@@ -155,7 +116,7 @@ public class ViewController {
      * @return Returns the newly created testcase. This is mostly for testing
      *         purposes.
      */
-    public TestCase generateTest() {
+    private TestCase generateTest() {
         TestCase oneTestCase = myTestCollection.newTest();
         sendAllDataToTestCase(oneTestCase);
         return oneTestCase;
@@ -167,7 +128,7 @@ public class ViewController {
      * @param pindex
      *            The integer index of the desired TestCase.
      */
-    public void deleteTest(int pindex) {
+    private void deleteTest(int pindex) {
         myTestCollection.removeTest(pindex);
     }
 
@@ -176,7 +137,7 @@ public class ViewController {
      * text fields in the gui.
      * 
      */
-    void getAllData() {
+    private void getAllData() {
         setTestName(namefield.getText());
         setTestParams(paramsfield.getText());
         setTestReturn(returnfield.getText());
@@ -191,7 +152,7 @@ public class ViewController {
      * model.
      * 
      * @param ptestCase
-     * An individual test case.
+     *            An individual test case.
      */
     private void sendAllDataToTestCase(TestCase ptestCase) {
         ptestCase.setArgs(params);
@@ -204,28 +165,14 @@ public class ViewController {
     }
 
     /**
-     * Updates the listview to match the TestCollection data structure. Can be
-     * used after deleting or adding a test instead of seperate methods to do
-     * both.
-     */
-    public void updateListView() {
-        int length = myTestCollection.testCount();
-        listView.getItems().clear(); // clear the list
-        for (int i = 0; i < length; i++) { // for all the tests
-            String anotherTest = getTestForView(myTestCollection.getTest(i));
-            listView.getItems().add(anotherTest); // add it to the listview
-        }
-    }
-
-    /**
      * Gets a string representation of the given test case for the listview.
      * 
      * @param pnewTestCase
      *            The test to get info for.
-     * @return message
-     * This method creates a string that is used for the list view.
+     * @return message This method creates a string that is used for the list
+     *         view.
      */
-    String getTestForView(TestCase pnewTestCase) {
+    private String getTestForView(TestCase pnewTestCase) {
         String lname = pnewTestCase.getTestName();
         String message = "Test Name: " + lname;
         return message;
@@ -289,21 +236,6 @@ public class ViewController {
      */
     public void setTestMethodName(String pmname) {
         methodname = pmname;
-    }
-
-    /**
-     * This method was created strictly for testing purposes
-     * 
-     * @param ps
-     *            A generic string used for all fields of a test.
-     */
-    public void setAllFields(String ps) {
-        setTestName(ps);
-        setTestParams(ps);
-        setTestStdIn(ps);
-        setTestStdOut(ps);
-        setTestClassName(ps);
-        setTestMethodName(ps);
     }
 
     /**

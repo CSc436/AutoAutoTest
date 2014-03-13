@@ -9,30 +9,21 @@
 <?import javafx.scene.shape.Rectangle?>
 
 <GridPane fx:controller="view.ViewController" 
-    xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" 
+    xmlns:fx="http://javafx.com/fxml"
+    alignment="center"
+    hgap="10"
+    vgap="10" 
     styleClass="root">
 
-
-	<ListView fx:id="listView" GridPane.columnIndex="1" GridPane.rowIndex="0">
-			
-	</ListView>
-	
-	
-	
-
-	
-	
+	<ListView fx:id="listView" GridPane.columnIndex="1" GridPane.rowIndex="0"> </ListView>
 	
 	<HBox spacing="10" alignment="bottom_right" 
         GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <Button text="Save All Tests"     
-        onAction="#handleSaveButtonAction"/>
+        	<Button text="Save All Tests"     
+        		onAction="#handleSaveButtonAction"/>
 	</HBox>
 
-
-
  	<GridPane hgap="10" vgap="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
-	    
 	    
 	    <Label text="Name:"
 	        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -48,7 +39,6 @@
         	GridPane.columnIndex="0" GridPane.rowIndex="6"/>
     	<Label text="Class Name:"
     		GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-	        
 	         
 	    <TextField fx:id="namefield"
 	        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
@@ -65,29 +55,27 @@
     	<TextField fx:id="classnamefield"
     		GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 	
-	
-	
 		<HBox spacing="10" alignment="bottom_right" 
 	        GridPane.columnIndex="1" GridPane.rowIndex="8">
-	        <Button text="Generate Test"     
-	        onAction="#handleGenerateButtonAction"/>
+	        	<Button text="Generate Test"     
+	        		onAction="#handleGenerateButtonAction"/>
 		</HBox>
-		
 		
 		<HBox spacing="10" alignment="bottom_right" 
 	        GridPane.columnIndex="0" GridPane.rowIndex="8">
-	        <Button text="Delete Selected Test"     
-	        onAction="#handleDeleteButtonAction"/>
+	        	<Button text="Delete Selected Test"     
+	        		onAction="#handleDeleteButtonAction"/>
 		</HBox>
 		
-		
 		<Text fx:id="actiontarget"
-			GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+			GridPane.columnIndex="1"
+			GridPane.rowIndex="7"/>
 			
-		<Text id="welcome-text" text="AutoAuto Tester"
-	   		GridPane.columnIndex="0" GridPane.rowIndex="0" 
+		<Text id="welcome-text"
+			text="AutoAuto Tester"
+	   		GridPane.columnIndex="0"
+	   		GridPane.rowIndex="0" 
 	        GridPane.columnSpan="2"/>
-	
 	
 	</GridPane>
 	
