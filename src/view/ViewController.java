@@ -104,7 +104,7 @@ public class ViewController {
     public void handleSaveButtonAction(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
-        File file = myFileChooser.showOpenDialog(new Stage());
+        File file = myFileChooser.showSaveDialog(new Stage());
         String filePath = file.getAbsolutePath();
         myTestCollection.save(filePath);
     }
