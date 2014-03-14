@@ -31,6 +31,7 @@ public class ViewController {
     private String stdin;
     private String stdout;
     private String timeoutlimit;
+    private String floatprecision;
 
     @FXML
     private TextField namefield;
@@ -48,6 +49,8 @@ public class ViewController {
     private TextField classnamefield;
     @FXML
     private TextField timeoutfield;
+    @FXML
+    private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
 
@@ -146,6 +149,7 @@ public class ViewController {
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
         timeoutlimit = timeoutfield.getText();
+        floatprecision = floatprecisionfield.getText();
     }
 
     /**
@@ -166,6 +170,12 @@ public class ViewController {
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
+        } catch (NumberFormatException e) {
+            LogManager.getRootLogger().error(e);
+        }
+        try {
+            int limit = Integer.parseInt(floatprecision);
+            ptestCase.setTimeoutTime(limit);
         } catch (NumberFormatException e) {
             LogManager.getRootLogger().error(e);
         }

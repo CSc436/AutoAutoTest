@@ -62,6 +62,9 @@
         <Label text="Timeout Limit:"
         		GridPane.columnIndex="0"
         		GridPane.rowIndex="8"/>
+        <Label text="Float Precision:"
+        		GridPane.columnIndex="0"
+        		GridPane.rowIndex="9"/>
          
         <!-- These are the input fields. -->
         <TextField fx:id="namefield"
@@ -88,12 +91,15 @@
         <TextField fx:id="timeoutfield"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="8"/>
+        <TextField fx:id="floatprecisionfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="9"/>
         
         <!-- This is the Generate Button. -->
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="1"
-                GridPane.rowIndex="9">
+                GridPane.rowIndex="10">
             <Button text="Generate Test"
                     onAction="#handleGenerateButtonAction"/>
         </HBox>
@@ -102,7 +108,7 @@
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="0"
-                GridPane.rowIndex="9">
+                GridPane.rowIndex="10">
             <Button text="Delete Selected Test"
                     onAction="#handleDeleteButtonAction"/>
         </HBox>
