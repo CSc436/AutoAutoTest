@@ -29,8 +29,6 @@ public class ViewController {
     private String stdin;
     private String stdout;
 
-    //@FXML
-    //private Text actiontarget;
     @FXML
     private TextField namefield;
     @FXML

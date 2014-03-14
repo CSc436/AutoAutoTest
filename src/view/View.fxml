@@ -60,7 +60,7 @@
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="7"/>
          
-        <!-- These are the input fields. -->    
+        <!-- These are the input fields. -->
         <TextField fx:id="namefield"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="1"/>
@@ -103,11 +103,10 @@
         
         
         <!-- Start of main code -->
-        <Text fx:id="actiontarget" 
-                GridPane.columnIndex="1"
+        <Text GridPane.columnIndex="1"
                 GridPane.rowIndex="7"/>
         
-        <!-- This is the header text. -->    
+        <!-- This is the header text. -->
         <Text id="welcome-text"
                 text="AutoAuto Tester"
                 GridPane.columnIndex="0"
