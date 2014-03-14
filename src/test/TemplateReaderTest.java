@@ -27,17 +27,21 @@ public class TemplateReaderTest {
     @Test
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
-        String expected = "Object returnValue;\n"
-                + "Thread studentMethodRunner = new Thread() {\n"
-                + "    public void run() {\n"
-                + "        returnValue = ClassInstance.METHOD(ARGS);\n"
-                + "    }\n" + "};\n" + "int timeout = TIMEOUT_TIME;\n"
-                + "studentMethodRunner.start();\n"
-                + "try {Thread.sleep(timeout);}\n"
-                + "catch (InterruptedException e) {fail();}\n"
-                + "if(studentMethodRunner.isAlive()) {\n"
-                + "    studentMethodRunner.stop();\n" + "    fail();\n" + "}";
-
+        String expected = 
+                    "Object returnValue;\n"
+                  + "Thread studentMethodRunner = new Thread() {\n" 
+                  + "    public void run() {\n"
+                  + "        returnValue = classInstance.METHOD(ARGS);\n"
+                  + "    }\n"
+                  + "};\n"
+                  + "int timeout = TIMEOUT_TIME;\n"
+                  + "studentMethodRunner.start();\n"
+                  + "try {Thread.sleep(timeout);}\n" 
+                  + "catch (InterruptedException e) {fail();}\n"
+                  + "if(studentMethodRunner.isAlive()) {\n"
+                  + "    studentMethodRunner.stop();\n"
+                  + "    fail();\n"
+                  + "}";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }

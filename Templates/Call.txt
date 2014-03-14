@@ -1,7 +1,7 @@
 Object returnValue;
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue = ClassInstance.METHOD(ARGS);
+        returnValue = classInstance.METHOD(ARGS);
     }
 };
 int timeout = TIMEOUT_TIME;
