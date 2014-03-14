@@ -23,6 +23,7 @@ public class TestCase {
     private boolean ignorePunctuation;
     private boolean ignoreWhitespace;
     private int timeoutTime;
+    private int floatPrecision;
 
     /**
      * Create a new empty test.
@@ -101,6 +102,20 @@ public class TestCase {
      */
     public void setTimeoutTime(int newValue) {
         this.timeoutTime = newValue;
+    }
+
+    /**
+     * @return The current number of decimal points to check
+     */
+    public int getFloatPrecision() {
+        return floatPrecision;
+    }
+
+    /**
+     * @param newValue The new number of decimal points to check
+     */
+    public void setFloatPrecision(int newValue) {
+        floatPrecision = newValue;
     }
 
     /**
@@ -223,6 +238,8 @@ public class TestCase {
         template = template.replace("CLASS", className);
         template = template.replace("METHOD", methodName);
         template = template.replace("NAME", testName);
+        template = template.replace("TIMEOUT_TIME", timeoutTime + "");
+        template = template.replace("FLOAT_PRECISION", floatPrecision + "");
         return template;
     }
 
