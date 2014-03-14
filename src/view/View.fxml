@@ -102,10 +102,6 @@
         </HBox>
         
         
-        <!-- Start of main code -->
-        <Text GridPane.columnIndex="1"
-                GridPane.rowIndex="7"/>
-        
         <!-- This is the header text. -->
         <Text id="welcome-text"
                 text="AutoAuto Tester"
