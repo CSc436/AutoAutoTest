@@ -18,8 +18,6 @@ import org.junit.Test;
  */
 public class ExceptionsTest {
 
-
-
     /**
      * Ensure that an exception is thrown when trying to write to a non .java
      * file
@@ -43,7 +41,7 @@ public class ExceptionsTest {
     public void testSavingToFileWithTwoDots() throws Exception {
         TestCollection.getInstance().save("Lol..java");
     }
-    
+
     /**
      * Try reading more elements than the size of the array.
      * 
@@ -58,10 +56,12 @@ public class ExceptionsTest {
         byte[] ba = new byte[6];
         myFSI.read(ba, 0, 10);
     }
-    
+
     /**
      * Test trying to read a negative amount of characters.
-     * @throws IOException (This should never happen)
+     * 
+     * @throws IOException
+     *             (This should never happen)
      */
     @SuppressWarnings("resource")
     @Test(expected = IndexOutOfBoundsException.class)

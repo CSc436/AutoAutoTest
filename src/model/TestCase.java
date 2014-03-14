@@ -1,6 +1,5 @@
 package model;
 
-
 /**
  * Class representing one test case.
  * 

@@ -9,7 +9,6 @@ import model.TemplateReader;
 import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
-
 /**
  * Tests the TemplateReader class.
  * 
@@ -18,30 +17,26 @@ import org.junit.Test;
  */
 public class TemplateReaderTest {
 
-
     /**
      * reads the Call.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
-        String expected = 
-                    "Object returnValue;\n"
-                  + "Thread studentMethodRunner = new Thread() {\n" 
-                  + "    public void run() {\n"
-                  + "        returnValue = ClassInstance.METHOD(ARGS);\n"
-                  + "    }\n"
-                  + "};\n"
-                  + "int timeout = TIMEOUT_TIME;\n"
-                  + "studentMethodRunner.start();\n"
-                  + "try {Thread.sleep(timeout);}\n" 
-                  + "catch (InterruptedException e) {fail();}\n"
-                  + "if(studentMethodRunner.isAlive()) {\n"
-                  + "    studentMethodRunner.stop();\n"
-                  + "    fail();\n"
-                  + "}";
+        String expected = "Object returnValue;\n"
+                + "Thread studentMethodRunner = new Thread() {\n"
+                + "    public void run() {\n"
+                + "        returnValue = ClassInstance.METHOD(ARGS);\n"
+                + "    }\n" + "};\n" + "int timeout = TIMEOUT_TIME;\n"
+                + "studentMethodRunner.start();\n"
+                + "try {Thread.sleep(timeout);}\n"
+                + "catch (InterruptedException e) {fail();}\n"
+                + "if(studentMethodRunner.isAlive()) {\n"
+                + "    studentMethodRunner.stop();\n" + "    fail();\n" + "}";
 
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
@@ -50,7 +45,9 @@ public class TemplateReaderTest {
     /**
      * reads the Input.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void testInput() throws FileNotFoundException {
@@ -66,7 +63,9 @@ public class TemplateReaderTest {
     /**
      * reads the Output.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void testOutput() throws FileNotFoundException {
@@ -75,11 +74,13 @@ public class TemplateReaderTest {
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
-    
+
     /**
      * reads the Return.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void testReturn() throws FileNotFoundException {
@@ -92,14 +93,14 @@ public class TemplateReaderTest {
     /**
      * reads the Test.txt file and ensures it was read correctly, prints it out
      * for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void testTest() throws FileNotFoundException {
         String str = TemplateReader.readTest();
-        String expected =                 
-                "@Test\n" 
-                + "public void NAME() {\n"
+        String expected = "@Test\n" + "public void NAME() {\n"
                 + "   INPUT_LINE\n"
                 + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
                 + "   System.setOut(fso);\n"
@@ -113,11 +114,12 @@ public class TemplateReaderTest {
     }    
     
     
-    
     /**
      * reads the Return.txt file and ensures it was read correctly, prints it
      * out for user verification too.
-     * @throws FileNotFoundException (This shouldn't happen)
+     * 
+     * @throws FileNotFoundException
+     *             (This shouldn't happen)
      */
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
@@ -126,7 +128,7 @@ public class TemplateReaderTest {
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
-    
+
     /**
      * Asks for the contents of a non-existent file. Should receive a blank.
      */

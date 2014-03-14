@@ -2,6 +2,7 @@ package model;
 
 /**
  * Wrapper class for Args to be passed into a method.
+ * 
  * @author Ricky
  * 
  */
