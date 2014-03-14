@@ -24,7 +24,7 @@ public class TemplateReader {
     private TemplateReader() {
 
     }
-    
+
     /**
      * @return The contents of Collection.txt
      */
@@ -59,7 +59,7 @@ public class TemplateReader {
     public static String readReturn() {
         return templateReader.doRead("Return.txt");
     }
-    
+
     /**
      * @return The contents of Test.txt
      */

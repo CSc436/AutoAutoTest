@@ -1,6 +1,5 @@
 package model;
 
-
 /**
  * Wrapper class for return values. Holds them as strings.
  * 

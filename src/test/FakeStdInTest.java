@@ -7,9 +7,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.junit.Test;
-
 import model.FakeStandardIn;
+
+import org.junit.Test;
 
 /**
  * Test class for FakeStandardIn.
@@ -63,10 +63,12 @@ public class FakeStdInTest {
         String s = new String(new byte[] {charRead}, "UTF8");
         assertEquals("\n", s);
     }
-    
+
     /**
      * Test trying to fill our FakeStandardIn with an empty string.
-     * @throws IOException (This should never happen)
+     * 
+     * @throws IOException
+     *             (This should never happen)
      */
     @Test
     @SuppressWarnings("resource")
