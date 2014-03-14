@@ -83,7 +83,7 @@ public class TestCaseTest {
         String javaString = outputCase.toString();
         LogManager.getRootLogger().info(javaString);
         assertTrue(javaString
-                .contains("relaxedAssertEquals(\"Hello\", fso.getOutput());"));
+                .contains("relaxedAssertEquals(\"Hello\", fso.getOutput()"));
     }
 
     /**
