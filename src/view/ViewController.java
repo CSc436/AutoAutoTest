@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -28,6 +29,8 @@ public class ViewController {
     private String testreturn;
     private String stdin;
     private String stdout;
+    private boolean ignoreCasing;
+    
 
     @FXML
     private TextField namefield;
@@ -45,6 +48,8 @@ public class ViewController {
     private TextField classnamefield;
     @FXML
     private ListView<String> listView;
+    @FXML
+    private CheckBox ignoreCasingBox;
 
     /**
      * Generic constructor used for tests.
@@ -140,6 +145,7 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
+        ignoreCasing = ignoreCasingBox.isSelected() ? true : false;
     }
 
     /**

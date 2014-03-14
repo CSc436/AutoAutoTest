@@ -226,4 +226,8 @@ public class TestCase {
         return template;
     }
 
+    public void replaceConstants(String template) {
+        template = template.replace("IS_IGNORE_CASING", ignoreCasing + "");
+    }
+
 }
