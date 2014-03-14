@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.shape.Rectangle?>
 
+
 <GridPane fx:controller="view.ViewController" 
     xmlns:fx="http://javafx.com/fxml"
     alignment="center"
@@ -15,72 +16,107 @@
     vgap="10" 
     styleClass="root">
 
-	<ListView fx:id="listView" GridPane.columnIndex="1" GridPane.rowIndex="0"> </ListView>
-	
-	<HBox spacing="10" alignment="bottom_right" 
-        GridPane.columnIndex="1" GridPane.rowIndex="2">
-        	<Button text="Save All Tests"     
-        		onAction="#handleSaveButtonAction"/>
-	</HBox>
+    <!-- This is the listview for our tests. -->
+    <ListView fx:id="listView"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="0"> 
+    </ListView>
+    
+    <!-- This is the Save button. -->
+    <HBox spacing="10"
+            alignment="bottom_right"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="2">
+        <Button text="Save All Tests"
+                onAction="#handleSaveButtonAction"/>
+    </HBox>
 
- 	<GridPane hgap="10" vgap="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
-	    
-	    <Label text="Name:"
-	        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-	    <Label text="Parameters:"
-	        GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-	    <Label text="Return Value:"
-	        GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-	    <Label text="Standard In:"
-	        GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-	    <Label text="Standard Out:"
-	        GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+     <!-- This is the container for the labels and input fields. -->
+     <GridPane hgap="10"
+             vgap="10"
+             GridPane.columnIndex="0"
+             GridPane.rowIndex="0">
+        
+        <!-- These are the text labels. -->
+        <Label text="Name:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="1"/>
+        <Label text="Parameters:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="2"/>
+        <Label text="Return Value:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="3"/>
+        <Label text="Standard In:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="4"/>
+        <Label text="Standard Out:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="5"/>
         <Label text="Method Name:"
-        	GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-    	<Label text="Class Name:"
-    		GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-	         
-	    <TextField fx:id="namefield"
-	        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-		<TextField fx:id="paramsfield"
-	        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-		<TextField fx:id="returnfield"
-	        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-		<TextField fx:id="stdinfield"
-	        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-		<TextField fx:id="stdoutfield"
-	        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="6"/>
+        <Label text="Class Name:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="7"/>
+         
+        <!-- These are the input fields. -->    
+        <TextField fx:id="namefield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="1"/>
+        <TextField fx:id="paramsfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="2"/>
+        <TextField fx:id="returnfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="3"/>
+        <TextField fx:id="stdinfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="4"/>
+        <TextField fx:id="stdoutfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="5"/>
         <TextField fx:id="methodnamefield"
-        	GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-    	<TextField fx:id="classnamefield"
-    		GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-	
-		<HBox spacing="10" alignment="bottom_right" 
-	        GridPane.columnIndex="1" GridPane.rowIndex="8">
-	        	<Button text="Generate Test"     
-	        		onAction="#handleGenerateButtonAction"/>
-		</HBox>
-		
-		<HBox spacing="10" alignment="bottom_right" 
-	        GridPane.columnIndex="0" GridPane.rowIndex="8">
-	        	<Button text="Delete Selected Test"     
-	        		onAction="#handleDeleteButtonAction"/>
-		</HBox>
-		
-		<Text fx:id="actiontarget"
-			GridPane.columnIndex="1"
-			GridPane.rowIndex="7"/>
-			
-		<Text id="welcome-text"
-			text="AutoAuto Tester"
-	   		GridPane.columnIndex="0"
-	   		GridPane.rowIndex="0" 
-	        GridPane.columnSpan="2"/>
-	
-	</GridPane>
-	
-		<stylesheets>
-			<URL value="@View.css" />
-		</stylesheets>
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="6"/>
+        <TextField fx:id="classnamefield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="7"/>
+        
+        <!-- This is the Generate Button. -->
+        <HBox spacing="10"
+                alignment="bottom_right"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="8">
+            <Button text="Generate Test"
+                    onAction="#handleGenerateButtonAction"/>
+        </HBox>
+        
+        <!-- This is the Delete Button. -->
+        <HBox spacing="10"
+                alignment="bottom_right"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="8">
+            <Button text="Delete Selected Test"
+                    onAction="#handleDeleteButtonAction"/>
+        </HBox>
+        
+        
+        <!-- Start of main code -->
+        <Text fx:id="actiontarget" 
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="7"/>
+        
+        <!-- This is the header text. -->    
+        <Text id="welcome-text"
+                text="AutoAuto Tester"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="0"
+                GridPane.columnSpan="2"/>
+    </GridPane>
+    
+    <stylesheets>
+        <URL value="@View.css" />
+    </stylesheets>
 
 </GridPane>
