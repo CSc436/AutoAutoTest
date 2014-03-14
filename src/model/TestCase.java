@@ -223,6 +223,7 @@ public class TestCase {
         template = template.replace("CLASS", className);
         template = template.replace("METHOD", methodName);
         template = template.replace("NAME", testName);
+        template = template.replace("TIMEOUT_TIME", timeoutTime + "");
         return template;
     }
 
