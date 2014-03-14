@@ -76,12 +76,13 @@ public class ViewControllerTest {
      * @throws Exception
      *             Due to reflection.
      */
+    @SuppressWarnings("unchecked")
     @Test
     public void testDeleteButtonAction() throws Exception {
         viewController.handleGenerateButtonAction(null);
         currentnumberoftests = TestCollection.getInstance().testCount();
-        ListView<String> theListView = (ListView<String>) listViewField
-                .get(viewController);
+        ListView<String> theListView;
+        theListView = (ListView<String>) listViewField.get(viewController);
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;

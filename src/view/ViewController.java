@@ -2,6 +2,8 @@ package view;
 
 import java.io.File;
 
+import org.apache.logging.log4j.LogManager;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -28,6 +30,7 @@ public class ViewController {
     private String testreturn;
     private String stdin;
     private String stdout;
+    private String timeoutlimit;
 
     @FXML
     private TextField namefield;
@@ -43,6 +46,8 @@ public class ViewController {
     private TextField methodnamefield;
     @FXML
     private TextField classnamefield;
+    @FXML
+    private TextField timeoutfield;
     @FXML
     private ListView<String> listView;
 
@@ -140,6 +145,7 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
+        timeoutlimit = timeoutfield.getText();
     }
 
     /**
@@ -157,6 +163,12 @@ public class ViewController {
         ptestCase.setMethodName(methodname);
         ptestCase.setStockedInput(stdin);
         ptestCase.setTestName(testname);
+        try {
+            int time = Integer.parseInt(timeoutlimit);
+            ptestCase.setTimeoutTime(time);
+        } catch (NumberFormatException e) {
+            LogManager.getRootLogger().error(e);
+        }
     }
 
     /**

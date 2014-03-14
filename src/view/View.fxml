@@ -59,6 +59,9 @@
         <Label text="Class Name:"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="7"/>
+        <Label text="Timeout Limit:"
+        		GridPane.columnIndex="0"
+        		GridPane.rowIndex="8"/>
          
         <!-- These are the input fields. -->
         <TextField fx:id="namefield"
@@ -82,12 +85,15 @@
         <TextField fx:id="classnamefield"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="7"/>
+        <TextField fx:id="timeoutfield"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="8"/>
         
         <!-- This is the Generate Button. -->
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="1"
-                GridPane.rowIndex="8">
+                GridPane.rowIndex="9">
             <Button text="Generate Test"
                     onAction="#handleGenerateButtonAction"/>
         </HBox>
@@ -96,11 +102,10 @@
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="0"
-                GridPane.rowIndex="8">
+                GridPane.rowIndex="9">
             <Button text="Delete Selected Test"
                     onAction="#handleDeleteButtonAction"/>
         </HBox>
-        
         
         <!-- This is the header text. -->
         <Text id="welcome-text"
