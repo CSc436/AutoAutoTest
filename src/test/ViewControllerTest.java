@@ -66,7 +66,8 @@ public class ViewControllerTest {
         }
 
         currentnumberoftests += 100;
-        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
+        int actual = TestCollection.getInstance().testCount();
+        assertEquals(currentnumberoftests, actual);
     }
 
     /**
@@ -84,8 +85,9 @@ public class ViewControllerTest {
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;
-
-        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
+        
+        int actual = TestCollection.getInstance().testCount();
+        assertEquals(currentnumberoftests, actual);
     }
 
     /**
@@ -104,7 +106,8 @@ public class ViewControllerTest {
         }
 
         currentnumberoftests += 100;
-        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
+        int actual = TestCollection.getInstance().testCount();
+        assertEquals(currentnumberoftests, actual);
     }
 
 }
