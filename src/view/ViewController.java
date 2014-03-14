@@ -153,7 +153,7 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
-        ignoreCasing = ignoreCasingBox.isSelected() ? true : false;
+        ignoreCasing = ignoreCasingBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }

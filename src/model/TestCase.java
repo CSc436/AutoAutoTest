@@ -243,8 +243,17 @@ public class TestCase {
         return template;
     }
 
-    public void replaceConstants(String template) {
-        template = template.replace("IS_IGNORE_CASING", ignoreCasing + "");
+    /**
+     * A method that replaces:
+     *  IS_IGNORE_CASING
+     *  IS_IGNORE_WHITESPACE
+     *  IS_IGNORE_PUNCTUATION
+     *  FLOAT_PRECISION
+     *  called from TestCollection's getFileContentString() method
+     * @param currTest The current test we are building
+     */
+    public void replaceConstants(String currTest) {
+        currTest = currTest.replace("IS_IGNORE_CASING", ignoreCasing + "");
     }
 
 }
