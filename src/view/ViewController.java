@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.TestCase;
@@ -30,8 +29,8 @@ public class ViewController {
     private String stdin;
     private String stdout;
 
-    @FXML
-    private Text actiontarget;
+    //@FXML
+    //private Text actiontarget;
     @FXML
     private TextField namefield;
     @FXML
@@ -62,13 +61,11 @@ public class ViewController {
      */
     @FXML
     public void handleGenerateButtonAction(ActionEvent event) {
-        if (listView != null) {
-            getAllData();
-            generateTest();
-            String anotherTest = getTestForView(myTestCollection
-                    .getTest(myTestCollection.testCount() - 1));
-            listView.getItems().add(anotherTest);
-        }
+        getAllData();
+        generateTest();
+        String anotherTest = getTestForView(myTestCollection
+                .getTest(myTestCollection.testCount() - 1));
+        listView.getItems().add(anotherTest);
     }
 
     /**
@@ -82,12 +79,10 @@ public class ViewController {
      */
     @FXML
     public void handleDeleteButtonAction(ActionEvent event) {
-        if (listView != null) {
-            int testIndex = listView.getSelectionModel().getSelectedIndex();
-            if (testIndex >= 0) {
-                deleteTest(testIndex);
-                listView.getItems().remove(testIndex);
-            }
+        int testIndex = listView.getSelectionModel().getSelectedIndex();
+        if (testIndex >= 0) {
+            deleteTest(testIndex);
+            listView.getItems().remove(testIndex);
         }
     }
 
@@ -105,8 +100,10 @@ public class ViewController {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
-        String filePath = file.getAbsolutePath();
-        myTestCollection.save(filePath);
+        if (file != null) {
+            String filePath = file.getAbsolutePath();
+            myTestCollection.save(filePath);
+        }
     }
 
     /**
@@ -138,13 +135,13 @@ public class ViewController {
      * 
      */
     private void getAllData() {
-        setTestName(namefield.getText());
-        setTestParams(paramsfield.getText());
-        setTestReturn(returnfield.getText());
-        setTestStdIn(stdinfield.getText());
-        setTestStdOut(stdoutfield.getText());
-        setTestMethodName(methodnamefield.getText());
-        setTestClassName(classnamefield.getText());
+        testname = namefield.getText();
+        params = paramsfield.getText();
+        testreturn = returnfield.getText();
+        stdin = stdinfield.getText();
+        stdout = stdoutfield.getText();
+        classname = methodnamefield.getText();
+        methodname = classnamefield.getText();
     }
 
     /**
@@ -236,15 +233,6 @@ public class ViewController {
      */
     public void setTestMethodName(String pmname) {
         methodname = pmname;
-    }
-
-    /**
-     * Returns the number of tests that are stored in the test collection.
-     * 
-     * @return The number of tests in the collection.
-     */
-    public int getNumberOfTests() {
-        return myTestCollection.testCount();
     }
 
 }

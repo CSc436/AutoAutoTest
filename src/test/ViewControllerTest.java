@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import model.TestCollection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,14 +59,14 @@ public class ViewControllerTest {
      */
     @Test
     public void testGenerateButtonAction() throws Exception {
-        currentnumberoftests = viewController.getNumberOfTests();
+        currentnumberoftests = TestCollection.getInstance().testCount();
 
         for (int i = 0; i < 100; i++) {
             viewController.handleGenerateButtonAction(null);
         }
 
         currentnumberoftests += 100;
-        assertEquals(currentnumberoftests, viewController.getNumberOfTests());
+        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
     }
 
     /**
@@ -77,14 +78,14 @@ public class ViewControllerTest {
     @Test
     public void testDeleteButtonAction() throws Exception {
         viewController.handleGenerateButtonAction(null);
-        currentnumberoftests = viewController.getNumberOfTests();
+        currentnumberoftests = TestCollection.getInstance().testCount();
         ListView<String> theListView = (ListView<String>) listViewField
                 .get(viewController);
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;
 
-        assertEquals(currentnumberoftests, viewController.getNumberOfTests());
+        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
     }
 
     /**
@@ -97,13 +98,13 @@ public class ViewControllerTest {
      */
     @Test
     public void testGetNumberOfTests() throws Exception {
-        currentnumberoftests = viewController.getNumberOfTests();
+        currentnumberoftests = TestCollection.getInstance().testCount();
         for (int i = 0; i < 100; i++) {
             viewController.handleGenerateButtonAction(null);
         }
 
         currentnumberoftests += 100;
-        assertEquals(currentnumberoftests, viewController.getNumberOfTests());
+        assertEquals(currentnumberoftests, TestCollection.getInstance().testCount());
     }
 
 }
