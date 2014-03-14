@@ -170,5 +170,17 @@ public class TestCaseTest {
         punctuationCase.setIgnorePunctuation(false);
         assertFalse(punctuationCase.isIgnorePunctuation());
     }
+    
+    /**
+     * Ensure the floating point precision can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingFloatPrecision() {
+        TestCase precisionCase = new TestCase();
+        precisionCase.setFloatPrecision(5);
+        assertEquals(5, precisionCase.getFloatPrecision());
+        precisionCase.setFloatPrecision(3);
+        assertEquals(3, precisionCase.getFloatPrecision());
+    }
 
 }
