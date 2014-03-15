@@ -240,20 +240,8 @@ public class TestCase {
         template = template.replace("NAME", testName);
         template = template.replace("TIMEOUT_TIME", timeoutTime + "");
         template = template.replace("FLOAT_PRECISION", floatPrecision + "");
+        template = template.replace("IS_IGNORE_CASING", ignoreCasing + "");
+        System.out.println(template);
         return template;
     }
-
-    /**
-     * A method that replaces:
-     *  IS_IGNORE_CASING
-     *  IS_IGNORE_WHITESPACE
-     *  IS_IGNORE_PUNCTUATION
-     *  FLOAT_PRECISION
-     *  called from TestCollection's getFileContentString() method
-     * @param currTest The current test we are building
-     */
-    public void replaceConstants(String currTest) {
-        currTest = currTest.replace("IS_IGNORE_CASING", ignoreCasing + "");
-    }
-
 }

@@ -117,7 +117,6 @@ public class TestCollection {
         for (TestCase test : tests) {
             testCaseCode.append(test.toString());
             testCaseCode.append("\n");
-            test.replaceConstants(testCaseCode.toString());
         }
         template = template.replace("TESTS", testCaseCode.toString());
         
