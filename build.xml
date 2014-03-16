@@ -49,6 +49,11 @@
         <mkdir dir="${bin}"/>
         <mkdir dir="${dist}"/>
         <mkdir dir="${test.output}"/>
+        <copy todir="${bin}/view">
+            <fileset dir="${src}/view">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="compile" depends="init">

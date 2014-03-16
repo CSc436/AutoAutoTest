@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -32,6 +33,8 @@ public class ViewController {
     private String stdout;
     private String timeoutlimit;
     private String floatprecision;
+    private boolean ignoreCasing;
+
 
     @FXML
     private TextField namefield;
@@ -53,6 +56,8 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
+    @FXML
+    private CheckBox ignoreCasingBox;
 
     /**
      * Generic constructor used for tests.
@@ -148,6 +153,7 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
+        ignoreCasing = ignoreCasingBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -167,6 +173,7 @@ public class ViewController {
         ptestCase.setMethodName(methodname);
         ptestCase.setStockedInput(stdin);
         ptestCase.setTestName(testname);
+        ptestCase.setIgnoreCasing(ignoreCasing);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);

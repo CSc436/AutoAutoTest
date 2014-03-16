@@ -4,14 +4,14 @@ import org.junit.Test;
 
 public class CLASSNAME {
 
-    public void relaxedAssertEquals(Object expected, Object actual) {
+    public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isignoreWhitespace, boolean isignorePunctuation, double floatPrecision) {
         if (expected instanceof Double || expected instanceof Float) {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
-            assertEquals(expectedValue, actualValue, 1e-(FLOAT_PRECISION));
+            assertEquals(expectedValue, actualValue, 1e-(floatPrecsion));
         } else if(expected instanceof String) {
             RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
-                  IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, IS_IGNORE_PUNCTUATION, FLOAT_PRECISION
+                isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, floatPrecision
             );
             assertTrue(checker.isAcceptable((String) expected, (String) actual);
         } else {

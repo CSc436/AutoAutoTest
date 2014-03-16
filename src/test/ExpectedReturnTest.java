@@ -30,7 +30,13 @@ public class ExpectedReturnTest {
         value = new ExpectedReturn("3.14");
         assertEquals("3.14", value.getReturnValue());
         LogManager.getRootLogger().info(value.toString());
-        assertEquals("relaxedAssertEquals(" + value.getReturnValue() + ", "
-                + TestingNameConstants.RETURN_VALUE + ");", value.toString());
+        assertEquals(
+                "relaxedAssertEquals("
+                        + value.getReturnValue()
+                        + ", "
+                        + TestingNameConstants.RETURN_VALUE
+                        + ", IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, "
+                        + "IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);",
+                value.toString());
     }
 }
