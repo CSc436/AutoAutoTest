@@ -173,6 +173,7 @@ public class ViewController {
         ptestCase.setMethodName(methodname);
         ptestCase.setStockedInput(stdin);
         ptestCase.setTestName(testname);
+        ptestCase.setIgnoreCasing(ignoreCasing);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);

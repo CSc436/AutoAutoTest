@@ -241,7 +241,6 @@ public class TestCase {
         template = template.replace("TIMEOUT_TIME", timeoutTime + "");
         template = template.replace("FLOAT_PRECISION", floatPrecision + "");
         template = template.replace("IS_IGNORE_CASING", ignoreCasing + "");
-        System.out.println(template);
         return template;
     }
 }
