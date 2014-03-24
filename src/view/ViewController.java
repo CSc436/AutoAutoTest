@@ -94,6 +94,8 @@ public class ViewController {
         if (testIndex >= 0) {
             deleteTest(testIndex);
             listView.getItems().remove(testIndex);
+            int newSelected = listView.getSelectionModel().getSelectedIndex();
+            listView.getSelectionModel().select(newSelected);
         }
     }
 
