@@ -151,8 +151,8 @@ public class ViewController {
         testreturn = returnfield.getText();
         stdin = stdinfield.getText();
         stdout = stdoutfield.getText();
-        classname = methodnamefield.getText();
-        methodname = classnamefield.getText();
+        classname = classnamefield.getText();
+        methodname = methodnamefield.getText();
         ignoreCasing = ignoreCasingBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
