@@ -182,7 +182,7 @@ public class ViewController {
         }
         try {
             int limit = Integer.parseInt(floatprecision);
-            ptestCase.setTimeoutTime(limit);
+            ptestCase.setFloatPrecision(limit);
         } catch (NumberFormatException e) {
             LogManager.getRootLogger().error(e);
         }
