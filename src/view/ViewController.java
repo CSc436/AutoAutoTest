@@ -34,6 +34,7 @@ public class ViewController {
     private String timeoutlimit;
     private String floatprecision;
     private boolean ignoreCasing;
+    private boolean ignorePunctuation;
 
 
     @FXML
@@ -58,7 +59,9 @@ public class ViewController {
     private ListView<String> listView;
     @FXML
     private CheckBox ignoreCasingBox;
-
+    @FXML
+    private CheckBox ignorePunctuationBox;
+    
     /**
      * Generic constructor used for tests.
      */
@@ -154,6 +157,7 @@ public class ViewController {
         classname = methodnamefield.getText();
         methodname = classnamefield.getText();
         ignoreCasing = ignoreCasingBox.isSelected();
+        ignorePunctuation = ignorePunctuationBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -174,6 +178,7 @@ public class ViewController {
         ptestCase.setStockedInput(stdin);
         ptestCase.setTestName(testname);
         ptestCase.setIgnoreCasing(ignoreCasing);
+        ptestCase.setIgnorePunctuation(ignorePunctuation);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
