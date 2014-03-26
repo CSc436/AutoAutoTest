@@ -1,5 +1,9 @@
 package view;
 
+/** @dillon: this class is the graphical view of our system.
+ *  the user will use this gui to interact with the model.
+ **/
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
