@@ -12,9 +12,6 @@ import org.apache.logging.log4j.LogManager;
  */
 public class FakeStandardOutput extends PrintStream {
 
-    /**
-     * This is an instance variable that will get returned.
-     */
     private StringOutputStream innerStream;
 
     /**
