@@ -35,6 +35,7 @@ public class ViewController {
     private String floatprecision;
     private boolean ignoreCasing;
     private boolean ignoreWhitespace;
+    private boolean ignorePunctuation;
 
 
     @FXML
@@ -61,6 +62,8 @@ public class ViewController {
     private CheckBox ignoreCasingBox;
     @FXML
     private CheckBox ignoreWhitespaceBox;
+    @FXML
+    private CheckBox ignorePunctuationBox;
     
     /**
      * Generic constructor used for tests.
@@ -97,6 +100,8 @@ public class ViewController {
         if (testIndex >= 0) {
             deleteTest(testIndex);
             listView.getItems().remove(testIndex);
+            int newSelected = listView.getSelectionModel().getSelectedIndex();
+            listView.getSelectionModel().select(newSelected);
         }
     }
 
@@ -154,10 +159,11 @@ public class ViewController {
         testreturn = returnfield.getText();
         stdin = stdinfield.getText();
         stdout = stdoutfield.getText();
-        classname = methodnamefield.getText();
-        methodname = classnamefield.getText();
+        classname = classnamefield.getText();
+        methodname = methodnamefield.getText();
         ignoreCasing = ignoreCasingBox.isSelected();
         ignoreWhitespace = ignoreWhitespaceBox.isSelected();
+        ignorePunctuation = ignorePunctuationBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -179,6 +185,7 @@ public class ViewController {
         ptestCase.setTestName(testname);
         ptestCase.setIgnoreCasing(ignoreCasing);
         ptestCase.setIgnoreWhitespace(ignoreWhitespace);
+        ptestCase.setIgnorePunctuation(ignorePunctuation);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
@@ -187,7 +194,7 @@ public class ViewController {
         }
         try {
             int limit = Integer.parseInt(floatprecision);
-            ptestCase.setTimeoutTime(limit);
+            ptestCase.setFloatPrecision(limit);
         } catch (NumberFormatException e) {
             LogManager.getRootLogger().error(e);
         }

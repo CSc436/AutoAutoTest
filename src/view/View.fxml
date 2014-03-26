@@ -71,6 +71,9 @@
         <Label text="Ignore Whitespace:"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="11"/>
+        <Label text="Ignore Punctuation:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="12"/>                
          
         <!-- These are the input fields. -->
         <TextField fx:id="namefield"
@@ -106,12 +109,15 @@
         <CheckBox fx:id="ignoreWhitespaceBox"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="11"/>        
+        <CheckBox fx:id="ignorePunctuationBox"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="12"/>
         
         <!-- This is the Generate Button. -->
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="1"
-                GridPane.rowIndex="12">
+                GridPane.rowIndex="13">
             <Button text="Generate Test"
                     onAction="#handleGenerateButtonAction"/>
         </HBox>
@@ -120,7 +126,7 @@
         <HBox spacing="10"
                 alignment="bottom_right"
                 GridPane.columnIndex="0"
-                GridPane.rowIndex="12">
+                GridPane.rowIndex="13">
             <Button text="Delete Selected Test"
                     onAction="#handleDeleteButtonAction"/>
         </HBox>
