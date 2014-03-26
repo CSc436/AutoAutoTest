@@ -1,5 +1,4 @@
 .root {
-/*	-fx-background-image: url("background.jpg");*/
         -fx-background-color: rgb(81,81,81);
 }
 
@@ -26,7 +25,7 @@
 #welcome-text {
    -fx-font-size: 32px;
    -fx-font-family: "Arial Black";
-   -fx-fill: #FFFFFF;
+   -fx-fill: #FFF;
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
 #actiontarget {
