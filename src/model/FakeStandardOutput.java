@@ -18,7 +18,7 @@ public class FakeStandardOutput extends PrintStream {
     private StringOutputStream innerStream;
 
     /**
-     * Summary: This is a constructor to create a FakeStandardOutput.
+     * Create a new FakeStandardOutput stream with an empty buffer.
      * 
      * @throws UnsupportedEncodingException
      *             if the machine somehow doesn't support UTF8
