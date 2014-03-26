@@ -39,7 +39,7 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This function ppends the given string to the output buffer.
+     * This function appends the given string to the output buffer.
      * 
      * @param someString
      *            the string appended to the end of the buffer.
