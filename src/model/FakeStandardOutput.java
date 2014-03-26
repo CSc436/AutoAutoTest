@@ -4,9 +4,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import org.apache.logging.log4j.LogManager;
 
-//Carlos Gallego
-//Feb 7, 2014
-
 /**
  * This class creates a "FakeStandardOutput", as a string so testing can be
  * easily done between student code correct answer.
