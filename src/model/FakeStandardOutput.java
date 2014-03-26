@@ -32,22 +32,20 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in an object, and put it into an instance
-     * variable it as a string.
+     * Add the given object to the end of the buffer as a string.
      * 
      * @param someObj
-     *            is an object that can be passed in and converted to a string.
+     *            The object to append to the end of the buffer.
      */
     public void print(Object someObj) {
         this.print(someObj.toString());
     }
 
     /**
-     * This is a method that will take in an string, and put it into an instance
-     * variable it as a string.
+     * This function ppends the given string to the output buffer.
      * 
      * @param someString
-     *            is an object that can be passed in and converted to a string.
+     *            the string appended to the end of the buffer.
      */
     public void print(String someString) {
         try {
