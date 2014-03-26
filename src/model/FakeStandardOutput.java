@@ -61,11 +61,9 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in a double, and put it into an instance
-     * variable as a string.
+     * Add the given double to the end of the buffer as a string.
      * 
-     * @param someDouble
-     *            is an object that can be passed in and converted to a string.
+     * @param someDouble the double to add at the end of the buffer.
      */
     public void print(double someDouble) {
         print(someDouble + "");
