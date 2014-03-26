@@ -68,6 +68,9 @@
         <Label text="Ignore Casing:"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="10"/>
+        <Label text="Ignore Whitespace:"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="11"/>
         <Label text="Ignore Punctuation:"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="12"/>                
@@ -103,6 +106,9 @@
         <CheckBox fx:id="ignoreCasingBox"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="10"/>
+        <CheckBox fx:id="ignoreWhitespaceBox"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="11"/>        
         <CheckBox fx:id="ignorePunctuationBox"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="12"/>
