@@ -172,6 +172,18 @@ public class TestCaseTest {
     }
     
     /**
+     * Ensure that the void return flag can be set and fetched.
+     */
+    @Test
+    public void testGettingAndSettingVoidFlag() {
+        TestCase voidCase = new TestCase();
+        voidCase.setIsVoid(true);
+        assertTrue(voidCase.isVoid());
+        voidCase.setIsVoid(false);
+        assertFalse(voidCase.isVoid());
+    }
+    
+    /**
      * Ensure the floating point precision can be set and fetched.
      */
     @Test

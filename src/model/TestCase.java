@@ -22,6 +22,7 @@ public class TestCase {
     private boolean ignoreCasing;
     private boolean ignorePunctuation;
     private boolean ignoreWhitespace;
+    private boolean isVoid;
     private int timeoutTime;
     private int floatPrecision;
 
@@ -42,6 +43,7 @@ public class TestCase {
         setIgnoreCasing(false);
         setIgnorePunctuation(false);
         setIgnoreWhitespace(false);
+        setIsVoid(false);
     }
 
     /**
@@ -222,6 +224,24 @@ public class TestCase {
     public void setMethodName(String newName) {
         this.methodName = newName;
     }
+    
+    /**
+     * 
+     * @param newValue the new value
+     */
+    public void setIsVoid(boolean newValue) {
+        this.isVoid = newValue;
+    }
+    
+    /**
+     * 
+     * @return If the current test returns void.
+     */
+    public boolean isVoid() {
+        return isVoid;
+    }
+    
+    
 
     /**
      * @return The code that will test the method based on the parameters
