@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class CLASSNAME {
 
-    public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isignoreWhitespace, boolean isignorePunctuation, double floatPrecision) {
+    public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isignoreWhitespace, boolean isignorePunctuation, int floatPrecision) {
         if (expected instanceof Double || expected instanceof Float) {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
