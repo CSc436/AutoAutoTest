@@ -50,11 +50,10 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in an int, and put it into an instance
-     * variable as a string.
+     * Add the given int to the end of the buffer as a string.
      * 
      * @param someInt
-     *            is an object that can be passed in and converted to a string.
+     *            The int to append to the end of the buffer.
      */
     public void print(int someInt) {
         print(someInt + "");
