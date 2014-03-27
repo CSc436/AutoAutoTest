@@ -88,11 +88,10 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in a boolean, and put it into an instance
-     * variable as a string.
+     * Add the given boolean to the end of the buffer as a string.
      * 
      * @param someBoolean
-     *            is an object that can be passed in and converted to a string.
+     *            The boolean to append to the end of the buffer.
      */
     public void print(boolean someBoolean) {
         print(someBoolean + "");
