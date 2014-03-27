@@ -28,7 +28,7 @@ public class TemplateReaderTest {
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
         String expected = 
-                    "Object returnValue;\n"
+                    "final Object returnValue;\n"
                   + "Thread studentMethodRunner = new Thread() {\n" 
                   + "    public void run() {\n"
                   + "        returnValue = classInstance.METHOD(ARGS);\n"
