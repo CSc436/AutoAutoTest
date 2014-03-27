@@ -1,4 +1,4 @@
-Object returnValue;
+final Object returnValue;
 Thread studentMethodRunner = new Thread() {
     public void run() {
         returnValue = classInstance.METHOD(ARGS);
