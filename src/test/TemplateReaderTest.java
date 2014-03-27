@@ -57,7 +57,7 @@ public class TemplateReaderTest {
     public void testInput() throws FileNotFoundException {
         String str = TemplateReader.readInput();
         String expected = 
-                "FakeStandardInput fsi = new FakeStandardInput();\n"
+                "FakeStandardIn fsi = new FakeStandardIn();\n"
                 + "fsi.setString(INPUT);\n"
                 + "System.setIn(fsi);";
         LogManager.getRootLogger().info(str);

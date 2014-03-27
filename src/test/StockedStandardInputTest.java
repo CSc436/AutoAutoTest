@@ -42,7 +42,7 @@ public class StockedStandardInputTest {
         ssi.setInput("Hello\n");
         String javaCode = ssi.toString();
         assertTrue(javaCode.startsWith(
-                "FakeStandardInput fsi = new FakeStandardInput();"
+                "FakeStandardIn fsi = new FakeStandardIn();"
         ));
         assertTrue(javaCode.contains("fsi.setString(\"Hello\\n\");"));
         assertTrue(javaCode.endsWith("System.setIn(fsi);"));
