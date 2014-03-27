@@ -69,11 +69,9 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in a float, and put it into an instance
-     * variable as a string.
+     * Add the given float to the end of the buffer as a string.
      * 
-     * @param someFloat
-     *            is an object that can be passed in and converted to a string.
+     * @param someFloat the float to add at the end of the buffer.
      */
     public void print(float someFloat) {
         print(someFloat + "");
