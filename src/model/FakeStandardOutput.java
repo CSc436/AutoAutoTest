@@ -80,11 +80,10 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in a long, and put it into an instance
-     * variable as a string.
+     * Add the given long to the end of the buffer as a string.
      * 
      * @param someLong
-     *            is an object that can be passed in and converted to a string.
+     *            The long to append to the end of the buffer.
      */
     public void print(long someLong) {
         print(someLong + "");
