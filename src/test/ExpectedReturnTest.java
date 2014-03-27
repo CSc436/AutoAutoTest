@@ -2,8 +2,6 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import model.ExpectedReturn;
-import model.TestingNameConstants;
-
 import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
@@ -34,7 +32,7 @@ public class ExpectedReturnTest {
                 "relaxedAssertEquals("
                         + value.getReturnValue()
                         + ", "
-                        + TestingNameConstants.RETURN_VALUE
+                        + "returnValue"
                         + ", IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, "
                         + "IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);",
                 value.toString());

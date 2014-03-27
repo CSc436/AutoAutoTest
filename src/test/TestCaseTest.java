@@ -36,7 +36,7 @@ public class TestCaseTest {
         ));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
-                .contains("FakeStandardInput fsi = new FakeStandardInput("));
+                .contains("FakeStandardIn fsi = new FakeStandardIn("));
         assertTrue(javaString.contains("System.setIn(fsi);"));
         assertTrue(javaString.contains("classInstance = "));
         assertTrue(javaString.contains("returnValue = "));

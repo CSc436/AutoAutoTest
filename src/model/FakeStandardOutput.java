@@ -12,13 +12,10 @@ import org.apache.logging.log4j.LogManager;
  */
 public class FakeStandardOutput extends PrintStream {
 
-    /**
-     * This is an instance variable that will get returned.
-     */
     private StringOutputStream innerStream;
 
     /**
-     * Summary: This is a constructor to create a FakeStandardOutput.
+     * Create a new FakeStandardOutput stream with an empty buffer.
      * 
      * @throws UnsupportedEncodingException
      *             if the machine somehow doesn't support UTF8
@@ -53,66 +50,58 @@ public class FakeStandardOutput extends PrintStream {
     }
 
     /**
-     * This is a method that will take in an int, and put it into an instance
-     * variable as a string.
+     * Add the given int to the end of the buffer as a string.
      * 
      * @param someInt
-     *            is an object that can be passed in and converted to a string.
+     *            The int to append to the end of the buffer.
      */
     public void print(int someInt) {
         print(someInt + "");
     }
 
     /**
-     * This is a method that will take in a double, and put it into an instance
-     * variable as a string.
+     * Add the given double to the end of the buffer as a string.
      * 
-     * @param someDouble
-     *            is an object that can be passed in and converted to a string.
+     * @param someDouble the double to add at the end of the buffer.
      */
     public void print(double someDouble) {
         print(someDouble + "");
     }
 
     /**
-     * This is a method that will take in a float, and put it into an instance
-     * variable as a string.
+     * Add the given float to the end of the buffer as a string.
      * 
-     * @param someFloat
-     *            is an object that can be passed in and converted to a string.
+     * @param someFloat the float to add at the end of the buffer.
      */
     public void print(float someFloat) {
         print(someFloat + "");
     }
 
     /**
-     * This is a method that will take in a long, and put it into an instance
-     * variable as a string.
+     * Add the given long to the end of the buffer as a string.
      * 
      * @param someLong
-     *            is an object that can be passed in and converted to a string.
+     *            The long to append to the end of the buffer.
      */
     public void print(long someLong) {
         print(someLong + "");
     }
 
     /**
-     * This is a method that will take in a boolean, and put it into an instance
-     * variable as a string.
+     * Add the given boolean to the end of the buffer as a string.
      * 
      * @param someBoolean
-     *            is an object that can be passed in and converted to a string.
+     *            The boolean to append to the end of the buffer.
      */
     public void print(boolean someBoolean) {
         print(someBoolean + "");
     }
 
     /**
-     * This is a method that will take in a char, and put it into an instance
-     * variable as a string.
+     * Add the given char to the end of the buffer as a string.
      * 
      * @param someChar
-     *            is an object that can be passed in and converted to a string.
+     *            The char to append to the end of the buffer.
      */
     public void print(char someChar) {
         print(someChar + "");

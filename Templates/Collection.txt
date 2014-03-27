@@ -1,5 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import model.FakeStandardIn;
+import model.FakeStandardOutput;
 import org.junit.Test;
 
 public class CLASSNAME {
@@ -8,7 +10,7 @@ public class CLASSNAME {
         if (expected instanceof Double || expected instanceof Float) {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
-            assertEquals(expectedValue, actualValue, 1e-(floatPrecsion));
+            assertEquals(expectedValue, actualValue, 1e-(floatPrecision));
         } else if(expected instanceof String) {
             RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
                 isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, floatPrecision

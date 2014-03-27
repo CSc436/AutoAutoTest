@@ -34,6 +34,7 @@ public class ViewController {
     private String timeoutlimit;
     private String floatprecision;
     private boolean ignoreCasing;
+    private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
 
 
@@ -59,6 +60,8 @@ public class ViewController {
     private ListView<String> listView;
     @FXML
     private CheckBox ignoreCasingBox;
+    @FXML
+    private CheckBox ignoreWhitespaceBox;
     @FXML
     private CheckBox ignorePunctuationBox;
     
@@ -159,6 +162,7 @@ public class ViewController {
         classname = classnamefield.getText();
         methodname = methodnamefield.getText();
         ignoreCasing = ignoreCasingBox.isSelected();
+        ignoreWhitespace = ignoreWhitespaceBox.isSelected();
         ignorePunctuation = ignorePunctuationBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
@@ -180,6 +184,7 @@ public class ViewController {
         ptestCase.setStockedInput(stdin);
         ptestCase.setTestName(testname);
         ptestCase.setIgnoreCasing(ignoreCasing);
+        ptestCase.setIgnoreWhitespace(ignoreWhitespace);
         ptestCase.setIgnorePunctuation(ignorePunctuation);
         try {
             int time = Integer.parseInt(timeoutlimit);
