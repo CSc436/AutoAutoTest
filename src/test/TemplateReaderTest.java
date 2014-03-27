@@ -76,7 +76,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readOutput();
         String expected = "relaxedAssertEquals(EXPECTED, fso.getOutput(),"
                 + " IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
-                + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
+                + " IS_IGNORE_PUNCTUATION, 1eFLOAT_PRECISION);";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
@@ -93,7 +93,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readReturn();
         String expected = "relaxedAssertEquals(EXPECTED, returnValue,"
                 + " IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
-                + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
+                + " IS_IGNORE_PUNCTUATION, 1eFLOAT_PRECISION);";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
@@ -134,7 +134,7 @@ public class TemplateReaderTest {
         String str = TemplateReader.readTemplate("Return.txt");
         String expected = "relaxedAssertEquals(EXPECTED, returnValue,"
                 + " IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
-                + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
+                + " IS_IGNORE_PUNCTUATION, 1eFLOAT_PRECISION);";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }

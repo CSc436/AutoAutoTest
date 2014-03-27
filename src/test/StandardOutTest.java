@@ -51,7 +51,7 @@ public class StandardOutTest {
         ExpectedStandardOut so = new ExpectedStandardOut("a different message");
         String expected = "relaxedAssertEquals(\"a different message\","
                 + " fso.getOutput(), IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
-                + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
+                + " IS_IGNORE_PUNCTUATION, 1eFLOAT_PRECISION);";
         assertEquals(expected, so.toString());
     }
 }
