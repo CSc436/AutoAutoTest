@@ -3,7 +3,7 @@ public void NAME() {
    INPUT_LINE
    FakeStandardOutput fso = new FakeStandardOutput();
    System.setOut(fso);
-   CLASS classInstance = new CLASS();
+   final CLASS classInstance = new CLASS();
    CALL_LINE
    RETURN_LINE
    OUTPUT_LINE

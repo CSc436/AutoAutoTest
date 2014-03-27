@@ -112,7 +112,7 @@ public class TemplateReaderTest {
                 + "   INPUT_LINE\n"
                 + "   FakeStandardOutput fso = new FakeStandardOutput();\n"
                 + "   System.setOut(fso);\n"
-                + "   CLASS classInstance = new CLASS();\n"
+                + "   final CLASS classInstance = new CLASS();\n"
                 + "   CALL_LINE\n"
                 + "   RETURN_LINE\n"
                 + "   OUTPUT_LINE\n"
