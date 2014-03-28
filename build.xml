@@ -54,6 +54,11 @@
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
+        <copy todir="${bin}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="compile" depends="init">
