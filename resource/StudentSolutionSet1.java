@@ -1,5 +1,3 @@
-package studentSolutions;
-
 public class StudentSolutionSet1 {
     public int add1(int num) {
         return num + 1;
@@ -11,8 +9,8 @@ public class StudentSolutionSet1 {
         return !val;
     }
     
-    public int badAdd1(int num) {
-        return num;
+    public String badAdd1(int num) {
+        return "" + (num + 1);
     }
     public String badAppendCom(String str) {
         return str + ".gov";
