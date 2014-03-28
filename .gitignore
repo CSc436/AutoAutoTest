@@ -7,6 +7,9 @@ test_output/
 dist/
 bin/
 
+# Logging files #
+AutoAutoTest.log
+
 # Eclipse files #
 .project
 .metadata
