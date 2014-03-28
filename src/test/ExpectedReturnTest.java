@@ -32,7 +32,7 @@ public class ExpectedReturnTest {
                 "relaxedAssertEquals("
                         + value.getReturnValue()
                         + ", "
-                        + "returnValue"
+                        + "returnValue[0]"
                         + ", IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, "
                         + "IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);",
                 value.toString());

@@ -28,10 +28,10 @@ public class TemplateReaderTest {
     public void testCall() throws FileNotFoundException {
         String str = TemplateReader.readCall();
         String expected = 
-                    "final Object returnValue;\n"
+                    "final Object[] returnValue = new Object[1];\n"
                   + "Thread studentMethodRunner = new Thread() {\n" 
                   + "    public void run() {\n"
-                  + "        returnValue = classInstance.METHOD(ARGS);\n"
+                  + "        returnValue[0] = classInstance.METHOD(ARGS);\n"
                   + "    }\n"
                   + "};\n"
                   + "int timeout = TIMEOUT_TIME;\n"
@@ -91,7 +91,7 @@ public class TemplateReaderTest {
     @Test
     public void testReturn() throws FileNotFoundException {
         String str = TemplateReader.readReturn();
-        String expected = "relaxedAssertEquals(EXPECTED, returnValue,"
+        String expected = "relaxedAssertEquals(EXPECTED, returnValue[0],"
                 + " IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
                 + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
         LogManager.getRootLogger().info(str);
@@ -132,7 +132,7 @@ public class TemplateReaderTest {
     @Test
     public void useMethodDoReadForCodeCoverage() throws FileNotFoundException {
         String str = TemplateReader.readTemplate("Return.txt");
-        String expected = "relaxedAssertEquals(EXPECTED, returnValue,"
+        String expected = "relaxedAssertEquals(EXPECTED, returnValue[0],"
                 + " IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
                 + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
         LogManager.getRootLogger().info(str);
