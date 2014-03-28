@@ -1,4 +1,5 @@
 public class StudentSolutionSet1 {
+    
     public int add1(int num) {
         return num + 1;
     }
