@@ -1,18 +1,16 @@
 package view;
 
-/** @dillon: this class is the graphical view of our system.
- *  the user will use this gui to interact with the model.
- **/
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
- * @author dillon This is the main class, we run it to run the GUI.
+ * This is the main graphical class.
+ * We run this class to run the GUI, and start the whole program.
+ * 
+ * @author dillon
  */
 public class View extends Application {
 
