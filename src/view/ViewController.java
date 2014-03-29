@@ -188,7 +188,7 @@ public class ViewController {
         ptestCase.setIgnoreCasing(ignoreCasing);
         ptestCase.setIgnoreWhitespace(ignoreWhitespace);
         ptestCase.setIgnorePunctuation(ignorePunctuation);
-        ptestCase.setReturnVoid(returnVoid);
+        ptestCase.setIsVoid(returnVoid);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
