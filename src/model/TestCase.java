@@ -265,6 +265,7 @@ public class TestCase {
                 ignoreWhitespace + "");
         template = template.replace("IS_IGNORE_PUNCTUATION", 
                 ignorePunctuation + "");
+        template = template.replace("IS_VOID", isVoid + "");
         return template;
     }
 }
