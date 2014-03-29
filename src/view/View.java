@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 /**
  * This is the main graphical class.
  * We run this class to run the GUI, and start the whole program.
+ * 
  * @author dillon
  */
 public class View extends Application {
