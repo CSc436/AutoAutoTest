@@ -1,7 +1,11 @@
 final Object returnValue;
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue = classInstance.METHOD(ARGS);
+		if (IS_VOID) {
+        	classInstance.METHOD(ARGS);
+        } else {
+        	returnValue = classInstance.METHOD(ARGS);
+        }
     }
 };
 int timeout = TIMEOUT_TIME;
