@@ -35,7 +35,7 @@ public class ViewController {
     private boolean ignoreCasing;
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
-    private boolean returnVoid;
+    private boolean isVoid;
 
     @FXML
     private TextField namefield;
@@ -165,7 +165,7 @@ public class ViewController {
         ignoreCasing = ignoreCasingBox.isSelected();
         ignoreWhitespace = ignoreWhitespaceBox.isSelected();
         ignorePunctuation = ignorePunctuationBox.isSelected();
-        returnVoid = returnVoidBox.isSelected();
+        isVoid = returnVoidBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -188,7 +188,7 @@ public class ViewController {
         ptestCase.setIgnoreCasing(ignoreCasing);
         ptestCase.setIgnoreWhitespace(ignoreWhitespace);
         ptestCase.setIgnorePunctuation(ignorePunctuation);
-        ptestCase.setIsVoid(returnVoid);
+        ptestCase.setIsVoid(isVoid);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
