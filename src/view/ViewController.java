@@ -19,7 +19,6 @@ import model.TestCollection;
  * methods and data for interacting between the model and the view.
  * 
  * @author: Dillon Jeffers
- * 
  */
 public class ViewController {
 
@@ -36,7 +35,7 @@ public class ViewController {
     private boolean ignoreCasing;
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
-
+    private boolean returnVoid;
 
     @FXML
     private TextField namefield;
@@ -64,6 +63,8 @@ public class ViewController {
     private CheckBox ignoreWhitespaceBox;
     @FXML
     private CheckBox ignorePunctuationBox;
+    @FXML
+    private CheckBox returnVoidBox;
     
     /**
      * Generic constructor used for tests.
@@ -164,6 +165,7 @@ public class ViewController {
         ignoreCasing = ignoreCasingBox.isSelected();
         ignoreWhitespace = ignoreWhitespaceBox.isSelected();
         ignorePunctuation = ignorePunctuationBox.isSelected();
+        returnVoid = returnVoidBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -186,6 +188,7 @@ public class ViewController {
         ptestCase.setIgnoreCasing(ignoreCasing);
         ptestCase.setIgnoreWhitespace(ignoreWhitespace);
         ptestCase.setIgnorePunctuation(ignorePunctuation);
+        ptestCase.setReturnVoid(returnVoid);
         try {
             int time = Integer.parseInt(timeoutlimit);
             ptestCase.setTimeoutTime(time);
