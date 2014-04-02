@@ -8,8 +8,11 @@ import javafx.stage.Stage;
 
 /**
  * This class starts the GUI and the whole program.
+ * 
  * @author dillon
  */
+
+// test this comment
 public class View extends Application {
 
     private static final int GUI_WIDTH = 750;
