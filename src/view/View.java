@@ -11,8 +11,6 @@ import javafx.stage.Stage;
  * 
  * @author dillon
  */
-
-// test this comment
 public class View extends Application {
 
     private static final int GUI_WIDTH = 750;
