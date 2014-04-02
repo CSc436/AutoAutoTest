@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 /**
  * This class starts the GUI and the whole program.
- * 
  * @author dillon
  */
 public class View extends Application {
