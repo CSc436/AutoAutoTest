@@ -7,8 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * This is the main graphical class.
- * We run this class to run the GUI, and start the whole program.
+ * This class starts the GUI and the whole program.
  * 
  * @author dillon
  */
