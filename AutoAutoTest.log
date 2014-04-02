@@ -1,4 +1,0 @@
-12:04:42.757 [JavaFX Application Thread] ERROR - java.lang.NumberFormatException: For input string: "k"
-12:04:42.759 [JavaFX Application Thread] ERROR - java.lang.NumberFormatException: For input string: "k"
-12:05:37.962 [main] INFO  - relaxedAssertEquals(3.14, returnValue[0], IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);
-12:05:53.072 [main] INFO  - relaxedAssertEquals(3.14, returnValue[0], IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);
