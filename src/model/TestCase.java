@@ -252,10 +252,12 @@ public class TestCase {
         String template = TemplateReader.readTest();
         template = template.replace("CALL_LINE", TemplateReader.readCall());
         if (isVoid) {
-            template = template.replace("RUN", TemplateReader.readCallRunVoid());
+            template = template.replace("RUN",
+                    TemplateReader.readCallRunVoid());
         } else {
             template = template.replace("RUN", TemplateReader.readCallRun());
-            template = template.replace("RETURN_LINE", expectedReturn.toString()); // only run this if not void
+            template = template.replace("RETURN_LINE",
+                    expectedReturn.toString());
         }
         template = template.replace("OUTPUT_LINE", expectedOutput.toString());
         template = template.replace("INPUT_LINE", stockedInput.toString());

@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 import model.TestCase;
 
 import org.apache.logging.log4j.LogManager;
@@ -193,6 +194,20 @@ public class TestCaseTest {
         assertEquals(5, precisionCase.getFloatPrecision());
         precisionCase.setFloatPrecision(3);
         assertEquals(3, precisionCase.getFloatPrecision());
+    }
+    
+    /**
+     * Tests the toString method in the Test Case
+     * for a method that returns void.
+     */
+    @Test
+    public void testVoidtoString() {
+        TestCase voidCase = new TestCase();
+        voidCase.setIsVoid(true);
+        String voidString = voidCase.toString();
+        voidCase.setIsVoid(false);
+        String notVoidString = voidCase.toString();
+        assertNotEquals(voidString, notVoidString);
     }
 
 }

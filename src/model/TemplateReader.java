@@ -47,7 +47,8 @@ public class TemplateReader {
     }
     
     /**
-     * @return The run command that runs the test for a function that does not return void.
+     * @return The run command that runs the test for
+     * a function that does not return void.
      */
     public static String readCallRun() {
         return templateReader.doRead("Call_Run.txt");
