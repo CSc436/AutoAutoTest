@@ -241,8 +241,6 @@ public class TestCase {
         return isVoid;
     }
     
-    
-
     /**
      * @return The code that will test the method based on the parameters
      *         specified.
@@ -265,6 +263,7 @@ public class TestCase {
                 ignoreWhitespace + "");
         template = template.replace("IS_IGNORE_PUNCTUATION", 
                 ignorePunctuation + "");
+        template = template.replace("IS_RETURN_VALUE_VOID", isVoid + "");
         return template;
     }
 }
