@@ -1,0 +1,1 @@
+returnValue[0] = classInstance.METHOD(ARGS);

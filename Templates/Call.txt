@@ -1,11 +1,7 @@
 final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-		if (IS_VOID) {
-        	classInstance.METHOD(ARGS);
-        } else {
-        	returnValue[0] = classInstance.METHOD(ARGS);
-        }
+        RUN
     }
 };
 int timeout = TIMEOUT_TIME;
