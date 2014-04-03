@@ -126,34 +126,16 @@ public class ViewController {
         }
     }
 
-    /**
-     * This method is a sub method to make the model generate a new test. A new
-     * test is created and all of the required data is sent it.
-     * 
-     * @return Returns the newly created testcase. This is mostly for testing
-     *         purposes.
-     */
     private TestCase generateTest() {
         TestCase oneTestCase = myTestCollection.newTest();
         sendAllDataToTestCase(oneTestCase);
         return oneTestCase;
     }
 
-    /**
-     * Deletes the test from the TestCollection at the specified index.
-     * 
-     * @param pindex
-     *            The integer index of the desired TestCase.
-     */
     private void deleteTest(int pindex) {
         myTestCollection.removeTest(pindex);
     }
 
-    /**
-     * This method is a sub method that is used to pull all of the data from the
-     * text fields in the gui.
-     * 
-     */
     private void getAllData() {
         testname = namefield.getText();
         params = paramsfield.getText();
@@ -170,13 +152,6 @@ public class ViewController {
         floatprecision = floatprecisionfield.getText();
     }
 
-    /**
-     * This method is a sub method that sends all of the collected data to the
-     * model.
-     * 
-     * @param ptestCase
-     *            An individual test case.
-     */
     private void sendAllDataToTestCase(TestCase ptestCase) {
         ptestCase.setArgs(params);
         ptestCase.setClassName(classname);
@@ -203,14 +178,6 @@ public class ViewController {
         }
     }
 
-    /**
-     * Gets a string representation of the given test case for the listview.
-     * 
-     * @param pnewTestCase
-     *            The test to get info for.
-     * @return message This method creates a string that is used for the list
-     *         view.
-     */
     private String getTestForView(TestCase pnewTestCase) {
         String lname = pnewTestCase.getTestName();
         String message = "Test Name: " + lname;
