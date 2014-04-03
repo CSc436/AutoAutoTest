@@ -16,7 +16,7 @@ public class CLASSNAME {
             RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
                 isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, precision
             );
-            assertTrue(checker.isAcceptable((String) expected, (String) actual);
+            assertTrue(checker.isAcceptable((String) expected, (String) actual));
         } else {
             assertEquals(expected, actual);
         }
