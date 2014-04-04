@@ -40,7 +40,7 @@
                 </fileset>
                 <pathelement path="./bin"/>
             </classpath>
-            <arg value="NAME_OF_JAVA_FILE_SAVED"/>
+            <arg value="Hello"/>
         </java>
     </target>
 </project>
