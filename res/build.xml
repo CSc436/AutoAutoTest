@@ -11,6 +11,7 @@
     <!--============================ Properties ===========================-->
     <property name="src" location="src"/>
     <property name="bin" location="bin"/>
+    <property name="lib" location="lib"/>
 
     <!--============================= Targets =============================-->
     <target name="clean">
@@ -24,7 +25,7 @@
     <target name="compile" depends="init">
         <javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
             <classpath>
-                <fileset dir=".">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -34,12 +35,12 @@
     <target name="test" depends="compile">
         <java classname="org.junit.runner.JUnitCore">
             <classpath>
-                <fileset dir=".">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
                 <pathelement path="./bin"/>
             </classpath>
-            <arg value="Test"/>
+            <arg value="NAME_OF_JAVA_FILE_SAVED"/>
         </java>
     </target>
 </project>
