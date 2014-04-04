@@ -13,8 +13,8 @@ import javafx.stage.Stage;
  */
 public class View extends Application {
 
-    private static final int GUI_WIDTH = 750;
-    private static final int GUI_HEIGHT = 500;
+    private static final int GUI_WIDTH = 890;
+    private static final int GUI_HEIGHT = 550;
 
     /**
      * This is the generic main method, it launches the gui.
