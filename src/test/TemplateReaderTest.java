@@ -102,7 +102,7 @@ public class TemplateReaderTest {
                 + "isIgnorePunctuation, precision\n"
                 + "            );\n"
                 + "            assertTrue(checker.isAcceptable((String) "
-                + "expected, (String) actual);\n"
+                + "expected, (String) actual));\n"
                 + "        } else {\n"
                 + "            assertEquals(expected, actual);\n"
                 + "        }\n"
