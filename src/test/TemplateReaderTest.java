@@ -31,7 +31,7 @@ public class TemplateReaderTest {
                     "final Object[] returnValue = new Object[1];\n"
                   + "Thread studentMethodRunner = new Thread() {\n" 
                   + "    public void run() {\n"
-                  + "        returnValue[0] = classInstance.METHOD(ARGS);\n"
+                  + "        RUN\n"
                   + "    }\n"
                   + "};\n"
                   + "int timeout = TIMEOUT_TIME;\n"
@@ -44,6 +44,73 @@ public class TemplateReaderTest {
                   + "}";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
+    }
+    
+    /**
+     * Tests the readCallRun method in Template Reader.
+     * @throws FileNotFoundException If file is not found.
+     */
+    @Test
+    public void testCallRun() throws FileNotFoundException {
+        String actual = TemplateReader.readCallRun();
+        String expected = "returnValue[0] = classInstance.METHOD(ARGS);";
+        LogManager.getRootLogger().info(actual);
+        assertEquals(expected, actual);
+    }
+    
+    /**
+     * Tests the readCallRunVoid method in Template Reader.
+     * @throws FileNotFoundException If file is not found.
+     */
+    @Test
+    public void testCallRunVoid() throws FileNotFoundException {
+        String actual = TemplateReader.readCallRunVoid();
+        String expected = "classInstance.METHOD(ARGS);";
+        LogManager.getRootLogger().info(actual);
+        assertEquals(expected, actual);
+    }
+    
+    /**
+     * Tests the readCollection method in Template Reader.
+     * @throws FileNotFoundException If file is not found.
+     */
+    @Test
+    public void testReadCollection() throws FileNotFoundException {
+        String actual = TemplateReader.readCollection();
+        String expected = "import static org.junit.Assert.assertEquals;\n"
+                + "import static org.junit.Assert.fail;\n"
+                + "import model.FakeStandardIn;\n"
+                + "import model.FakeStandardOutput;\n"
+                + "import org.junit.Test;\n\n"
+                + "public class CLASSNAME {\n\n"
+                + "    public void relaxedAssertEquals(Object expected,"
+                + " Object actual, boolean isIgnoreCasing, boolean"
+                + " isIgnoreWhitespace, boolean isIgnorePunctuation,"
+                + " int floatPrecision) {\n"
+                + "        double precision = Math.pow(10, "
+                + "-(floatPrecision));\n"
+                + "        if (expected instanceof Double || "
+                + "expected instanceof Float) {\n"
+                + "            double expectedValue = (double) expected;\n"
+                + "            double actualValue = (double) actual;\n"
+                + "            assertEquals(expectedValue, actualValue, "
+                + "precision);\n"
+                + "        } else if(expected instanceof String) {\n"
+                + "            RelaxedStringFloatCheck checker = "
+                + "new RelaxedStringFloatCheck(\n"
+                + "                isIgnoreCasing, isIgnoreWhitespace, "
+                + "isIgnorePunctuation, precision\n"
+                + "            );\n"
+                + "            assertTrue(checker.isAcceptable((String) "
+                + "expected, (String) actual);\n"
+                + "        } else {\n"
+                + "            assertEquals(expected, actual);\n"
+                + "        }\n"
+                + "    }\n\n"
+                + "TESTS\n\n"
+                + "}";
+        LogManager.getRootLogger().info(actual);
+        assertEquals(expected, actual);
     }
 
     /**

@@ -38,6 +38,21 @@ public class TemplateReader {
     public static String readCall() {
         return templateReader.doRead("Call.txt");
     }
+    
+    /**
+     * @return The run command for the test for a function that returns void.
+     */
+    public static String readCallRunVoid() {
+        return templateReader.doRead("Call_Run_Void.txt");
+    }
+    
+    /**
+     * @return The run command that runs the test for
+     * a function that does not return void.
+     */
+    public static String readCallRun() {
+        return templateReader.doRead("Call_Run.txt");
+    }
 
     /**
      * @return The contents of Input.txt
