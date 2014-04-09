@@ -82,7 +82,8 @@ public class TestCollection {
      * @param filePath
      *            The place to write the Java code to
      * @return The name of the file in the path, without the .java extension
-     * @throws Exception If the filename isn't a valid Java filename
+     * @throws Exception
+     *             If the filename isn't a valid Java filename
      */
     private String getClassName(String filePath) throws Exception {
         File destination = new File(filePath);
@@ -118,6 +119,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
+        
         return template;
     }
 
@@ -149,3 +151,4 @@ public class TestCollection {
     }
 
 }
+

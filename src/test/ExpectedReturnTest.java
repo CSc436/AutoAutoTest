@@ -1,9 +1,8 @@
 package test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import model.ExpectedReturn;
-import model.TestingNameConstants;
-
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 
 /**
@@ -21,16 +20,21 @@ public class ExpectedReturnTest {
     public void returnValuesTest() {
 
         ExpectedReturn value = new ExpectedReturn();
-        assertTrue(value.getReturnValue().equals(""));
+        assertEquals("", value.getReturnValue());
 
         value.setReturnValue("false");
-        assertTrue(value.getReturnValue().equals("false"));
+        assertEquals("false", value.getReturnValue());
 
         value = new ExpectedReturn("3.14");
-        assertTrue(value.getReturnValue().equals("3.14"));
-
-        assertTrue(value.toString().equals(
-                "assertEquals(" + TestingNameConstants.RETURN_VALUE + ", "
-                        + value.getReturnValue() + ");"));
+        assertEquals("3.14", value.getReturnValue());
+        LogManager.getRootLogger().info(value.toString());
+        assertEquals(
+                "relaxedAssertEquals("
+                        + value.getReturnValue()
+                        + ", "
+                        + "returnValue[0]"
+                        + ", IS_IGNORE_CASING, IS_IGNORE_WHITESPACE, "
+                        + "IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);",
+                value.toString());
     }
 }

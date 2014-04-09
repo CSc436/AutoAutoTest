@@ -2,11 +2,9 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import model.FakeStandardIn;
-import model.TemplateReader;
 import model.TestCollection;
 
 import org.junit.Test;
@@ -19,17 +17,6 @@ import org.junit.Test;
  * 
  */
 public class ExceptionsTest {
-
-    /**
-     * Asks for the contents of a non-existent file. Should receive a blank.
-     * 
-     * @throws FileNotFoundException
-     *             when file is not found
-     */
-    @Test(expected = FileNotFoundException.class)
-    public void testFileNotFound() throws FileNotFoundException {
-        TemplateReader.readTemplate("FileNotFound.txt");
-    }
 
     /**
      * Ensure that an exception is thrown when trying to write to a non .java
@@ -54,7 +41,7 @@ public class ExceptionsTest {
     public void testSavingToFileWithTwoDots() throws Exception {
         TestCollection.getInstance().save("Lol..java");
     }
-    
+
     /**
      * Try reading more elements than the size of the array.
      * 
@@ -69,10 +56,12 @@ public class ExceptionsTest {
         byte[] ba = new byte[6];
         myFSI.read(ba, 0, 10);
     }
-    
+
     /**
      * Test trying to read a negative amount of characters.
-     * @throws IOException (This should never happen)
+     * 
+     * @throws IOException
+     *             (This should never happen)
      */
     @SuppressWarnings("resource")
     @Test(expected = IndexOutOfBoundsException.class)

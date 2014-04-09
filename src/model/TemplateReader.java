@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+
 /**
  * TemplateReader reads somes text files and returns them as strings. The files
  * are templates for a generic test.
@@ -22,52 +24,61 @@ public class TemplateReader {
     private TemplateReader() {
 
     }
-    
+
     /**
      * @return The contents of Collection.txt
-     * @throws FileNotFoundException If Collection.txt doesn't exist
      */
-    public static String readCollection() throws FileNotFoundException {
+    public static String readCollection() {
         return templateReader.doRead("Collection.txt");
     }
 
     /**
      * @return The contents of Call.txt
-     * @throws FileNotFoundException If Call.txt doesn't exist
      */
-    public static String readCall() throws FileNotFoundException {
+    public static String readCall() {
         return templateReader.doRead("Call.txt");
+    }
+    
+    /**
+     * @return The run command for the test for a function that returns void.
+     */
+    public static String readCallRunVoid() {
+        return templateReader.doRead("Call_Run_Void.txt");
+    }
+    
+    /**
+     * @return The run command that runs the test for
+     * a function that does not return void.
+     */
+    public static String readCallRun() {
+        return templateReader.doRead("Call_Run.txt");
     }
 
     /**
      * @return The contents of Input.txt
-     * @throws FileNotFoundException  if Input.txt doesn't exist
      */
-    public static String readInput() throws FileNotFoundException {
+    public static String readInput() {
         return templateReader.doRead("Input.txt");
     }
 
     /**
      * @return The contents of Output.txt
-     * @throws FileNotFoundException If Output.txt doesn't exist
      */
-    public static String readOutput() throws FileNotFoundException {
+    public static String readOutput() {
         return templateReader.doRead("Output.txt");
     }
 
     /**
      * @return The contents of Return.txt
-     * @throws FileNotFoundException If Return.txt doesn't exist
      */
-    public static String readReturn() throws FileNotFoundException {
+    public static String readReturn() {
         return templateReader.doRead("Return.txt");
     }
-    
+
     /**
      * @return The contents of Test.txt
-     * @throws FileNotFoundException If Test.txt doesn't exist
      */
-    public static String readTest() throws FileNotFoundException {
+    public static String readTest() {
         return templateReader.doRead("Test.txt");
     }
 
@@ -78,10 +89,8 @@ public class TemplateReader {
      * @param inputFile
      *            The file to read.
      * @return The contents of the file as a String
-     * @throws FileNotFoundException If the inputFile doesn't exist
      */
-    public static String readTemplate(String inputFile)
-            throws FileNotFoundException {
+    public static String readTemplate(String inputFile) {
         return templateReader.doRead(inputFile);
     }
 
@@ -89,19 +98,20 @@ public class TemplateReader {
      * @param inputFile
      *            The file to read.
      * @return The file as a string. If file is not found, returns "".
-     * @throws FileNotFoundException 
      */
-    private String doRead(String inputFile) throws FileNotFoundException {
+    private String doRead(String inputFile) {
         // add directory to path
-        inputFile = Paths.get("Templates", inputFile).toString();
-        Scanner scanner = new Scanner(new File(inputFile), "UTF8");
-
-        String str = "";
-        while (scanner.hasNextLine()) {
-            str = str.concat(scanner.nextLine() + "\n");
+        try {
+            inputFile = Paths.get("Templates", inputFile).toString();
+            Scanner scanner = new Scanner(new File(inputFile), "UTF8");
+            scanner.useDelimiter("\\Z");
+            String str = scanner.next();
+            str = str.replace("\r\n", "\n").replace("\r", "\n");
+            scanner.close();
+            return str;
+        } catch (FileNotFoundException e) {
+            LogManager.getRootLogger().error(e);
         }
-        str = str.trim();
-        scanner.close();
-        return str;
+        return "";
     }
 }

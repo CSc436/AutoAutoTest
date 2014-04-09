@@ -1,1 +1,14 @@
-Object returnValue = ClassInstance.METHOD(ARGS);
+final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        RUN
+    }
+};
+int timeout = TIMEOUT_TIME;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}

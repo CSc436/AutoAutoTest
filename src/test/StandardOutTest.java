@@ -1,8 +1,7 @@
 package test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import model.ExpectedStandardOut;
-import model.TestingNameConstants;
 
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class StandardOutTest {
     @Test
     public void standardOutEmptyConstructorTest() {
         ExpectedStandardOut so = new ExpectedStandardOut();
-        assertTrue(so.getStandardOutValue().equals(""));
+        assertEquals("", so.getStandardOutValue());
     }
 
     /**
@@ -27,9 +26,10 @@ public class StandardOutTest {
      */
     @Test
     public void standardOutNonEmptyConstructorTest() {
-        ExpectedStandardOut so = new ExpectedStandardOut(
-                "a different\n message");
-        assertTrue(so.getStandardOutValue().equals("a different\n message"));
+        ExpectedStandardOut so = new ExpectedStandardOut("a different"
+                + System.lineSeparator() + " message");
+        assertEquals("a different" + System.lineSeparator() + " message",
+                so.getStandardOutValue());
     }
 
     /**
@@ -40,7 +40,7 @@ public class StandardOutTest {
         ExpectedStandardOut so = new ExpectedStandardOut();
 
         so.setStandardOutValue("a line of text");
-        assertTrue(so.getStandardOutValue().equals("a line of text"));
+        assertEquals("a line of text", so.getStandardOutValue());
     }
 
     /**
@@ -48,11 +48,10 @@ public class StandardOutTest {
      */
     @Test
     public void standardOutToStringTest() {
-        ExpectedStandardOut so = new ExpectedStandardOut(
-                "a different\n message");
-
-        assertTrue(so.toString().equals(
-                "assertEquals(" + TestingNameConstants.STANDARD_OUT_VALUE
-                        + ", " + so.getStandardOutValue() + ");"));
+        ExpectedStandardOut so = new ExpectedStandardOut("a different message");
+        String expected = "relaxedAssertEquals(\"a different message\","
+                + " fso.getOutput(), IS_IGNORE_CASING, IS_IGNORE_WHITESPACE,"
+                + " IS_IGNORE_PUNCTUATION, FLOAT_PRECISION);";
+        assertEquals(expected, so.toString());
     }
 }

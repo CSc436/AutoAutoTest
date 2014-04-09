@@ -2,7 +2,8 @@
         name="AutoAutoTesting"
         default="all"
         basedir="."
-        xmlns:jacoco="antlib:org.jacoco.ant">
+        xmlns:jacoco="antlib:org.jacoco.ant"
+	    xmlns:fx="javafx:com.sun.javafx.tools.ant">
 
     <description>
         build file for Automated Automated testing
@@ -35,6 +36,10 @@
         <classpath path="${dev}/jacocoant.jar"/>
     </taskdef>
 
+	<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+	             uri="javafx:com.sun.javafx.tools.ant"
+	             classpath="${dev}/ant-javafx.jar"/>
+	
     <!--============================= Targets =============================-->
     <target name="clean">
         <delete dir="${bin}"/>
@@ -49,6 +54,16 @@
         <mkdir dir="${bin}"/>
         <mkdir dir="${dist}"/>
         <mkdir dir="${test.output}"/>
+        <copy todir="${bin}/view">
+            <fileset dir="${src}/view">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy todir="${bin}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="compile" depends="init">
@@ -90,7 +105,7 @@
                 </sourcefiles>
             </structure>
             <check>
-                <rule element="CLASS" excludes="package-info:*Constants*:*ExceptionsTest">
+                <rule element="CLASS" excludes="package-info:*Constants*:*ExceptionsTest:*view*">
                     <limit counter="INSTRUCTION" value="COVEREDRATIO" minimum="1.00"/>
                     <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
                 </rule>
@@ -110,20 +125,20 @@
                 output="text"
                 failOnError="true"
                 excludefilter="${config}/findbugs_ignore_tests.xml">
-            <auxClassPath path="${dev}"/>
+            <auxClassPath path="${dev};${lib}"/>
             <sourcePath path="${src}"/>
             <class location="${bin}"/>
         </findbugs>
     </target>
 
     <target name="dist" depends="compile">
-        <jar destfile="${dist}/AutoAutoTest.jar">
-            <fileset dir="${bin}" excludes="**/Test/*.java"/>
-            <!-- <zipfileset dir="${lib}/**/*.jar"/> -->
-            <manifest>
-                <attribute name="Main-Class" value="Main"/>
-            </manifest>
-        </jar>
+        <fx:jar destfile="${dist}/AutoAutoTest.jar" verbose="true">
+            <fx:application mainClass="view.View" />
+            <fx:resources>
+                <fx:fileset dir="${dist}" includes="lib/**"  type="jar"/>
+            </fx:resources>
+            <fileset dir="${bin}" excludes="**/Test/*.java" />
+        </fx:jar>
     </target>
 
     <target name="all" depends="coverage,checkstyle,findbugs,dist"/>

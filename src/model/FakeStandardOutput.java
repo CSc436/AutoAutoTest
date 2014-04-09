@@ -2,10 +2,7 @@ package model;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-
-
-//Carlos Gallego
-//Feb 7, 2014
+import org.apache.logging.log4j.LogManager;
 
 /**
  * This class creates a "FakeStandardOutput", as a string so testing can be
@@ -15,13 +12,10 @@ import java.io.UnsupportedEncodingException;
  */
 public class FakeStandardOutput extends PrintStream {
 
-    /**
-     * This is an instance variable that will get returned.
-     */
     private StringOutputStream innerStream;
 
     /**
-     * Summary: This is a constructor to create a FakeStandardOutput.
+     * Create a new FakeStandardOutput stream with an empty buffer.
      * 
      * @throws UnsupportedEncodingException
      *             if the machine somehow doesn't support UTF8
@@ -29,99 +23,88 @@ public class FakeStandardOutput extends PrintStream {
     public FakeStandardOutput() throws UnsupportedEncodingException {
         super(new StringOutputStream(), true, "UTF8");
         innerStream = (StringOutputStream) super.out;
-    } 
+    }
 
     /**
-     * This is a method that will take in an object, and put it into an
-     * instance variable it as a string.
+     * Add the given object to the end of the buffer as a string.
      * 
      * @param someObj
-     *            is an object that can be passed in and converted to a string.
+     *            The object to append to the end of the buffer.
      */
     public void print(Object someObj) {
         this.print(someObj.toString());
-    } 
+    }
 
     /**
-     * This is a method that will take in an string, and put it into an
-     * instance variable it as a string.
+     * This function appends the given string to the output buffer.
      * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
+     * @param someString
+     *            the string appended to the end of the buffer.
      */
-    public void print(String blah) {
+    public void print(String someString) {
         try {
-            innerStream.write(blah.getBytes("UTF8"));
+            innerStream.write(someString.getBytes("UTF8"));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogManager.getRootLogger().error(e);
         }
-    } 
-
-    /**
-     * This is a method that will take in an int, and put it into an
-     * instance variable as a string.
-     * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
-     */
-    public void print(int blah) {
-        print(blah + "");
-    } 
-
-    /**
-     * This is a method that will take in a double, and put it into an
-     * instance variable as a string.
-     * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
-     */
-    public void print(double blah) {
-        print(blah + "");
     }
 
     /**
-     * This is a method that will take in a float, and put it into an
-     * instance variable as a string.
+     * Add the given int to the end of the buffer as a string.
      * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
+     * @param someInt
+     *            The int to append to the end of the buffer.
      */
-    public void print(float blah) {
-        print(blah + "");
-    } 
-
-    /**
-     * This is a method that will take in a long, and put it into an
-     * instance variable as a string.
-     * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
-     */
-    public void print(long blah) {
-        print(blah + "");
+    public void print(int someInt) {
+        print(someInt + "");
     }
 
     /**
-     * This is a method that will take in a boolean, and put it into an
-     * instance variable as a string.
+     * Add the given double to the end of the buffer as a string.
      * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
+     * @param someDouble the double to add at the end of the buffer.
      */
-    public void print(boolean blah) {
-        print(blah + "");
+    public void print(double someDouble) {
+        print(someDouble + "");
     }
 
     /**
-     * This is a method that will take in a char, and put it into an
-     * instance variable as a string.
+     * Add the given float to the end of the buffer as a string.
      * 
-     * @param blah
-     *            is an object that can be passed in and converted to a string.
+     * @param someFloat the float to add at the end of the buffer.
      */
-    public void print(char blah) {
-        print(blah + "");
+    public void print(float someFloat) {
+        print(someFloat + "");
+    }
+
+    /**
+     * Add the given long to the end of the buffer as a string.
+     * 
+     * @param someLong
+     *            The long to append to the end of the buffer.
+     */
+    public void print(long someLong) {
+        print(someLong + "");
+    }
+
+    /**
+     * Add the given boolean to the end of the buffer as a string.
+     * 
+     * @param someBoolean
+     *            The boolean to append to the end of the buffer.
+     */
+    public void print(boolean someBoolean) {
+        print(someBoolean + "");
+    }
+
+    /**
+     * Add the given char to the end of the buffer as a string.
+     * 
+     * @param someChar
+     *            The char to append to the end of the buffer.
+     */
+    public void print(char someChar) {
+        print(someChar + "");
     }
 
     /**
@@ -134,4 +117,4 @@ public class FakeStandardOutput extends PrintStream {
         return innerStream.getString();
     }
 
-} 
+}

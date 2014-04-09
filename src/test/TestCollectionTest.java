@@ -24,14 +24,15 @@ import org.junit.Test;
  * @author Cody
  */
 public class TestCollectionTest {
-    
+
     private TestCollection collection;
     private static File tempDir;
-    
+
     /**
      * Create a temporary directory for us to dump file into.
      * 
-     * @throws IOException If unable to create the temporary directory
+     * @throws IOException
+     *             If unable to create the temporary directory
      */
     @BeforeClass
     public static void createTempDir() throws IOException {
@@ -42,7 +43,7 @@ public class TestCollectionTest {
         tempDir.delete();
         tempDir.mkdir();
     }
-    
+
     /**
      * Remove the temporary directory.
      */
@@ -50,11 +51,12 @@ public class TestCollectionTest {
     public static void removeTempDir() {
         tempDir.delete();
     }
-    
+
     /**
      * Create a new TestCollection Object before each JUnit test case runs.
      * 
-     * @throws Exception If something goes wrong with reflection
+     * @throws Exception
+     *             If something goes wrong with reflection
      */
     @Before
     public void resetTestCollection() throws Exception {
@@ -75,7 +77,7 @@ public class TestCollectionTest {
         assertEquals(1, collection.testCount());
         assertNotNull(collection.getTest(0));
     }
-    
+
     /**
      * Ensure that many tests can be added to the collection.
      */
@@ -89,7 +91,7 @@ public class TestCollectionTest {
         assertNotNull(collection.getTest(1));
         assertNotNull(collection.getTest(2));
     }
-    
+
     /**
      * Ensure that tests can be removed from the collection.
      */
@@ -108,11 +110,12 @@ public class TestCollectionTest {
         collection.removeTest(0);
         assertEquals(0, collection.testCount());
     }
-    
+
     /**
      * Ensure that a .java file can be written to disk.
      * 
-     * @throws Exception If the test file couldn't be written
+     * @throws Exception
+     *             If the test file couldn't be written
      */
     @Test
     public void testSavingTests() throws Exception {
@@ -125,11 +128,12 @@ public class TestCollectionTest {
         collection.save(path);
         assertTrue(new File(path).exists());
     }
-    
+
     /**
      * Ensure that a .java file can be written to disk.
      * 
-     * @throws Exception If the test file couldn't be written
+     * @throws Exception
+     *             If the test file couldn't be written
      */
     @Test
     public void testSavingTestWithoutJavaExtension() throws Exception {
@@ -140,7 +144,7 @@ public class TestCollectionTest {
         path += ".java";
         assertTrue(new File(path).exists());
     }
-    
+
     /**
      * Ensure that getInstance() actually returns a TestCollection Object.
      */
@@ -149,7 +153,7 @@ public class TestCollectionTest {
         TestCollection theCollection = TestCollection.getInstance();
         assertTrue(theCollection instanceof TestCollection);
     }
-    
+
     /**
      * Ensure that get instance returns the same Object each time
      */
@@ -159,6 +163,6 @@ public class TestCollectionTest {
         TestCollection collection2 = TestCollection.getInstance();
         assertSame(collection1, collection2);
     }
-    
 
 }
+

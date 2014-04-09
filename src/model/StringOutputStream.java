@@ -3,11 +3,13 @@ package model;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.logging.log4j.LogManager;
+
 /**
- * This is a class that returns a string instance variable that
- *         was created using a byte array.
+ * This is a class that returns a string instance variable that was created
+ * using a byte array.
  * 
- * @author Carlos G 
+ * @author Carlos G
  * 
  */
 public class StringOutputStream extends OutputStream {
@@ -19,11 +21,11 @@ public class StringOutputStream extends OutputStream {
      */
     public StringOutputStream() {
         outputBuffer = "";
-    } 
+    }
 
     /**
-     * This is a void method that will take an array of bites, and
-     * create a string out of them.
+     * This is a void method that will take an array of bites, and create a
+     * string out of them.
      * 
      * @param array
      *            is the array that is going to be passed into the method.
@@ -33,17 +35,14 @@ public class StringOutputStream extends OutputStream {
         try {
             bytesAsString = new String(array, "UTF8");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogManager.getRootLogger().error(e);
         }
-//        System.out.println("outputbuffer = " + outputBuffer);
         outputBuffer += bytesAsString;
-//        System.out.println("outputbuffer = " + outputBuffer);
     } 
 
     /**
-     * This is a getter that simply returns the string instance
-     * variable after it has been manipulated.
+     * This is a getter that simply returns the string instance variable after
+     * it has been manipulated.
      * 
      * @return String
      */
@@ -64,6 +63,6 @@ public class StringOutputStream extends OutputStream {
     public void write(int arg0) throws IOException {
         char something = (char) arg0;
         outputBuffer += something;
-    } 
+    }
 
-} 
+}
