@@ -13,9 +13,6 @@ import javafx.stage.Stage;
  */
 public class View extends Application {
 
-    private static final int GUI_WIDTH = 750;
-    private static final int GUI_HEIGHT = 500;
-
     /**
      * This is the generic main method, it launches the gui.
      * 
@@ -29,7 +26,7 @@ public class View extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
-        Scene scene = new Scene(root, GUI_WIDTH, GUI_HEIGHT);
+        Scene scene = new Scene(root);
         stage.setTitle("AutoAuto Tester");
         stage.setScene(scene);
         stage.show();
