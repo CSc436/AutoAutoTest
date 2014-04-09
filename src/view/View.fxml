@@ -38,7 +38,7 @@
              GridPane.rowIndex="0">
         
         <!-- These are the text labels. -->
-        <Label text="Name:"
+        <Label text="Test Name:"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="1"/>
         <Label text="Parameters:"
