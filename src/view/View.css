@@ -1,6 +1,6 @@
 .root {
-        -fx-background-color: rgb(81,81,81);
-	-fx-padding: 10px;
+    -fx-background-color: rgb(81,81,81);
+    -fx-padding: 10px;
 }
 
 .label {
