@@ -254,6 +254,7 @@ public class TestCase {
         if (isVoid) {
             template = template.replace("RUN",
                     TemplateReader.readCallRunVoid());
+            template = template.replace("RETURN_LINE", "");
         } else {
             template = template.replace("RUN", TemplateReader.readCallRun());
             template = template.replace("RETURN_LINE",
