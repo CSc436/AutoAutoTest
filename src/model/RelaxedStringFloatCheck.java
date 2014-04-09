@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -105,6 +104,47 @@ public class RelaxedStringFloatCheck {
             // invalid precision specified
             decPlacesPrecision = DEFAULT_PRECISION;
     }
+    
+    private boolean checkLastCharacters(char chFromExpected, char chFromActual)
+    {
+        boolean ignoreExpected = false;
+        boolean ignoreActual = false;
+        String exp = "" + chFromExpected;
+        String act = "" + chFromActual;
+        
+        // check to see if the two characters are ignorable, in which case
+        // they are deemed to match, or not, in which case they must
+        // actually match
+        
+        if (ignoreWhitespace)
+        {
+            if (isWhitespace(chFromExpected))
+                ignoreExpected = true;
+            
+            if (isWhitespace(chFromActual))
+                ignoreActual = true;
+        }
+        
+        if (ignorePunctuation)
+        {
+            if (isPunctuation(chFromExpected))
+                ignoreExpected = true;
+            
+            if (isPunctuation(chFromActual))
+                ignoreActual = true;
+        }
+        
+        if (ignoreExpected && ignoreActual)
+        {
+            return true;  // both characters are deemed acceptable
+        }
+        else if (ignoreCasing)
+        {
+            return exp.equalsIgnoreCase(act);
+        }
+        else
+        return exp.equals(act);
+    }
 
     /**
      * Determines if the student output is acceptable, compared to the expected
@@ -137,13 +177,14 @@ public class RelaxedStringFloatCheck {
 
         int nbrStartIndex = 0; // used for round and replace
         int nbrEndIndex = 0; // used for round and replace
+        int newIndex = 0;  // used for StringBuilder replace
         String numberAsString = "";
         double numberAsDecimal = 0;
         long numberAsRounded = 0;
 
-        // Note that the pattern matcher is linked to the NEW StringBuilder we
-        // are building.
-        Matcher expectedMatcher = numberPattern.matcher(newExpected);
+        // Note that the pattern matcher is linked to the original input,
+        // not the new StringBuilder we are building.
+        Matcher expectedMatcher = numberPattern.matcher(expected);
 
         while (expectedMatcher.find()) {
             numberAsString = expectedMatcher.group();
@@ -157,16 +198,14 @@ public class RelaxedStringFloatCheck {
             // we now replace the original number with the rounded number (which
             // is now an integer because it was multiplied by
             // 10^decPlacesPrecision)
-            newExpected.replace(nbrStartIndex, nbrEndIndex, ""
+            newIndex = newExpected.indexOf(numberAsString);
+            newExpected.replace(newIndex, newIndex + numberAsString.length(), ""
                     + numberAsRounded);
         } // end of looping thru all numbers in newExpected
 
-        // Note that the pattern matcher is linked to the NEW StringBuilder
-        // we are building.
-        Matcher actualMatcher = numberPattern.matcher(newActual);
-        
- System.out.println("newActual =" + newActual);
- System.out.println("newExpected =" + newExpected);
+        // Note that the pattern matcher is linked to the original input,
+        // not the new StringBuilder we are building.
+        Matcher actualMatcher = numberPattern.matcher(actual);
 
         while (actualMatcher.find()) {
             numberAsString = actualMatcher.group();
@@ -180,7 +219,9 @@ public class RelaxedStringFloatCheck {
             // we now replace the original number with the rounded number (which
             // is now an integer because it was multiplied by
             // 10^decPlacesPrecision)
-            newActual.replace(nbrStartIndex, nbrEndIndex, "" + numberAsRounded);
+            newIndex = newActual.indexOf(numberAsString);
+            newActual.replace(newIndex, newIndex + numberAsString.length(), ""
+                    + numberAsRounded);
         } // end of looping thru all numbers in newActual
 
         // Now, the StringBuilder variables contain the expected and actual with
@@ -250,6 +291,14 @@ public class RelaxedStringFloatCheck {
             // unprocessed character in actual which we can compare to the next
             // non-ignored character from expected, which we are probing
             chFromActual = newActual.charAt(actualIndex);
+            
+            // check to see if we are at the end of both strings, in which case
+            // we could be looking at characters which don't match, but are
+            // supposed to be ignored
+            if ((expectedIndex == expectedLength-1) && (actualIndex == actualLength-1))
+            {
+                return checkLastCharacters(chFromExpected, chFromActual);
+            }
 
             if (charactersMatch(chFromExpected, chFromActual) == false) {
                 // the next non-ignored characters do not match, so the student
@@ -262,22 +311,17 @@ public class RelaxedStringFloatCheck {
                 System.out
                         .println("Actual output (beginning with first difference):"
                                 + newActual.substring(actualIndex));
+                return false;  // quit out of procedure
             }
             // proceed to next iteration of while loop, because there are still
             // characters remaining in the strings which need to be compared.
+            expectedIndex++;
+            actualIndex++;
 
         } // end of while loop
           // if we get here, then the expected and actual have matched (taking
           // into account any relaxed checks)
         return true;
     } // end of isAccaptable
-
-    public static void main(String[] args) {
-        RelaxedStringFloatCheck myRSFC = new RelaxedStringFloatCheck(true,
-                true, true, 2);
-        String expect = "There are 3 items costing $2.49 or more.";
-        String actual = "There are 3.000000000 items costing $2.490000000 or more.";
-        myRSFC.isAcceptable(expect, actual);
-    }
-
+    
 }
