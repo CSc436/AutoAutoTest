@@ -11,6 +11,9 @@ import org.junit.Test;
 
 /**
  * Tests the TemplateReader class.
+ * 
+ * @author Ricky Gorowsky
+ * 
  */
 public class TemplateReaderTest {
 
@@ -25,20 +28,10 @@ public class TemplateReaderTest {
     public void testReading() throws FileNotFoundException {
         String str = TemplateReader.readTemplate("DummyTemplate.txt");
         String expected = 
-                    "final Object[] returnValue = new Object[1];\n"
-                  + "Thread studentMethodRunner = new Thread() {\n" 
-                  + "    public void run() {\n"
-                  + "        RUN\n"
-                  + "    }\n"
-                  + "};\n"
-                  + "int timeout = TIMEOUT_TIME;\n"
-                  + "studentMethodRunner.start();\n"
-                  + "try {Thread.sleep(timeout);}\n" 
-                  + "catch (InterruptedException e) {fail();}\n"
-                  + "if(studentMethodRunner.isAlive()) {\n"
-                  + "    studentMethodRunner.stop();\n"
-                  + "    fail();\n"
-                  + "}";
+                    "dummy1\n"
+                  + "dummy line 2\n"
+                  + "some special characters\n"
+                  + "!@#$%^&*()";
         LogManager.getRootLogger().info(str);
         assertEquals(expected, str);
     }
