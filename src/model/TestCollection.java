@@ -109,7 +109,7 @@ public class TestCollection {
         Files.copy(copyLog4JApi, newdir.resolve(copyLog4JApi.getFileName()),
                 StandardCopyOption.REPLACE_EXISTING);
 
-        // copying log4j api jar
+        // copying log4j core jar
         Path copyLog4JCore = new File("./lib/log4j-core-2.0-rc1.jar").toPath();
         Files.copy(copyLog4JCore, newdir.resolve(copyLog4JCore.getFileName()),
                 StandardCopyOption.REPLACE_EXISTING);
