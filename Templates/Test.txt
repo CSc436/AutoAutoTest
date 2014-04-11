@@ -1,7 +1,10 @@
 @Test
 public void NAME() {
    INPUT_LINE
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final CLASS classInstance = new CLASS();
    CALL_LINE

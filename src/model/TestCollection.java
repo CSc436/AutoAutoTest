@@ -160,7 +160,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-
+        
         return template;
     }
 
@@ -192,3 +192,4 @@ public class TestCollection {
     }
 
 }
+
