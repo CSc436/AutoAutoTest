@@ -122,7 +122,6 @@ public class TestCollection {
         Files.copy(copyLog4JCore.toPath(),
                 pathForLog4JCore.resolve(copyLog4JCore.toPath().getFileName()),
                 StandardCopyOption.REPLACE_EXISTING);
-
     }
 
     /**
