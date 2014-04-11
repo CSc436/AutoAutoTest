@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+
 
 /**
  * A Class that stores all of the tests. This class is responsible for reading
@@ -73,6 +77,52 @@ public class TestCollection {
         String className = getClassName(filePath);
         String content = getFileContentString(className);
         writeToFile(content, filePath);
+
+        // Creates a new file for copying
+        File newFile = new File(filePath);
+
+        // Copies FakeStandardIn
+        File copyStdIn = new File("./src/model/FakeStandardIn.java");
+        Path pathForStdIn = newFile.toPath().getParent();
+        Files.copy(copyStdIn.toPath(),
+                pathForStdIn.resolve(copyStdIn.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Copies FakeStandardOutput
+        File copyStdOut = new File("./src/model/FakeStandardOutput.java");
+        Path pathForStdOut = newFile.toPath().getParent();
+        Files.copy(copyStdOut.toPath(),
+                pathForStdOut.resolve(copyStdOut.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Copies Hamcrest Jar
+        File copyHamcrest = new File("./dev/hamcrest-core-1.3.jar");
+        Path pathForHamcrest = newFile.toPath().getParent();
+        Files.copy(copyHamcrest.toPath(),
+                pathForHamcrest.resolve(copyHamcrest.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Copies Junit Jar
+        File copyJUnit = new File("./dev/junit-4.11.jar");
+        Path pathForJUnit = newFile.toPath().getParent();
+        Files.copy(copyJUnit.toPath(),
+                pathForJUnit.resolve(copyJUnit.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Copies Log4JApi jar
+        File copyLog4JApi = new File("./lib/log4j-api-2.0-rc1.jar");
+        Path pathForLog4JApi = newFile.toPath().getParent();
+        Files.copy(copyLog4JApi.toPath(),
+                pathForLog4JApi.resolve(copyLog4JApi.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // Copies Log4JCore jar
+        File copyLog4JCore = new File("./lib/log4j-core-2.0-rc1.jar");
+        Path pathForLog4JCore = newFile.toPath().getParent();
+        Files.copy(copyLog4JCore.toPath(),
+                pathForLog4JCore.resolve(copyLog4JCore.toPath().getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
     }
 
     /**
@@ -119,7 +169,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -151,4 +201,3 @@ public class TestCollection {
     }
 
 }
-
