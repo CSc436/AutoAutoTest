@@ -11,4 +11,5 @@ catch (InterruptedException e) {fail();}
 if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
+    testFailed = true;
 }
