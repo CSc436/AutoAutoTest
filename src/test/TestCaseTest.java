@@ -43,7 +43,7 @@ public class TestCaseTest {
         assertTrue(javaString.contains("returnValue = "));
         assertTrue(javaString.contains("relaxedAssertEquals(, returnValue"));
         assertTrue(javaString.contains("relaxedAssertEquals("));
-        assertTrue(javaString.endsWith(");\n}"));
+        assertTrue(javaString.endsWith("\n}"));
     }
 
     /**
