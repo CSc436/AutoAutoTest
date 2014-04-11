@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 /**
@@ -73,6 +76,44 @@ public class TestCollection {
         String className = getClassName(filePath);
         String content = getFileContentString(className);
         writeToFile(content, filePath);
+
+        // getting destination path
+        File destination = new File(filePath);
+        Path newdir = destination.toPath().getParent();
+
+        // copying FakeStandardin
+        Path copyFakeStdIn = new File("./src/model/FakeStandardin.java")
+                .toPath();
+        Files.copy(copyFakeStdIn, newdir.resolve(copyFakeStdIn.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // copying FakeStandardOut
+        Path copyFakeStdOut = new File("./src/model/FakeStandardOutput.java")
+                .toPath();
+        Files.copy(copyFakeStdOut,
+                newdir.resolve(copyFakeStdOut.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // copying Hamcrest jar
+        Path copyHamcrest = new File("./dev/hamcrest-core-1.3.jar").toPath();
+        Files.copy(copyHamcrest, newdir.resolve(copyHamcrest.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // copying JUnit jar
+        Path copyJUnit = new File("./dev/junit-4.11.jar").toPath();
+        Files.copy(copyJUnit, newdir.resolve(copyJUnit.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // copying log4j api jar
+        Path copyLog4JApi = new File("./lib/log4j-api-2.0-rc1.jar").toPath();
+        Files.copy(copyLog4JApi, newdir.resolve(copyLog4JApi.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        // copying log4j api jar
+        Path copyLog4JCore = new File("./lib/log4j-core-2.0-rc1.jar").toPath();
+        Files.copy(copyLog4JCore, newdir.resolve(copyLog4JCore.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
+
     }
 
     /**
@@ -119,7 +160,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -151,4 +192,3 @@ public class TestCollection {
     }
 
 }
-
