@@ -14,26 +14,26 @@ public class RelaxedStringFloatCheck {
      * only to the ASCII characters A-Z and a-z.
      */
     // instance variables for RelaxedStringFloatCheck
-    boolean ignoreCasing;
+    private boolean ignoreCasing;
     /**
      * Stores a boolean value which if true means that we ignore spaces and tabs
      * in the output. if false, then we do not ignore spaces and tabs.
      */
-    boolean ignoreWhitespace;
+    private boolean ignoreWhitespace;
     /**
      * Stores a boolean value which if true means that we ignore special
      * characters in the output (basically any Unicode characters which are NOT
      * digits, numbers, or spaces). If false, then we do not ignore special
      * characters.
      */
-    boolean ignorePunctuation;
+    private boolean ignorePunctuation;
     /**
      * Stores the number of decimal places to which the expected and actual must
      * round to the same value. For example, if a decimal places precision of 2
      * is used, then the expected and actual are both multiplied by 10^2, then
      * Math.Round is invoked, and the results should be equal.
      */
-    int decPlacesPrecision;
+    private int decPlacesPrecision;
     /**
      * This is the default number of decimal places to evaluate to.
      */
@@ -42,7 +42,7 @@ public class RelaxedStringFloatCheck {
     private static final String numberRegex = "[-+]?[0-9]*\\.?[0-9]+";
     private static final String whitespaceRegex = "\\s";
     private static final String punctuationRegex = "\\p{Punct}";
-    
+
     private Pattern whitespacePattern = Pattern.compile(whitespaceRegex);
     private Pattern punctuationPattern = Pattern.compile(punctuationRegex);
 
@@ -104,46 +104,39 @@ public class RelaxedStringFloatCheck {
             // invalid precision specified
             decPlacesPrecision = DEFAULT_PRECISION;
     }
-    
-    private boolean checkLastCharacters(char chFromExpected, char chFromActual)
-    {
+
+    private boolean checkLastCharacters(char chFromExpected, char chFromActual) {
         boolean ignoreExpected = false;
         boolean ignoreActual = false;
         String exp = "" + chFromExpected;
         String act = "" + chFromActual;
-        
+
         // check to see if the two characters are ignorable, in which case
         // they are deemed to match, or not, in which case they must
         // actually match
-        
-        if (ignoreWhitespace)
-        {
+
+        if (ignoreWhitespace) {
             if (isWhitespace(chFromExpected))
                 ignoreExpected = true;
-            
+
             if (isWhitespace(chFromActual))
                 ignoreActual = true;
         }
-        
-        if (ignorePunctuation)
-        {
+
+        if (ignorePunctuation) {
             if (isPunctuation(chFromExpected))
                 ignoreExpected = true;
-            
+
             if (isPunctuation(chFromActual))
                 ignoreActual = true;
         }
-        
-        if (ignoreExpected && ignoreActual)
-        {
-            return true;  // both characters are deemed acceptable
-        }
-        else if (ignoreCasing)
-        {
+
+        if (ignoreExpected && ignoreActual) {
+            return true; // both characters are deemed acceptable
+        } else if (ignoreCasing) {
             return exp.equalsIgnoreCase(act);
-        }
-        else
-        return exp.equals(act);
+        } else
+            return exp.equals(act);
     }
 
     /**
@@ -162,8 +155,8 @@ public class RelaxedStringFloatCheck {
         int actualIndex = 0; // tracks the index as we parse actual string
         int expectedLength = 0;
         int actualLength = 0;
-        char chFromActual;
-        char chFromExpected;
+        char chFromActual = '0';;
+        char chFromExpected = '0';
 
         // use the regular expression numberRegex to instantiate a
         // number-matching pattern
@@ -177,7 +170,7 @@ public class RelaxedStringFloatCheck {
 
         int nbrStartIndex = 0; // used for round and replace
         int nbrEndIndex = 0; // used for round and replace
-        int newIndex = 0;  // used for StringBuilder replace
+        int newIndex = 0; // used for StringBuilder replace
         String numberAsString = "";
         double numberAsDecimal = 0;
         long numberAsRounded = 0;
@@ -199,8 +192,8 @@ public class RelaxedStringFloatCheck {
             // is now an integer because it was multiplied by
             // 10^decPlacesPrecision)
             newIndex = newExpected.indexOf(numberAsString);
-            newExpected.replace(newIndex, newIndex + numberAsString.length(), ""
-                    + numberAsRounded);
+            newExpected.replace(newIndex, newIndex + numberAsString.length(),
+                    "" + numberAsRounded);
         } // end of looping thru all numbers in newExpected
 
         // Note that the pattern matcher is linked to the original input,
@@ -232,9 +225,20 @@ public class RelaxedStringFloatCheck {
         // parse the new strings for being acceptable
         expectedIndex = 0;
         actualIndex = 0;
-        while ((expectedIndex < expectedLength) && (actualIndex < actualLength)) {
-            chFromExpected = newExpected.charAt(expectedIndex);
-            chFromActual = newActual.charAt(actualIndex);
+        boolean bonusPass = false; // allows us to make one more pass at the end
+        while ((bonusPass == false) || (expectedIndex < expectedLength) && (actualIndex < actualLength)
+                ) {
+            if (expectedIndex < expectedLength)
+                chFromExpected = newExpected.charAt(expectedIndex);
+
+            if (actualIndex < actualLength)
+                chFromActual = newActual.charAt(actualIndex);
+
+            // check to see if this is the bonus pass, to check for strings of
+            // different lengths, where the different lengths are due to ignored
+            // characters
+            if ((expectedIndex >= expectedLength) || (actualIndex >=actualLength))
+                bonusPass = true;
 
             // if we are ignoring whitespace, then we skip over any whitespace
             // characters
@@ -273,34 +277,18 @@ public class RelaxedStringFloatCheck {
             // see if the strings have been exhausted
             if (expectedIndex < expectedLength)
                 chFromExpected = newExpected.charAt(expectedIndex);
-            else { // expected has been exhausted
-                if (actualIndex < actualLength) {
-                    // there are non-ignored characters remaining in actual,
-                    // while expected has been exhausted, so the actual is wrong
-                    System.out
-                            .println("Student output contains one or more extraneous characters at the end");
-                    System.out.println("Extraneous characters:"
-                            + newActual.substring(actualIndex));
-                    return false;
-                }
-                // we have exhausted the expected and actual together, so the
-                // student output is acceptable
-                return true;
-            }
-            // if we get here, then we know there is at least one more
-            // unprocessed character in actual which we can compare to the next
-            // non-ignored character from expected, which we are probing
-            chFromActual = newActual.charAt(actualIndex);
-            
+
+            if (actualIndex < actualLength)
+                chFromActual = newActual.charAt(actualIndex);
+
             // check to see if we are at the end of both strings, in which case
             // we could be looking at characters which don't match, but are
             // supposed to be ignored
-            if ((expectedIndex == expectedLength-1) && (actualIndex == actualLength-1))
-            {
+            if ((bonusPass == true) || (expectedIndex == expectedLength - 1)
+                    && (actualIndex == actualLength - 1)) {
                 return checkLastCharacters(chFromExpected, chFromActual);
             }
-
-            if (charactersMatch(chFromExpected, chFromActual) == false) {
+            else if ((charactersMatch(chFromExpected, chFromActual) == false)) {
                 // the next non-ignored characters do not match, so the student
                 // output is wrong
                 System.out
@@ -311,7 +299,7 @@ public class RelaxedStringFloatCheck {
                 System.out
                         .println("Actual output (beginning with first difference):"
                                 + newActual.substring(actualIndex));
-                return false;  // quit out of procedure
+                return false; // quit out of procedure
             }
             // proceed to next iteration of while loop, because there are still
             // characters remaining in the strings which need to be compared.
@@ -319,9 +307,10 @@ public class RelaxedStringFloatCheck {
             actualIndex++;
 
         } // end of while loop
-          // if we get here, then the expected and actual have matched (taking
-          // into account any relaxed checks)
-        return true;
+
+        // if we get here, then expected or actual was shorter (taking
+        // into account any relaxed checks)
+        return false;
     } // end of isAccaptable
-    
+
 }
