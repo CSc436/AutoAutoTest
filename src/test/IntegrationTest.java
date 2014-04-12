@@ -119,7 +119,7 @@ public class IntegrationTest {
         TestCase testCase2 = testCollection.newTest();
         testCase2.setTestName("badHelloWorldTest");
         testCase2.setClassName("StudentSolutionSet1");
-        testCase.setExpectedStandardOutput("Hello World!");
+        testCase2.setExpectedStandardOutput("Hello World!");
         testCase2.setMethodName("badHelloWorld");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
