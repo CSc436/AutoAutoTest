@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
-
 /**
  * A Class that stores all of the tests. This class is responsible for reading
  * and writing files associated with the tests.
@@ -168,7 +167,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-
+        
         return template;
     }
 
@@ -200,3 +199,4 @@ public class TestCollection {
     }
 
 }
+
