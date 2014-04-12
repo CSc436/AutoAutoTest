@@ -2,6 +2,8 @@ package view;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 import org.apache.logging.log4j.LogManager;
 
 import javafx.event.ActionEvent;
@@ -80,11 +82,14 @@ public class ViewController {
     @FXML
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
-        generateTest();
-        String anotherTest = getTestForView(myTestCollection
+        if(dataIsAcceptable()) {
+            generateTest();
+            String anotherTest = getTestForView(myTestCollection
                 .getTest(myTestCollection.testCount() - 1));
-        listView.getItems().add(anotherTest);
+            listView.getItems().add(anotherTest);
+        }
     }
+
 
     /**
      * This method is the response to the user clicking the 'Delete Button'. The
@@ -215,6 +220,61 @@ public class ViewController {
         String lname = pnewTestCase.getTestName();
         String message = "Test Name: " + lname;
         return message;
+    }
+    
+    /**
+     * Checks for bad input, will display messages accordingly
+     * @return true if there is acceptable input
+     */
+    private boolean dataIsAcceptable() {
+//        testname = namefield.getText();
+//        params = paramsfield.getText();
+//        testreturn = returnfield.getText();
+//        stdin = stdinfield.getText();
+//        stdout = stdoutfield.getText();
+//        classname = classnamefield.getText();
+//        methodname = methodnamefield.getText();
+//        ignoreCasing = ignoreCasingBox.isSelected();
+//        ignoreWhitespace = ignoreWhitespaceBox.isSelected();
+//        ignorePunctuation = ignorePunctuationBox.isSelected();
+//        isVoid = returnVoidBox.isSelected();
+//        timeoutlimit = timeoutfield.getText();
+//        floatprecision = floatprecisionfield.getText();
+        
+        if(testname.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please specify a test name");
+            return false;
+        }
+        for(int i = 0; i < myTestCollection.testCount(); i++) {
+            if(myTestCollection.getTest(i).getTestName().equals(testname)) {
+                JOptionPane.showMessageDialog(null, "Test name exists, please choose a different name");
+                return false;
+            }
+        }
+        if(testreturn.equals("") && isVoid == false) {
+            JOptionPane.showMessageDialog(null, "Return value can not be blank when method is non-void");
+            return false;
+        }
+        if(testreturn.equals("") == false && isVoid == true) {
+            JOptionPane.showMessageDialog(null, "Void methods can not have a return value");
+            return false;
+        }
+        if(classname.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please specify the class name");
+            return false;
+        }
+        if(methodname.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please specify the method name");
+            return false;
+        }
+        if(timeoutlimit.equals("")) {
+            timeoutlimit = "1000";
+        }
+        if(floatprecision.equals("")) {
+            floatprecision = "12";
+        }
+        
+        return true;
     }
 
 }

@@ -56,25 +56,6 @@ public class ViewControllerTest {
     }
 
     /**
-     * Tests the 'handleGenerateButtonAction' method.
-     * 
-     * @throws Exception
-     *             Due to reflection.
-     */
-    @Test
-    public void testGenerateButtonAction() throws Exception {
-        currentnumberoftests = TestCollection.getInstance().testCount();
-
-        for (int i = 0; i < 100; i++) {
-            viewController.handleGenerateButtonAction(null);
-        }
-
-        currentnumberoftests += 100;
-        int actual = TestCollection.getInstance().testCount();
-        assertEquals(currentnumberoftests, actual);
-    }
-
-    /**
      * Tests the deletion of a test from the list.
      * 
      * @throws Exception
