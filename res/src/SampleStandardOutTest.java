@@ -3,6 +3,7 @@ import static org.junit.Assert.fail;
 import model.FakeStandardIn;
 import model.FakeStandardOutput;
 import org.junit.Test;
+import java.io.UnsupportedEncodingException;
 
 public class SampleStandardOutTest {
 
@@ -27,7 +28,10 @@ public void oppositeTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -52,7 +56,10 @@ public void badOppositeTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -77,7 +84,10 @@ public void appendComTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -102,7 +112,10 @@ public void badAppendComTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -127,7 +140,10 @@ public void add1Test() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -152,7 +168,10 @@ public void badAdd1Test() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
@@ -177,13 +196,16 @@ public void helloWorldTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.helloWorld();
+        classInstance.helloWorld();
     }
 };
 int timeout = 1000;
@@ -194,7 +216,7 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(, returnValue[0], false, false, false, 2);
+   
    relaxedAssertEquals("Hello World!", fso.getOutput(), false, false, false, 2);
 }
 @Test
@@ -202,7 +224,10 @@ public void badHelloWorldTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
-   FakeStandardOutput fso = new FakeStandardOutput();
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
    System.setOut(fso);
    final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
    final Object[] returnValue = new Object[1];

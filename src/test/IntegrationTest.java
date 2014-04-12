@@ -114,6 +114,7 @@ public class IntegrationTest {
         testCase.setMethodName("helloWorld");
         testCase.setTimeoutTime(1000);
         testCase.setFloatPrecision(2);
+        testCase.setIsVoid(true);
         
         TestCase testCase2 = testCollection.newTest();
         testCase2.setTestName("badHelloWorldTest");
@@ -122,6 +123,7 @@ public class IntegrationTest {
         testCase2.setMethodName("badHelloWorld");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
+        testCase.setIsVoid(true);
         
         testCollection.save("res/src/SampleStandardOutTest.java");
     }
