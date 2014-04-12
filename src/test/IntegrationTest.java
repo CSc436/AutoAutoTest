@@ -5,10 +5,20 @@ import model.TestCollection;
 
 import org.junit.Test;
 
+/**
+ * @author Ricky
+ *
+ * Generates a number of test files to use on StudentSolutionSet1
+ */
 public class IntegrationTest {
 
+    /**
+     * Makes a pair of tests for ints, 
+     * one method should work fine, the other doesn't
+     * @throws Exception if saving file goes wrong.
+     */
     @Test
-    public void makeIntTest() {
+    public void makeIntTest() throws Exception {
         TestCollection testCollection = TestCollection.getInstance();
         TestCase testCase = testCollection.newTest();
         testCase.setTestName("add1Test");
@@ -28,15 +38,16 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        try {
-            testCollection.save("res/src/SampleIntTest.java");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        testCollection.save("res/src/SampleIntTest.java");
     }
     
+    /**
+     * Makes a pair of tests for strings, 
+     * one method should work fine, the other doesn't
+     * @throws Exception if saving file goes wrong.
+     */
     @Test
-    public void makeStringTest() {
+    public void makeStringTest() throws Exception {
         TestCollection testCollection = TestCollection.getInstance();
         TestCase testCase = testCollection.newTest();
         testCase.setTestName("appendComTest");
@@ -56,15 +67,16 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        try {
-            testCollection.save("res/src/SampleStringTest.java");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        testCollection.save("res/src/SampleStringTest.java");
     }
     
+    /**
+     * Makes a pair of tests for booleans, 
+     * one method should work fine, the other doesn't
+     * @throws Exception if saving file goes wrong.
+     */
     @Test
-    public void makeBooleanTest() {
+    public void makeBooleanTest() throws Exception {
         TestCollection testCollection = TestCollection.getInstance();
         TestCase testCase = testCollection.newTest();
         testCase.setTestName("oppositeTest");
@@ -84,15 +96,16 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        try {
-            testCollection.save("res/src/SampleBooleanTest.java");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        testCollection.save("res/src/SampleBooleanTest.java");
     }
     
+    /**
+     * Makes a pair of tests for standard out, 
+     * one method should work fine, the other doesn't
+     * @throws Exception if saving file goes wrong.
+     */
     @Test
-    public void makeStandardOutTest() {
+    public void makeStandardOutTest() throws Exception {
         TestCollection testCollection = TestCollection.getInstance();
         TestCase testCase = testCollection.newTest();
         testCase.setTestName("helloWorldTest");
@@ -109,10 +122,7 @@ public class IntegrationTest {
         testCase2.setMethodName("badHelloWorld");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        try {
-            testCollection.save("res/src/SampleStandardOutTest.java");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
+        testCollection.save("res/src/SampleStandardOutTest.java");
     }
 }
