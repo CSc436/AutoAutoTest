@@ -123,7 +123,7 @@ public class IntegrationTest {
         testCase2.setMethodName("badHelloWorld");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        testCase.setIsVoid(true);
+        testCase2.setIsVoid(true);
         
         testCollection.save("res/src/SampleStandardOutTest.java");
     }
