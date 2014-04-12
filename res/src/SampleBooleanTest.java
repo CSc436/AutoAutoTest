@@ -4,7 +4,7 @@ import model.FakeStandardIn;
 import model.FakeStandardOutput;
 import org.junit.Test;
 
-public class SampleTest {
+public class SampleBooleanTest {
 
     public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isIgnoreWhitespace, boolean isIgnorePunctuation, int floatPrecision) {
         double precision = Math.pow(10, -(floatPrecision));
@@ -23,7 +23,7 @@ public class SampleTest {
     }
 
 @Test
-public void test() {
+public void oppositeTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
@@ -33,7 +33,7 @@ System.setIn(fsi);
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.add1(1);
+        returnValue[0] = classInstance.opposite(false);
     }
 };
 int timeout = 1000;
@@ -44,7 +44,32 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(2, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals(true, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void badOppositeTest() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = new FakeStandardOutput();
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        returnValue[0] = classInstance.badOpposite(false);
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   relaxedAssertEquals(true, returnValue[0], false, false, false, 2);
    relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
 }
 
