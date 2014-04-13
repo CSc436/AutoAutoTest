@@ -69,6 +69,86 @@ public class ViewController {
     private CheckBox returnVoidBox;
     
     /**
+     * @return namefield
+     */
+    public TextField getNameField() {
+        return namefield;
+    }
+    /**
+     * @return paramsfield
+     */
+    public TextField getParamsField() {
+        return paramsfield;
+    }
+    /**
+     * @return returnfield
+     */
+    public TextField getReturnField() {
+        return returnfield;
+    }
+    /**
+     * @return stdinfield
+     */
+    public TextField getStdInField() {
+        return stdinfield;
+    }
+    /**
+     * @return stdoutfield
+     */
+    public TextField getStdOutField() {
+        return stdoutfield;
+    }
+    /**
+     * @return methodnamefield
+     */
+    public TextField getMethodNameField() {
+        return methodnamefield;
+    }
+    /**
+     * @return classnamefield
+     */
+    public TextField getClassNameField() {
+        return classnamefield;
+    }
+    /**
+     * @return timeoutfield
+     */
+    public TextField getTimeoutField() {
+        return timeoutfield;
+    }
+    /**
+     * @return floatprecisionfield
+     */
+    public TextField getFloatPrecisionField() {
+        return floatprecisionfield;
+    }
+    /**
+     * @return ignoreCasingBox
+     */
+    public CheckBox getIgnoreCasingBox() {
+        return ignoreCasingBox;
+    }
+    /**
+     * @return ignoreWhitespaceBox
+     */
+    public CheckBox getIgnoreWhitespaceBox() {
+        return ignoreWhitespaceBox;
+    }
+    /**
+     * @return ignorePunctuationBox
+     */
+    public CheckBox getIgnorePuctuationBox() {
+        return ignorePunctuationBox;
+    }
+    /**
+     * @return returnVoidBox
+     */
+    public CheckBox getReturnVoidBox() {
+        return returnVoidBox;
+    }
+    
+    
+    /**
      * Generic constructor used for tests.
      */
     public ViewController() {
@@ -82,7 +162,7 @@ public class ViewController {
     @FXML
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
-        if(dataIsAcceptable()) {
+        if (dataIsAcceptable()) {
             generateTest();
             String anotherTest = getTestForView(myTestCollection
                 .getTest(myTestCollection.testCount() - 1));
@@ -227,50 +307,41 @@ public class ViewController {
      * @return true if there is acceptable input
      */
     private boolean dataIsAcceptable() {
-//        testname = namefield.getText();
-//        params = paramsfield.getText();
-//        testreturn = returnfield.getText();
-//        stdin = stdinfield.getText();
-//        stdout = stdoutfield.getText();
-//        classname = classnamefield.getText();
-//        methodname = methodnamefield.getText();
-//        ignoreCasing = ignoreCasingBox.isSelected();
-//        ignoreWhitespace = ignoreWhitespaceBox.isSelected();
-//        ignorePunctuation = ignorePunctuationBox.isSelected();
-//        isVoid = returnVoidBox.isSelected();
-//        timeoutlimit = timeoutfield.getText();
-//        floatprecision = floatprecisionfield.getText();
-        
-        if(testname.equals("")) {
+        if (testname.equals("")) {
             JOptionPane.showMessageDialog(null, "Please specify a test name");
             return false;
         }
-        for(int i = 0; i < myTestCollection.testCount(); i++) {
-            if(myTestCollection.getTest(i).getTestName().equals(testname)) {
-                JOptionPane.showMessageDialog(null, "Test name exists, please choose a different name");
+        for (int i = 0; i < myTestCollection.testCount(); i++) {
+            if (myTestCollection.getTest(i).getTestName().equals(testname)) {
+                JOptionPane.showMessageDialog(null, "Test name exists, "
+                        + "please choose a different name");
                 return false;
             }
         }
-        if(testreturn.equals("") && isVoid == false) {
-            JOptionPane.showMessageDialog(null, "Return value can not be blank when method is non-void");
+        if (testreturn.equals("") && !isVoid) {
+            JOptionPane.showMessageDialog(null, 
+                    "Return value can not be blank when method is non-void");
             return false;
         }
-        if(testreturn.equals("") == false && isVoid == true) {
-            JOptionPane.showMessageDialog(null, "Void methods can not have a return value");
+        if (!testreturn.equals("") && isVoid) {
+            JOptionPane.showMessageDialog(null, 
+                    "Void methods can not have a return value");
             return false;
         }
-        if(classname.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please specify the class name");
+        if (classname.equals("")) {
+            JOptionPane.showMessageDialog(null, 
+                    "Please specify the class name");
             return false;
         }
-        if(methodname.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please specify the method name");
+        if (methodname.equals("")) {
+            JOptionPane.showMessageDialog(null, 
+                    "Please specify the method name");
             return false;
         }
-        if(timeoutlimit.equals("")) {
+        if (timeoutlimit.equals("")) {
             timeoutlimit = "1000";
         }
-        if(floatprecision.equals("")) {
+        if (floatprecision.equals("")) {
             floatprecision = "12";
         }
         

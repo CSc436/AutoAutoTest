@@ -64,6 +64,7 @@ public class ViewControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteButtonAction() throws Exception {
+        setupBogusValues("testname", "className", "methodName", "1");
         viewController.handleGenerateButtonAction(null);
         currentnumberoftests = TestCollection.getInstance().testCount();
         ListView<String> theListView;
@@ -88,12 +89,28 @@ public class ViewControllerTest {
     public void testGetNumberOfTests() throws Exception {
         currentnumberoftests = TestCollection.getInstance().testCount();
         for (int i = 0; i < 100; i++) {
+            setupBogusValues("testname" + i, "className", "methodName", "1");
             viewController.handleGenerateButtonAction(null);
         }
 
         currentnumberoftests += 100;
         int actual = TestCollection.getInstance().testCount();
         assertEquals(currentnumberoftests, actual);
+    }
+    
+    /**
+     * sets up bogus values so no errors are thrown during testing
+     * @param testName the test name to use
+     * @param className the class name to use
+     * @param methodName the method name to use
+     * @param returnValue the return value to use
+     */
+    private void setupBogusValues(String testName, String className, 
+            String methodName, String returnValue) {
+        viewController.getNameField().setText(testName);
+        viewController.getClassNameField().setText(className);
+        viewController.getMethodNameField().setText(methodName);
+        viewController.getReturnField().setText(returnValue);
     }
 
 }
