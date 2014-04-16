@@ -25,6 +25,7 @@ public class ViewControllerTest {
 
     private Field listViewField;
     private ViewController viewController;
+    private Class<ViewController> viewControllerClass;
     /**
      * This is used for testing, because our test collection is a singleton.
      */
@@ -40,7 +41,7 @@ public class ViewControllerTest {
     public void makeEverythingPublic() throws Exception {
         currentnumberoftests = 0;
         viewController = new ViewController();
-        Class<ViewController> viewControllerClass = ViewController.class;
+        viewControllerClass = ViewController.class;
         for (Field field : viewControllerClass.getDeclaredFields()) {
             field.setAccessible(true);
             if (field.getType() == TextField.class) {
@@ -104,13 +105,26 @@ public class ViewControllerTest {
      * @param className the class name to use
      * @param methodName the method name to use
      * @param returnValue the return value to use
+     * 
+     * @throws Exception should never throw, field names are correct
      */
-    private void setupBogusValues(String testName, String className, 
-            String methodName, String returnValue) {
-        viewController.getNameField().setText(testName);
-        viewController.getClassNameField().setText(className);
-        viewController.getMethodNameField().setText(methodName);
-        viewController.getReturnField().setText(returnValue);
+    private void setupBogusValues(String testName, String className,
+            String methodName, String returnValue) throws Exception {
+
+        Field namefield = viewControllerClass.getDeclaredField("namefield");
+        Field classfield = viewControllerClass
+                .getDeclaredField("classnamefield");
+        Field methodfield = viewControllerClass
+                .getDeclaredField("methodnamefield");
+        Field returnfield = viewControllerClass.getDeclaredField("returnfield");
+        namefield.setAccessible(true);
+        classfield.setAccessible(true);
+        methodfield.setAccessible(true);
+        returnfield.setAccessible(true);
+        ((TextField) namefield.get(viewController)).setText(testName);
+        ((TextField) classfield.get(viewController)).setText(className);
+        ((TextField) methodfield.get(viewController)).setText(methodName);
+        ((TextField) returnfield.get(viewController)).setText(returnValue);
     }
 
 }
