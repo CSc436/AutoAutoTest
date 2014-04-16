@@ -90,7 +90,6 @@ public class ViewController {
         }
     }
 
-
     /**
      * This method is the response to the user clicking the 'Delete Button'. The
      * selected test in the listview is deleted from the TestCollection data
