@@ -82,7 +82,7 @@ public class TestCollection {
         Path newdir = destination.toPath().getParent();
 
         // copying FakeStandardin
-        Path copyFakeStdIn = new File("./src/model/FakeStandardin.java")
+        Path copyFakeStdIn = new File("./src/model/FakeStandardIn.java")
                 .toPath();
         Files.copy(copyFakeStdIn, newdir.resolve(copyFakeStdIn.getFileName()),
                 StandardCopyOption.REPLACE_EXISTING);
