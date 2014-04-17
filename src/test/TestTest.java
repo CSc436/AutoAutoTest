@@ -58,7 +58,9 @@ public class TestTest {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("Failures: ")) {
-                    actualFailures = Integer.valueOf(line.substring(line.length()-1));
+                    String end = line.substring(line.indexOf("Failures: "));
+                    end = end.substring(10);
+                    actualFailures = Integer.valueOf(end);
                 }
             }
             assertEquals(numberOfExpectedFails, actualFailures);

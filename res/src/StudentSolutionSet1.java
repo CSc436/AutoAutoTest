@@ -13,7 +13,7 @@ public class StudentSolutionSet1 {
     }
     
     public void helloWorld() {
-        System.out.println("Hello World!");
+        System.out.print("Hello World!");
     }
     
     public int badAdd1(int num) {
@@ -29,7 +29,7 @@ public class StudentSolutionSet1 {
     }
     
     public void badHelloWorld() {
-        System.out.println("Goodbye World!");
+        System.out.print("Goodbye World!");
     }
     
 }

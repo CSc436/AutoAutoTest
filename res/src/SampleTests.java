@@ -5,7 +5,7 @@ import model.FakeStandardOutput;
 import org.junit.Test;
 import java.io.UnsupportedEncodingException;
 
-public class SampleIntTest {
+public class SampleTests {
 
     public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isIgnoreWhitespace, boolean isIgnorePunctuation, int floatPrecision) {
         double precision = Math.pow(10, -(floatPrecision));
@@ -190,6 +190,62 @@ if(studentMethodRunner.isAlive()) {
 }
    relaxedAssertEquals(2, returnValue[0], false, false, false, 2);
    relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void helloWorldTest() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        classInstance.helloWorld();
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   
+   relaxedAssertEquals("Hello World!", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void badHelloWorldTest() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        classInstance.badHelloWorld();
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   
+   relaxedAssertEquals("Hello World!", fso.getOutput(), false, false, false, 2);
 }
 
 

@@ -9,12 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 
 // specify an array of test classes
-@Suite.SuiteClasses({
-  SampleIntTest.class, 
-  SampleStandardOutTest.class,
-  SampleBooleanTest.class,
-  SampleStringTest.class}
-)
+@Suite.SuiteClasses({SampleTests.class})
 
 public class AllTests {
 }

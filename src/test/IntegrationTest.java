@@ -56,7 +56,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        testCollection.save("res/src/SampleIntTest.java");
+        //testCollection.save("res/src/SampleIntTest.java");
     }
     
     /**
@@ -85,7 +85,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        testCollection.save("res/src/SampleStringTest.java");
+        //testCollection.save("res/src/SampleStringTest.java");
     }
     
     /**
@@ -114,7 +114,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        testCollection.save("res/src/SampleBooleanTest.java");
+        //testCollection.save("res/src/SampleBooleanTest.java");
     }
     
     /**
@@ -143,7 +143,7 @@ public class IntegrationTest {
         testCase2.setFloatPrecision(2);
         testCase2.setIsVoid(true);
         
-        testCollection.save("res/src/SampleStandardOutTest.java");
+        //testCollection.save("res/src/SampleStandardOutTest.java");
     }
     
     /**
@@ -163,7 +163,9 @@ public class IntegrationTest {
      */
     @AfterClass
     public static void saveNumBadTests() {
+        TestCollection collection = TestCollection.getInstance();
         try {
+            collection.save("res/src/SampleTests.java");
             File pathToRes = new File(System.getProperty("user.dir") 
                     + System.getProperty("file.separator") 
                     + "res" + System.getProperty("file.separator") + "numBadTests.txt");
@@ -171,6 +173,8 @@ public class IntegrationTest {
             saver.write(Integer.toString(numBadTests));
             saver.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
