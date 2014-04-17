@@ -48,6 +48,9 @@ public class RelaxedStringFloatTest {
         result = myRSFC.isAcceptable(strExp2, strAct8);
         assertTrue(result);
         
+        result = myRSFC.isAcceptable(strExp2, strExp2);
+        assertTrue(result);
+        
     }
 
     /**
@@ -98,6 +101,9 @@ public class RelaxedStringFloatTest {
         String strAct8 = "When life hands you lemons!";
 
         boolean result = myRSFC.isAcceptable(strExp1, strAct1);
+        assertTrue(result);
+        
+        result = myRSFC.isAcceptable(strAct1, strExp1);
         assertTrue(result);
 
         result = myRSFC.isAcceptable(strExp1, strAct2);
@@ -165,14 +171,29 @@ public class RelaxedStringFloatTest {
     public void testDifferentLengthInputs()
     {
         RelaxedStringFloatCheck myRSFC = new RelaxedStringFloatCheck(false, false, false, 3);
-        String strExp = "Qwertyuiop";
+        String strExp1 = "Qwertyuiop";
+        String strExp2 = "Cost is 4.00";
+        String strExp3 = "Cost is     ";
         String strAct1 = "Qwerty";
         String strAct2 = "Qwertyuiopasdf";
+        String strAct3 = "Cost is  ";
         
-        boolean result = myRSFC.isAcceptable(strExp, strAct1);
+        boolean result = myRSFC.isAcceptable(strExp1, strAct1);
         assertFalse(result);
         
-        result = myRSFC.isAcceptable(strExp, strAct2);
+        result = myRSFC.isAcceptable(strExp1, strAct2);
         assertFalse(result);
+        
+        result = myRSFC.isAcceptable(strExp2,strAct3);
+        assertFalse(result);
+        
+        result = myRSFC.isAcceptable(strAct3, strExp2);
+        assertFalse(result);
+        
+        result = myRSFC.isAcceptable(strExp3, strAct3);
+        assertFalse(result);
+        
+        result = myRSFC.isAcceptable(strAct3, strExp3);
+        assertFalse(result);        
     }
 }

@@ -75,6 +75,20 @@ public class RelaxedStringFloatCheck {
         String strB = "" + chB;
         return strA.equalsIgnoreCase(strB);
     } // end of charactersMatch
+    
+    /**
+     * @param ch character to check
+     * @return true if we can ignore this character in the actual or expected string
+     */
+    private boolean canAdvanceOver(char ch)
+    {
+        if ((ignorePunctuation) && (isPunctuation(ch)))
+            return true;
+        else if ((ignoreWhitespace) && (isWhitespace(ch)))
+            return true;
+        else
+            return false;  
+    }
 
     /**
      * @param inputCasing
@@ -105,39 +119,6 @@ public class RelaxedStringFloatCheck {
             decPlacesPrecision = DEFAULT_PRECISION;
     }
 
-    private boolean checkLastCharacters(char chFromExpected, char chFromActual) {
-        boolean ignoreExpected = false;
-        boolean ignoreActual = false;
-        String exp = "" + chFromExpected;
-        String act = "" + chFromActual;
-
-        // check to see if the two characters are ignorable, in which case
-        // they are deemed to match, or not, in which case they must
-        // actually match
-
-        if (ignoreWhitespace) {
-            if (isWhitespace(chFromExpected))
-                ignoreExpected = true;
-
-            if (isWhitespace(chFromActual))
-                ignoreActual = true;
-        }
-
-        if (ignorePunctuation) {
-            if (isPunctuation(chFromExpected))
-                ignoreExpected = true;
-
-            if (isPunctuation(chFromActual))
-                ignoreActual = true;
-        }
-
-        if (ignoreExpected && ignoreActual) {
-            return true; // both characters are deemed acceptable
-        } else if (ignoreCasing) {
-            return exp.equalsIgnoreCase(act);
-        } else
-            return exp.equals(act);
-    }
 
     /**
      * Determines if the student output is acceptable, compared to the expected
@@ -155,6 +136,8 @@ public class RelaxedStringFloatCheck {
         int actualIndex = 0; // tracks the index as we parse actual string
         int expectedLength = 0;
         int actualLength = 0;
+        boolean expectedIsExhausted = false;
+        boolean actualIsExhausted = false;
         char chFromActual = '0';;
         char chFromExpected = '0';
 
@@ -168,8 +151,6 @@ public class RelaxedStringFloatCheck {
         StringBuilder newExpected = new StringBuilder(expected);
         StringBuilder newActual = new StringBuilder(actual);
 
-        int nbrStartIndex = 0; // used for round and replace
-        int nbrEndIndex = 0; // used for round and replace
         int newIndex = 0; // used for StringBuilder replace
         String numberAsString = "";
         double numberAsDecimal = 0;
@@ -181,8 +162,6 @@ public class RelaxedStringFloatCheck {
 
         while (expectedMatcher.find()) {
             numberAsString = expectedMatcher.group();
-            nbrStartIndex = expectedMatcher.start();
-            nbrEndIndex = expectedMatcher.end();
             // we now have captured one number, and know its start and end
             // positions in the input string
             numberAsDecimal = Double.parseDouble(numberAsString);
@@ -202,8 +181,6 @@ public class RelaxedStringFloatCheck {
 
         while (actualMatcher.find()) {
             numberAsString = actualMatcher.group();
-            nbrStartIndex = actualMatcher.start();
-            nbrEndIndex = actualMatcher.end();
             // we now have captured one number, and know its start and end
             // positions in the input string
             numberAsDecimal = Double.parseDouble(numberAsString);
@@ -225,70 +202,63 @@ public class RelaxedStringFloatCheck {
         // parse the new strings for being acceptable
         expectedIndex = 0;
         actualIndex = 0;
-        boolean bonusPass = false; // allows us to make one more pass at the end
-        while ((bonusPass == false) || (expectedIndex < expectedLength) && (actualIndex < actualLength)
-                ) {
-            if (expectedIndex < expectedLength)
+        while ((expectedIsExhausted == false) && (actualIsExhausted == false))
+        {
+            // update current characters to probe
+            chFromExpected = newExpected.charAt(expectedIndex);
+            chFromActual = newActual.charAt(actualIndex);
+            
+            // advance probe character for each string until we see something we cannot ignore
+            while (canAdvanceOver(chFromExpected))
+            {
+                expectedIndex++;
+                // check to see if string has been exhausted
+                if (expectedIndex == expectedLength)
+                {
+                    expectedIsExhausted = true;
+                    break;
+                }
+                // otherwise, advance probe location
                 chFromExpected = newExpected.charAt(expectedIndex);
-
-            if (actualIndex < actualLength)
+            }
+            
+            while (canAdvanceOver(chFromActual))
+            {
+                actualIndex++;
+                // check to see if string has been exhausted
+                if (actualIndex == actualLength)
+                {
+                    actualIsExhausted = true;
+                    break;
+                }
+                // otherwise, advance probe location
                 chFromActual = newActual.charAt(actualIndex);
-
-            // check to see if this is the bonus pass, to check for strings of
-            // different lengths, where the different lengths are due to ignored
-            // characters
-            if ((expectedIndex >= expectedLength) || (actualIndex >=actualLength))
-                bonusPass = true;
-
-            // if we are ignoring whitespace, then we skip over any whitespace
-            // characters
-            if (ignoreWhitespace) {
-                // advance through any whitespaces in the expected
-                while ((isWhitespace(chFromExpected))
-                        && (expectedIndex < expectedLength - 1)) {
-                    expectedIndex++;
-                    chFromExpected = newExpected.charAt(expectedIndex);
-
-                }
-                // advance through any whitespaces in the actual
-                while ((isWhitespace(chFromActual))
-                        && (actualIndex < actualLength - 1)) {
-                    actualIndex++;
-                    chFromActual = newActual.charAt(actualIndex);
-                }
-            } // end of skipping over whitespace in each string
-
-            if (ignorePunctuation) {
-                // advance through any punctuation in the expected
-                while ((isPunctuation(chFromExpected))
-                        && (expectedIndex < expectedLength - 1)) {
-                    expectedIndex++;
-                    chFromExpected = newExpected.charAt(expectedIndex);
-                }
-                // advance through any punctuation in the actual
-                while ((isPunctuation(chFromActual))
-                        && (actualIndex < actualLength - 1)) {
-                    actualIndex++;
-                    chFromActual = newActual.charAt(actualIndex);
-                }
-            } // end of skipping over punctuation in each string
-
-            // re-update current probe locations in each string, and check to
-            // see if the strings have been exhausted
-            if (expectedIndex < expectedLength)
-                chFromExpected = newExpected.charAt(expectedIndex);
-
-            if (actualIndex < actualLength)
-                chFromActual = newActual.charAt(actualIndex);
+            }
+            
+            // if we get here, the we are either at the next pair of characters to compare, or at the end of both strings
 
             // check to see if we are at the end of both strings, in which case
             // we could be looking at characters which don't match, but are
             // supposed to be ignored
-            if ((bonusPass == true) || (expectedIndex == expectedLength - 1)
-                    && (actualIndex == actualLength - 1)) {
-                return checkLastCharacters(chFromExpected, chFromActual);
+            if ((actualIsExhausted) && (expectedIsExhausted))
+            {
+                return true;  // both strings exhausted
             }
-            else if ((charactersMatch(chFromExpected, chFromActual) == false)) {
+            else if ((actualIsExhausted) && (expectedIsExhausted == false))
+            {
+                return false;  // student output is too short
+            }
+            else if ((actualIsExhausted == false) && (expectedIsExhausted))
+            {
+                return false;  // student output has extraneous characters which are not ignorable
+            }
+            else if ((expectedIndex == expectedLength - 1)
+                    && (actualIndex == actualLength - 1)) {
+                return charactersMatch(chFromExpected, chFromActual);
+            }
+            
+            // if we get here, then we need to compare two characters which are not at the end of their respective strings
+            if ((charactersMatch(chFromExpected, chFromActual) == false)) {
                 // the next non-ignored characters do not match, so the student
                 // output is wrong
                 System.out
@@ -305,11 +275,47 @@ public class RelaxedStringFloatCheck {
             // characters remaining in the strings which need to be compared.
             expectedIndex++;
             actualIndex++;
+            
+            if (expectedIndex == expectedLength)
+                expectedIsExhausted = true;
+            
+            if (actualIndex == actualLength)
+                actualIsExhausted = true;
 
         } // end of while loop
 
-        // if we get here, then expected or actual was shorter (taking
-        // into account any relaxed checks)
+        // if we get here, then expected or actual was shorter, but we need to see if the difference is due to ignorable characters
+        if (expectedIsExhausted)
+        {
+            chFromActual = newActual.charAt(actualIndex);
+            while ((canAdvanceOver(chFromActual)) && (actualIsExhausted == false))
+            {
+                actualIndex++;
+                if (actualIndex == actualLength)
+                    actualIsExhausted = true;
+                else
+                    chFromActual = newActual.charAt(actualIndex);
+            }
+            // if we manage to exhaust actual, then the string was acceptable
+            if (actualIsExhausted)
+                return true;
+        }
+        else if (actualIsExhausted)
+        {
+            chFromExpected = newExpected.charAt(expectedIndex);
+            while ((canAdvanceOver(chFromExpected)) && (expectedIsExhausted == false))
+            {
+                expectedIndex++;
+                if (expectedIndex == expectedLength)
+                    expectedIsExhausted = true;
+                else
+                    chFromExpected = newExpected.charAt(expectedIndex);
+            }
+            // if we manage to exhaust expected, then the string was acceptable
+            if (expectedIsExhausted)
+                return true;
+        }
+        // if we get here, then there is a difference of length between the strings, with characters that we cannot ignore
         return false;
     } // end of isAccaptable
 
