@@ -1,0 +1,4 @@
+dummy1
+dummy line 2
+some special characters
+!@#$%^&*()

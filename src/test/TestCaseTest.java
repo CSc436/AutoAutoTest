@@ -33,7 +33,7 @@ public class TestCaseTest {
         assertTrue(javaString.startsWith("@Test"));
         assertTrue(javaString.contains("public void empty() {"));
         assertTrue(javaString.contains(
-                "FakeStandardOutput fso = new FakeStandardOutput();"
+                "FakeStandardOutput fso = null;"
         ));
         assertTrue(javaString.contains("System.setOut(fso);"));
         assertTrue(javaString
