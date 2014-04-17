@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
@@ -81,39 +82,57 @@ public class TestCollection {
         File destination = new File(filePath);
         Path newdir = destination.toPath().getParent();
 
+        // making src folder
+        new File(Paths.get(newdir.toString(), "src").toString()).mkdir();
+
+        // making lib folder
+        new File(Paths.get(newdir.toString(), "lib").toString()).mkdir();
+
+        // making src/model folder
+        new File(Paths.get(newdir.toString(), "src", "model").toString())
+                .mkdir();
+
         // copying FakeStandardin
         Path copyFakeStdIn = new File("./src/model/FakeStandardIn.java")
                 .toPath();
-        Files.copy(copyFakeStdIn, newdir.resolve(copyFakeStdIn.getFileName()),
+        Files.copy(copyFakeStdIn, newdir.resolve(copyFakeStdIn),
                 StandardCopyOption.REPLACE_EXISTING);
 
         // copying FakeStandardOut
         Path copyFakeStdOut = new File("./src/model/FakeStandardOutput.java")
                 .toPath();
-        Files.copy(copyFakeStdOut,
-                newdir.resolve(copyFakeStdOut.getFileName()),
+        Files.copy(copyFakeStdOut, newdir.resolve(copyFakeStdOut),
                 StandardCopyOption.REPLACE_EXISTING);
 
         // copying Hamcrest jar
         Path copyHamcrest = new File("./dev/hamcrest-core-1.3.jar").toPath();
-        Files.copy(copyHamcrest, newdir.resolve(copyHamcrest.getFileName()),
+        Files.copy(copyHamcrest, newdir.resolve(Paths.get("lib", copyHamcrest
+                .getFileName().toString())),
                 StandardCopyOption.REPLACE_EXISTING);
 
         // copying JUnit jar
         Path copyJUnit = new File("./dev/junit-4.11.jar").toPath();
-        Files.copy(copyJUnit, newdir.resolve(copyJUnit.getFileName()),
+        Files.copy(copyJUnit, newdir.resolve(Paths.get("lib", copyJUnit
+                .getFileName().toString())),
                 StandardCopyOption.REPLACE_EXISTING);
 
         // copying log4j api jar
         Path copyLog4JApi = new File("./lib/log4j-api-2.0-rc1.jar").toPath();
-        Files.copy(copyLog4JApi, newdir.resolve(copyLog4JApi.getFileName()),
+        Files.copy(copyLog4JApi, newdir.resolve(Paths.get("lib", copyLog4JApi
+                .getFileName().toString())),
                 StandardCopyOption.REPLACE_EXISTING);
 
         // copying log4j core jar
         Path copyLog4JCore = new File("./lib/log4j-core-2.0-rc1.jar").toPath();
-        Files.copy(copyLog4JCore, newdir.resolve(copyLog4JCore.getFileName()),
+        Files.copy(copyLog4JCore, newdir.resolve(Paths.get("lib", copyLog4JCore
+                .getFileName().toString())),
                 StandardCopyOption.REPLACE_EXISTING);
 
+        // copying build.xml
+        Path copyBuildScript = new File("build.xml").toPath();
+        Files.copy(copyBuildScript,
+                newdir.resolve(copyBuildScript.getFileName()),
+                StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -160,7 +179,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -192,4 +211,3 @@ public class TestCollection {
     }
 
 }
-
