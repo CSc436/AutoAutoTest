@@ -1,7 +1,6 @@
 package test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import model.TestCase;
@@ -160,22 +159,20 @@ public class IntegrationTest {
     /**
      *Saves the number of expected bad tests so we can assert them later
      *when testing our generated tests. 
+     * @throws Exception FileNotFoundException and 
+     * generic Exception due to saving the test collection 
+     * and the number of expected failing tests.
      */
     @AfterClass
-    public static void saveNumBadTests() {
+    public static void saveNumBadTests() throws Exception {
         TestCollection collection = TestCollection.getInstance();
-        try {
-            collection.save("res/src/SampleTests.java");
-            File pathToRes = new File(System.getProperty("user.dir") 
-                    + System.getProperty("file.separator") 
-                    + "res" + System.getProperty("file.separator") + "numBadTests.txt");
-            PrintWriter saver = new PrintWriter(pathToRes);
-            saver.write(Integer.toString(numBadTests));
-            saver.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        collection.save("res/src/SampleTests.java");
+        File pathToRes = new File(System.getProperty("user.dir") 
+                + System.getProperty("file.separator") 
+                + "res" + System.getProperty("file.separator") 
+                + "numBadTests.txt");
+        PrintWriter saver = new PrintWriter(pathToRes);
+        saver.write(Integer.toString(numBadTests));
+        saver.close();
     }
 }
