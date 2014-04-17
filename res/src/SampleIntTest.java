@@ -5,7 +5,7 @@ import model.FakeStandardOutput;
 import org.junit.Test;
 import java.io.UnsupportedEncodingException;
 
-public class TestStudentSolutionSet1 {
+public class SampleIntTest {
 
     public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isIgnoreWhitespace, boolean isIgnorePunctuation, int floatPrecision) {
         double precision = Math.pow(10, -(floatPrecision));
@@ -13,16 +13,18 @@ public class TestStudentSolutionSet1 {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
             assertEquals(expectedValue, actualValue, precision);
-        } else if(expected instanceof String) {
-            //RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, precision);
-//assertTrue(checker.isAcceptable((String) expected, (String) actual));
-        } else {
+        } /*else if(expected instanceof String) {
+            RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
+                isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, precision
+            );
+            assertTrue(checker.isAcceptable((String) expected, (String) actual));
+        } */else {
             assertEquals(expected, actual);
         }
     }
 
 @Test
-public void testAdd1() {
+public void oppositeTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
@@ -35,7 +37,7 @@ System.setIn(fsi);
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.add1(5);
+        returnValue[0] = classInstance.opposite(false);
     }
 };
 int timeout = 1000;
@@ -46,123 +48,11 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(6, returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
+   relaxedAssertEquals(true, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
 }
 @Test
-public void testAppendCom() {
-   FakeStandardIn fsi = new FakeStandardIn();
-fsi.setString("");
-System.setIn(fsi);
-   FakeStandardOutput fso = null;
-   try {
-     fso = new FakeStandardOutput();
-   } catch (UnsupportedEncodingException e1) {fail();}
-   System.setOut(fso);
-   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
-   final Object[] returnValue = new Object[1];
-Thread studentMethodRunner = new Thread() {
-    public void run() {
-        returnValue[0] = classInstance.appendCom("google");
-    }
-};
-int timeout = 1000;
-studentMethodRunner.start();
-try {Thread.sleep(timeout);}
-catch (InterruptedException e) {fail();}
-if(studentMethodRunner.isAlive()) {
-    studentMethodRunner.stop();
-    fail();
-}
-   relaxedAssertEquals("google.com", returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
-}
-@Test
-public void testOpposite() {
-   FakeStandardIn fsi = new FakeStandardIn();
-fsi.setString("");
-System.setIn(fsi);
-   FakeStandardOutput fso = null;
-   try {
-     fso = new FakeStandardOutput();
-   } catch (UnsupportedEncodingException e1) {fail();}
-   System.setOut(fso);
-   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
-   final Object[] returnValue = new Object[1];
-Thread studentMethodRunner = new Thread() {
-    public void run() {
-        returnValue[0] = classInstance.opposite(true);
-    }
-};
-int timeout = 1000;
-studentMethodRunner.start();
-try {Thread.sleep(timeout);}
-catch (InterruptedException e) {fail();}
-if(studentMethodRunner.isAlive()) {
-    studentMethodRunner.stop();
-    fail();
-}
-   relaxedAssertEquals(false, returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
-}
-@Test
-public void testBadAdd1() {
-   FakeStandardIn fsi = new FakeStandardIn();
-fsi.setString("");
-System.setIn(fsi);
-   FakeStandardOutput fso = null;
-   try {
-     fso = new FakeStandardOutput();
-   } catch (UnsupportedEncodingException e1) {fail();}
-   System.setOut(fso);
-   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
-   final Object[] returnValue = new Object[1];
-Thread studentMethodRunner = new Thread() {
-    public void run() {
-        returnValue[0] = classInstance.badAdd1(5);
-    }
-};
-int timeout = 1000;
-studentMethodRunner.start();
-try {Thread.sleep(timeout);}
-catch (InterruptedException e) {fail();}
-if(studentMethodRunner.isAlive()) {
-    studentMethodRunner.stop();
-    fail();
-}
-   relaxedAssertEquals(6, returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
-}
-@Test
-public void testBadAppendCom() {
-   FakeStandardIn fsi = new FakeStandardIn();
-fsi.setString("");
-System.setIn(fsi);
-   FakeStandardOutput fso = null;
-   try {
-     fso = new FakeStandardOutput();
-   } catch (UnsupportedEncodingException e1) {fail();}
-   System.setOut(fso);
-   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
-   final Object[] returnValue = new Object[1];
-Thread studentMethodRunner = new Thread() {
-    public void run() {
-        returnValue[0] = classInstance.badAppendCom("bing");
-    }
-};
-int timeout = 1000;
-studentMethodRunner.start();
-try {Thread.sleep(timeout);}
-catch (InterruptedException e) {fail();}
-if(studentMethodRunner.isAlive()) {
-    studentMethodRunner.stop();
-    fail();
-}
-   relaxedAssertEquals("bing.com", returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
-}
-@Test
-public void testBadOpposite() {
+public void badOppositeTest() {
    FakeStandardIn fsi = new FakeStandardIn();
 fsi.setString("");
 System.setIn(fsi);
@@ -186,8 +76,120 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(true, returnValue[0], false, false, false, 0);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 0);
+   relaxedAssertEquals(true, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void appendComTest() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        returnValue[0] = classInstance.appendCom("bannana");
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   relaxedAssertEquals("bannana.com", returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void badAppendComTest() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        returnValue[0] = classInstance.badAppendCom("bannana");
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   relaxedAssertEquals("bannana.com", returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void add1Test() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        returnValue[0] = classInstance.add1(1);
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   relaxedAssertEquals(2, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+}
+@Test
+public void badAdd1Test() {
+   FakeStandardIn fsi = new FakeStandardIn();
+fsi.setString("");
+System.setIn(fsi);
+   FakeStandardOutput fso = null;
+   try {
+     fso = new FakeStandardOutput();
+   } catch (UnsupportedEncodingException e1) {fail();}
+   System.setOut(fso);
+   final StudentSolutionSet1 classInstance = new StudentSolutionSet1();
+   final Object[] returnValue = new Object[1];
+Thread studentMethodRunner = new Thread() {
+    public void run() {
+        returnValue[0] = classInstance.badAdd1(1);
+    }
+};
+int timeout = 1000;
+studentMethodRunner.start();
+try {Thread.sleep(timeout);}
+catch (InterruptedException e) {fail();}
+if(studentMethodRunner.isAlive()) {
+    studentMethodRunner.stop();
+    fail();
+}
+   relaxedAssertEquals(2, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
 }
 
 

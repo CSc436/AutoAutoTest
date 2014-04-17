@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**This class is used to test the test we have generated for the student code.
@@ -14,10 +17,34 @@ import org.junit.Test;
  * @author jeffersd
  */
 public class TestTest {
-    private int numberOfExpectedFails = 3;
+    private static int numberOfExpectedFails;
     
     /**
-     *Tests the test with a ProcessBuilder.
+     * Loads the number of expected failures before the tests 
+     * are run.
+     */
+    @BeforeClass
+    public static void loadNumExpectedFails() {
+        String pathToRes = System.getProperty("user.dir") 
+                + System.getProperty("file.separator") 
+                + "res" + System.getProperty("file.separator") + "numBadTests.txt";
+        BufferedReader reader;
+            try {
+                reader = new BufferedReader(new FileReader(pathToRes));
+                String line = reader.readLine();
+                numberOfExpectedFails = Integer.valueOf(line);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    
+    /**
+     *Tests the test by running ant in the
+     *res folder with a ProcessBuilder. Then checks
+     *the number of failed tests against the number of 
+     *expected failures.
      */
     @Test
     public void testOurTest() {
@@ -28,17 +55,12 @@ public class TestTest {
             pb.directory(pathToRes);
             Process p = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            StringBuilder builder = new StringBuilder();
             String line = null;
-            while ( (line = reader.readLine()) != null) {
-                builder.append(line);
+            while ((line = reader.readLine()) != null) {
                 if (line.contains("Failures: ")) {
                     actualFailures = Integer.valueOf(line.substring(line.length()-1));
                 }
-                builder.append(System.getProperty("line.separator"));
             }
-            String result = builder.toString();
-            System.out.println(result);
             assertEquals(numberOfExpectedFails, actualFailures);
         } catch (IOException e) {
             e.printStackTrace();
