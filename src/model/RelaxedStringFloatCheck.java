@@ -159,40 +159,13 @@ public class RelaxedStringFloatCheck {
         // Note that the pattern matcher is linked to the original input,
         // not the new StringBuilder we are building.
         Matcher expectedMatcher = numberPattern.matcher(expected);
-
-        while (expectedMatcher.find()) {
-            numberAsString = expectedMatcher.group();
-            // we now have captured one number, and know its start and end
-            // positions in the input string
-            numberAsDecimal = Double.parseDouble(numberAsString);
-            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
-                    * numberAsDecimal);
-            // we now replace the original number with the rounded number (which
-            // is now an integer because it was multiplied by
-            // 10^decPlacesPrecision)
-            newIndex = newExpected.indexOf(numberAsString);
-            newExpected.replace(newIndex, newIndex + numberAsString.length(),
-                    "" + numberAsRounded);
-        } // end of looping thru all numbers in newExpected
+        Matcher actualMatcher = numberPattern.matcher(actual);
 
         // Note that the pattern matcher is linked to the original input,
         // not the new StringBuilder we are building.
-        Matcher actualMatcher = numberPattern.matcher(actual);
+        replaceNumbers(newExpected, expectedMatcher);
+        replaceNumbers(newActual, actualMatcher); // end of looping thru all numbers in newActual
 
-        while (actualMatcher.find()) {
-            numberAsString = actualMatcher.group();
-            // we now have captured one number, and know its start and end
-            // positions in the input string
-            numberAsDecimal = Double.parseDouble(numberAsString);
-            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
-                    * numberAsDecimal);
-            // we now replace the original number with the rounded number (which
-            // is now an integer because it was multiplied by
-            // 10^decPlacesPrecision)
-            newIndex = newActual.indexOf(numberAsString);
-            newActual.replace(newIndex, newIndex + numberAsString.length(), ""
-                    + numberAsRounded);
-        } // end of looping thru all numbers in newActual
 
         // Now, the StringBuilder variables contain the expected and actual with
         // any numeric values rounded to the specified number of decimal places.
@@ -317,6 +290,27 @@ public class RelaxedStringFloatCheck {
         }
         // if we get here, then there is a difference of length between the strings, with characters that we cannot ignore
         return false;
+    }
+
+    private void replaceNumbers(StringBuilder newExpected, Matcher expectedMatcher) {
+        int newIndex;
+        String numberAsString;
+        double numberAsDecimal;
+        long numberAsRounded;
+        while (expectedMatcher.find()) {
+            numberAsString = expectedMatcher.group();
+            // we now have captured one number, and know its start and end
+            // positions in the input string
+            numberAsDecimal = Double.parseDouble(numberAsString);
+            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
+                    * numberAsDecimal);
+            // we now replace the original number with the rounded number (which
+            // is now an integer because it was multiplied by
+            // 10^decPlacesPrecision)
+            newIndex = newExpected.indexOf(numberAsString);
+            newExpected.replace(newIndex, newIndex + numberAsString.length(),
+                    "" + numberAsRounded);
+        } // end of looping thru all numbers in newExpected
     } // end of isAccaptable
 
 }
