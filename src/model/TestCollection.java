@@ -27,6 +27,19 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
 
+    private final String saveArgsName = "Args";
+    private final String saveClassName = "ClassName";
+    private final String saveExpectedReturnName = "ExpectedReturn";
+    private final String saveExpectedStdOutName = "ExpectedStandardOut";
+    private final String saveMethodName = "MethodName";
+    private final String saveFloatPrecisionName = "FloatPrecision";
+    private final String saveStockedInputName = "StockedInput";
+    private final String saveTimeoutTimeName = "TimeoutTime";
+    private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
+    private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
+    private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
+    private final String saveIsVoidName = "IsVoid";
+    
     /**
      * Create a new test collection with no tests.
      */
@@ -158,19 +171,6 @@ public class TestCollection {
     public static TestCollection getInstance() {
         return instance;
     }
-
-    private final String saveArgsName = "Args";
-    private final String saveClassName = "ClassName";
-    private final String saveExpectedReturnName = "ExpectedReturn";
-    private final String saveExpectedStdOutName = "ExpectedStandardOut";
-    private final String saveMethodName = "MethodName";
-    private final String saveFloatPrecisionName = "FloatPrecision";
-    private final String saveStockedInputName = "StockedInput";
-    private final String saveTimeoutTimeName = "TimeoutTime";
-    private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
-    private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
-    private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
-    private final String saveIsVoidName = "IsVoid";
 
     /**
      * Saves all the information in the TestCollection in xml format.
