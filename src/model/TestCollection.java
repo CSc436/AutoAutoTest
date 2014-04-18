@@ -7,6 +7,20 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
  * A Class that stores all of the tests. This class is responsible for reading
  * and writing files associated with the tests.
@@ -152,7 +166,56 @@ public class TestCollection {
     
     
     public void save(String fileName) {
-        
+        try {
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            // root elements
+            Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("TestCollection");
+            doc.appendChild(rootElement);
+            
+            
+            for(TestCase test: tests) {
+                Element oneTest = doc.createElement(test.getTestName());
+                rootElement.appendChild(oneTest);
+                oneTest.setAttribute("args", test.getArgs());
+//                staff.setAttribute("id", "1");
+//                System.out.println("'" + test.getArgs() + "'");
+                Element but = doc.createElement(test.getArgs());
+                oneTest.appendChild(but);
+//                oneTest.appendChild(doc.createElement(test.getClassName()));
+//                oneTest.appendChild(doc.createElement(test.getExpectedReturn()));
+//                oneTest.appendChild(doc.createElement(test.getExpectedStandardOutput()));
+//                oneTest.appendChild(doc.createElement(test.getMethodName()));
+//                oneTest.appendChild(doc.createElement(test.getStockedInput()));
+//                oneTest.appendChild(doc.createElement("" + test.getFloatPrecision()));
+//                oneTest.appendChild(doc.createElement("" + test.getTimeoutTime()));
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(fileName));
+
+            // Output to console for testing
+            // StreamResult result = new StreamResult(System.out);
+
+            transformer.transform(source, result);
+
+            System.out.println("File saved!");
+            
+            
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+          } catch (TransformerConfigurationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
  
 }

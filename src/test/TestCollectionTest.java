@@ -118,7 +118,7 @@ public class TestCollectionTest {
      *             If the test file couldn't be written
      */
     @Test
-    public void testSavingTests() throws Exception {
+    public void testExportingTests() throws Exception {
         collection.newTest();
         TestCase theTest = collection.getTest(0);
         theTest.setMethodName("helloWorld");
@@ -136,7 +136,7 @@ public class TestCollectionTest {
      *             If the test file couldn't be written
      */
     @Test
-    public void testSavingTestWithoutJavaExtension() throws Exception {
+    public void testExportingTestWithoutJavaExtension() throws Exception {
         collection.newTest();
         String base = tempDir.toString();
         String path = Paths.get(base, "ExampleTest").toString();
@@ -164,5 +164,19 @@ public class TestCollectionTest {
         assertSame(collection1, collection2);
     }
 
+    
+    @Test
+    public void testSaving() {
+        TestCollection collection = TestCollection.getInstance();
+        TestCase test = collection.newTest();
+        test.setTestName("test1");
+        test.setClassName("class1");
+        test.setArgs("1");
+        test.setExpectedReturn("2");
+        test.setFloatPrecision(2);
+        test.setTimeoutTime(1000);
+        test.setMethodName("method1");
+        collection.save("src/test/save.xml");
+    }
 }
 
