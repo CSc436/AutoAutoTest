@@ -18,20 +18,10 @@
     <!-- Here is our menu bar with its menus. -->
 	<MenuBar>
 	    <Menu text="File">
-	        <MenuItem text="Exit"
-	          onAction="#handleExitMenuOption"/>
-	    </Menu>
-	    <Menu text="Load">
-	        <MenuItem text="Load Tests"
-	          onAction="#handleLoadTestsMenuOption"/>
-	    </Menu>
-	    <Menu text="Save">
-	        <MenuItem text="Save Tests"
-	          onAction="#handleSaveTestsMenuOption"/>
-	    </Menu>
-	    <Menu text="Export">
-	        <MenuItem text="Export Tests"
-	          onAction="#handleExportTestsMenuOption"/>
+	        <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
+		    <MenuItem text="Load" onAction="#handleLoadTestsMenuOption"/>
+		    <MenuItem text="Save" onAction="#handleSaveTestsMenuOption"/>
+		    <MenuItem text="Export" onAction="#handleExportTestsMenuOption"/>
 	    </Menu>
 	</MenuBar> 
     
