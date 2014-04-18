@@ -1,12 +1,14 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.PrintWriter;
+import java.io.InputStreamReader;
 
 import model.TestCase;
 import model.TestCollection;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,7 +57,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        //testCollection.save("res/src/SampleIntTest.java");
+        incNumBadTests();
     }
     
     /**
@@ -84,7 +86,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        //testCollection.save("res/src/SampleStringTest.java");
+        incNumBadTests();
     }
     
     /**
@@ -113,7 +115,7 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         
-        //testCollection.save("res/src/SampleBooleanTest.java");
+        incNumBadTests();
     }
     
     /**
@@ -142,18 +144,7 @@ public class IntegrationTest {
         testCase2.setFloatPrecision(2);
         testCase2.setIsVoid(true);
         
-        //testCollection.save("res/src/SampleStandardOutTest.java");
-    }
-    
-    /**
-     * Increments the number of bad tests we expect after every test is run.
-     * This uses an after tag because this class creates test cases in pairs, 
-     * so it is assumed that there is a bad test case generated for every test 
-     * that is run.
-     */
-    @After
-    public void incNumBadTests() {
-        numBadTests++;
+        incNumBadTests();
     }
     
     /**
@@ -163,16 +154,49 @@ public class IntegrationTest {
      * generic Exception due to saving the test collection 
      * and the number of expected failing tests.
      */
-    @AfterClass
-    public static void saveNumBadTests() throws Exception {
+    public static void saveGeneratedTests() throws Exception {
         TestCollection collection = TestCollection.getInstance();
         collection.save("res/src/SampleTests.java");
-        File pathToRes = new File(System.getProperty("user.dir") 
-                + System.getProperty("file.separator") 
-                + "res" + System.getProperty("file.separator") 
-                + "numBadTests.txt");
-        PrintWriter saver = new PrintWriter(pathToRes);
-        saver.write(Integer.toString(numBadTests));
-        saver.close();
     }
+    
+    /**
+     *Tests the test by running ant in the
+     *res folder with a ProcessBuilder. Then checks
+     *the number of failed tests against the number of 
+     *expected failures.
+     * @throws Exception Due to reading the input stream 
+     * of ant from the process, and saving the TestCollection Class.
+     */
+    @AfterClass
+    public static void testOurTest() throws Exception {
+        saveGeneratedTests();
+        int actualFailures = 0;
+        ProcessBuilder pb = new ProcessBuilder("ant");
+        File pathToRes = new File(System.getProperty("user.dir") 
+                + System.getProperty("file.separator") + "res");
+        pb.directory(pathToRes);
+        Process p = pb.start();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains("Failures: ")) {
+                String end = line.substring(line.indexOf("Failures: "));
+                end = end.substring(10);
+                actualFailures = Integer.valueOf(end);
+            }
+        }
+        assertEquals(numBadTests, actualFailures);
+    }
+    
+    /**
+     * Increments the number of bad tests we expect after every test is run.
+     * This uses an after tag because this class creates test cases in pairs, 
+     * so it is assumed that there is a bad test case generated for every test 
+     * that is run.
+     */
+    public void incNumBadTests() {
+        numBadTests += 1;
+    }
+    
 }
