@@ -164,19 +164,43 @@ public class TestCollectionTest {
         assertSame(collection1, collection2);
     }
 
-    
+    /**
+     * Saves a test, should have no exceptions
+     * @throws Exception if the test fails
+     */
     @Test
-    public void testSaving() {
-        TestCollection collection = TestCollection.getInstance();
-        TestCase test = collection.newTest();
+    public void testSaving() throws Exception {
+        TestCollection collection1 = TestCollection.getInstance();
+        TestCase test = collection1.newTest();
         test.setTestName("test1");
-        test.setClassName("class1");
         test.setArgs("1");
+        test.setClassName("class1");
         test.setExpectedReturn("2");
+        test.setExpectedStandardOutput("");
         test.setFloatPrecision(2);
-        test.setTimeoutTime(1000);
+        test.setIgnoreCasing(false);
+        test.setIgnorePunctuation(false);
+        test.setIgnoreWhitespace(false);
+        test.setIsVoid(false);
         test.setMethodName("method1");
-        collection.save("src/test/save.xml");
+        test.setStockedInput("");
+        test.setTimeoutTime(1000);
+        
+        test = collection1.newTest();
+        test.setTestName("test2");
+        test.setArgs("2");
+        test.setClassName("class2");
+        test.setExpectedReturn("3");
+        test.setExpectedStandardOutput("");
+        test.setFloatPrecision(3);
+        test.setIgnoreCasing(false);
+        test.setIgnorePunctuation(false);
+        test.setIgnoreWhitespace(false);
+        test.setIsVoid(false);
+        test.setMethodName("method2");
+        test.setStockedInput("");
+        test.setTimeoutTime(1000);
+        collection1.save("test_output/SaveTest.xml");
     }
 }
 

@@ -9,15 +9,10 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -133,7 +128,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -163,60 +158,109 @@ public class TestCollection {
     public static TestCollection getInstance() {
         return instance;
     }
-    
-    
-    public void save(String fileName) {
-        try {
 
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    private final String saveArgsName = "Args";
+    private final String saveClassName = "ClassName";
+    private final String saveExpectedReturnName = "ExpectedReturn";
+    private final String saveExpectedStdOutName = "ExpectedStandardOut";
+    private final String saveMethodName = "MethodName";
+    private final String saveFloatPrecisionName = "FloatPrecision";
+    private final String saveStockedInputName = "StockedInput";
+    private final String saveTimeoutTimeName = "TimeoutTime";
+    private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
+    private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
+    private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
+    private final String saveIsVoidName = "IsVoid";
 
-            // root elements
-            Document doc = docBuilder.newDocument();
-            Element rootElement = doc.createElement("TestCollection");
-            doc.appendChild(rootElement);
-            
-            
-            for(TestCase test: tests) {
-                Element oneTest = doc.createElement(test.getTestName());
-                rootElement.appendChild(oneTest);
-                oneTest.setAttribute("args", test.getArgs());
-//                staff.setAttribute("id", "1");
-//                System.out.println("'" + test.getArgs() + "'");
-                Element but = doc.createElement(test.getArgs());
-                oneTest.appendChild(but);
-//                oneTest.appendChild(doc.createElement(test.getClassName()));
-//                oneTest.appendChild(doc.createElement(test.getExpectedReturn()));
-//                oneTest.appendChild(doc.createElement(test.getExpectedStandardOutput()));
-//                oneTest.appendChild(doc.createElement(test.getMethodName()));
-//                oneTest.appendChild(doc.createElement(test.getStockedInput()));
-//                oneTest.appendChild(doc.createElement("" + test.getFloatPrecision()));
-//                oneTest.appendChild(doc.createElement("" + test.getTimeoutTime()));
-            }
+    /**
+     * Saves all the information in the TestCollection in xml format.
+     * 
+     * @param fileName
+     *            the name of the file to save
+     * @throws Exception if anything goes wrong
+     */
+    public void save(String fileName) throws Exception {
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(fileName));
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory
+                .newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-            // Output to console for testing
-            // StreamResult result = new StreamResult(System.out);
+        // root elements
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("TestCollection");
+        doc.appendChild(rootElement);
 
-            transformer.transform(source, result);
+        for (TestCase test : tests) {
+            Element oneTest = doc.createElement("Test");
+            oneTest.setAttribute("name", test.getTestName());
 
-            System.out.println("File saved!");
-            
-            
-        } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
-          } catch (TransformerConfigurationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Element tempElement = doc.createElement(saveArgsName);
+            tempElement.appendChild(doc.createTextNode(test.getArgs()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveClassName);
+            tempElement.appendChild(doc.createTextNode(test.getClassName()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveExpectedReturnName);
+            tempElement
+                    .appendChild(doc.createTextNode(test.getExpectedReturn()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveExpectedStdOutName);
+            tempElement.appendChild(doc.createTextNode(test
+                    .getExpectedStandardOutput()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveMethodName);
+            tempElement.appendChild(doc.createTextNode(test.getMethodName()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveFloatPrecisionName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.getFloatPrecision()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveStockedInputName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.getStockedInput()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveTimeoutTimeName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.getTimeoutTime()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveIsIgnoreCasingName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.isIgnoreCasing()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveIsIgnorePunctuationName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.isIgnorePunctuation()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveIsIgnoreWhitespaceName);
+            tempElement.appendChild(doc.createTextNode(""
+                    + test.isIgnoreWhitespace()));
+            oneTest.appendChild(tempElement);
+
+            tempElement = doc.createElement(saveIsVoidName);
+            tempElement.appendChild(doc.createTextNode("" + test.isVoid()));
+            oneTest.appendChild(tempElement);
+
+            rootElement.appendChild(oneTest);
         }
-    }
- 
-}
 
+        TransformerFactory transformerFactory = TransformerFactory
+                .newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(fileName));
+
+        transformer.transform(source, result);
+
+    }
+
+}
