@@ -5,7 +5,7 @@ import model.FakeStandardOutput;
 import org.junit.Test;
 import java.io.UnsupportedEncodingException;
 
-public class SampleStandardOutTest {
+public class SampleTests {
 
     public void relaxedAssertEquals(Object expected, Object actual, boolean isIgnoreCasing, boolean isIgnoreWhitespace, boolean isIgnorePunctuation, int floatPrecision) {
         double precision = Math.pow(10, -(floatPrecision));
@@ -13,12 +13,12 @@ public class SampleStandardOutTest {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
             assertEquals(expectedValue, actualValue, precision);
-        } else if(expected instanceof String) {
+        } /*else if(expected instanceof String) {
             RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
                 isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, precision
             );
             assertTrue(checker.isAcceptable((String) expected, (String) actual));
-        } else {
+        } */else {
             assertEquals(expected, actual);
         }
     }
@@ -93,7 +93,7 @@ System.setIn(fsi);
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.appendCom(bannana);
+        returnValue[0] = classInstance.appendCom("bannana");
     }
 };
 int timeout = 1000;
@@ -104,7 +104,7 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(bannana.com, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("bannana.com", returnValue[0], false, false, false, 2);
    relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
 }
 @Test
@@ -121,7 +121,7 @@ System.setIn(fsi);
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.badAppendCom(bannana);
+        returnValue[0] = classInstance.badAppendCom("bannana");
     }
 };
 int timeout = 1000;
@@ -132,7 +132,7 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(bannana.com, returnValue[0], false, false, false, 2);
+   relaxedAssertEquals("bannana.com", returnValue[0], false, false, false, 2);
    relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
 }
 @Test
@@ -233,7 +233,7 @@ System.setIn(fsi);
    final Object[] returnValue = new Object[1];
 Thread studentMethodRunner = new Thread() {
     public void run() {
-        returnValue[0] = classInstance.badHelloWorld();
+        classInstance.badHelloWorld();
     }
 };
 int timeout = 1000;
@@ -244,8 +244,8 @@ if(studentMethodRunner.isAlive()) {
     studentMethodRunner.stop();
     fail();
 }
-   relaxedAssertEquals(, returnValue[0], false, false, false, 2);
-   relaxedAssertEquals("", fso.getOutput(), false, false, false, 2);
+   
+   relaxedAssertEquals("Hello World!", fso.getOutput(), false, false, false, 2);
 }
 
 

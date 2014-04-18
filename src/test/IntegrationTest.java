@@ -1,8 +1,15 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+
 import model.TestCase;
 import model.TestCollection;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 /**
@@ -37,8 +44,6 @@ public class IntegrationTest {
         testCase2.setMethodName("badAdd1");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        testCollection.save("res/src/SampleIntTest.java");
     }
     
     /**
@@ -51,23 +56,21 @@ public class IntegrationTest {
         TestCollection testCollection = TestCollection.getInstance();
         TestCase testCase = testCollection.newTest();
         testCase.setTestName("appendComTest");
-        testCase.setArgs("bannana");
+        testCase.setArgs("\"bannana\"");
         testCase.setClassName("StudentSolutionSet1");
-        testCase.setExpectedReturn("bannana.com");
+        testCase.setExpectedReturn("\"bannana.com\"");
         testCase.setMethodName("appendCom");
         testCase.setTimeoutTime(1000);
         testCase.setFloatPrecision(2);
         
         TestCase testCase2 = testCollection.newTest();
         testCase2.setTestName("badAppendComTest");
-        testCase2.setArgs("bannana");
+        testCase2.setArgs("\"bannana\"");
         testCase2.setClassName("StudentSolutionSet1");
-        testCase2.setExpectedReturn("bannana.com");
+        testCase2.setExpectedReturn("\"bannana.com\"");
         testCase2.setMethodName("badAppendCom");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        testCollection.save("res/src/SampleStringTest.java");
     }
     
     /**
@@ -95,8 +98,6 @@ public class IntegrationTest {
         testCase2.setMethodName("badOpposite");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        testCollection.save("res/src/SampleBooleanTest.java");
     }
     
     /**
@@ -124,7 +125,48 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         testCase2.setIsVoid(true);
-        
-        testCollection.save("res/src/SampleStandardOutTest.java");
     }
+    
+    /**
+     *Saves the number of expected bad tests so we can assert them later
+     *when testing our generated tests. 
+     * @throws Exception FileNotFoundException and 
+     * generic Exception due to saving the test collection 
+     * and the number of expected failing tests.
+     */
+    public static void saveGeneratedTests() throws Exception {
+        TestCollection collection = TestCollection.getInstance();
+        collection.save("res/src/SampleTests.java");
+    }
+    
+    /**
+     *Tests the test by running ant in the
+     *res folder with a ProcessBuilder. Then checks
+     *the number of failed tests against the number of 
+     *expected failures.
+     * @throws Exception Due to reading the input stream 
+     * of ant from the process, and saving the TestCollection Class.
+     */
+    @AfterClass
+    public static void testOurTest() throws Exception {
+        saveGeneratedTests();
+        int actualFailures = 0;
+        ProcessBuilder pb = new ProcessBuilder("ant");
+        File pathToRes = new File(System.getProperty("user.dir") 
+                + System.getProperty("file.separator") + "res");
+        pb.directory(pathToRes);
+        Process p = pb.start();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains("Failures: ")) {
+                String end = line.substring(line.indexOf("Failures: "));
+                end = end.substring(10);
+                actualFailures = Integer.valueOf(end);
+            }
+        }
+        assertEquals(4, actualFailures);
+    }
+    
 }
