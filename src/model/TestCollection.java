@@ -69,7 +69,7 @@ public class TestCollection {
      * @throws Exception
      *             If the filePath isn't a .java file or can't be written to.
      */
-    public void save(String filePath) throws Exception {
+    public void export(String filePath) throws Exception {
         String className = getClassName(filePath);
         String content = getFileContentString(className);
         writeToFile(content, filePath);
@@ -149,6 +149,11 @@ public class TestCollection {
     public static TestCollection getInstance() {
         return instance;
     }
-
+    
+    
+    public void save(String fileName) {
+        
+    }
+ 
 }
 

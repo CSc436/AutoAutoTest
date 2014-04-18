@@ -23,11 +23,11 @@ public class ExceptionsTest {
      * file
      * 
      * @throws Exception
-     *             Because we tried to save a .py file instead of .java
+     *             Because we tried to export a .py file instead of .java
      */
     @Test(expected = RuntimeException.class)
-    public void testSavingToNonJavaFile() throws Exception {
-        TestCollection.getInstance().save("Lol.py");
+    public void testExportingToNonJavaFile() throws Exception {
+        TestCollection.getInstance().export("Lol.py");
     }
 
     /**
@@ -35,11 +35,11 @@ public class ExceptionsTest {
      * file
      * 
      * @throws Exception
-     *             Because we tried to save a ..java file instead of .java
+     *             Because we tried to export a ..java file instead of .java
      */
     @Test(expected = RuntimeException.class)
-    public void testSavingToFileWithTwoDots() throws Exception {
-        TestCollection.getInstance().save("Lol..java");
+    public void testExportingToFileWithTwoDots() throws Exception {
+        TestCollection.getInstance().export("Lol..java");
     }
 
     /**

@@ -125,7 +125,7 @@ public class TestCollectionTest {
         theTest.setExpectedStandardOutput("Hello World!");
         String base = tempDir.toString();
         String path = Paths.get(base, "ExampleTest.java").toString();
-        collection.save(path);
+        collection.export(path);
         assertTrue(new File(path).exists());
     }
 
@@ -140,7 +140,7 @@ public class TestCollectionTest {
         collection.newTest();
         String base = tempDir.toString();
         String path = Paths.get(base, "ExampleTest").toString();
-        collection.save(path);
+        collection.export(path);
         path += ".java";
         assertTrue(new File(path).exists());
     }
