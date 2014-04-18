@@ -15,8 +15,24 @@
     vgap="10" 
     styleClass="root">
     
-	<MenuBar fx:id="menuBar">
-	    <Menu fx:id="save" text="Save"/>
+    <!-- Here is our menu bar with its menus. -->
+	<MenuBar>
+	    <Menu text="File">
+	        <MenuItem text="Exit"
+	          onAction="#handleExitMenuOption"/>
+	    </Menu>
+	    <Menu text="Load">
+	        <MenuItem text="Load Tests"
+	          onAction="#handleLoadTestsMenuOption"/>
+	    </Menu>
+	    <Menu text="Save">
+	        <MenuItem text="Save Tests"
+	          onAction="#handleSaveTestsMenuOption"/>
+	    </Menu>
+	    <Menu text="Export">
+	        <MenuItem text="Export Tests"
+	          onAction="#handleExportTestsMenuOption"/>
+	    </Menu>
 	</MenuBar> 
     
     <!-- This is the listview for our tests. -->

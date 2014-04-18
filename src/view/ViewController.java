@@ -74,7 +74,39 @@ public class ViewController {
     public ViewController() {
         myTestCollection = TestCollection.getInstance();
     }
-
+    
+    /**
+     * This method handles the action of exiting the GUI via the menu.
+     */
+    @FXML
+    public void handleExitMenuOption() {
+        System.out.println("Exit");
+    }
+    
+    /**
+     * Loads the tests into the program via the menu.
+     */
+    @FXML
+    public void handleLoadTestsMenuOption() {
+        System.out.println("Load");
+    }
+    
+    /**
+     * Saves the tests via the menu.
+     */
+    @FXML
+    public void handleSaveTestsMenuOption() {
+        System.out.println("Save");
+    }
+    
+    /**
+     * Exports the tests to a .java file via the menu.
+     */
+    @FXML
+    public void handleExportTestsMenuOption() {
+        System.out.println("Export");
+    }
+    
     /**
      * @param event
      *            This method generates a new test when the button is pressed.
