@@ -10,7 +10,6 @@ import model.TestCase;
 import model.TestCollection;
 
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -19,17 +18,6 @@ import org.junit.Test;
  * Generates a number of test files to use on StudentSolutionSet1
  */
 public class IntegrationTest {
-    private static int numBadTests; // this is used for testing our tests
-    
-    /**
-     * This is used to initialize the number of bad tests 
-     * that we are expecting. i.e. The number of tests that we 
-     * expect to fail.
-     */
-    @BeforeClass
-    public static void initializeNumBadTests() {
-        numBadTests = 0;
-    }
 
     /**
      * Makes a pair of tests for ints, 
@@ -56,8 +44,6 @@ public class IntegrationTest {
         testCase2.setMethodName("badAdd1");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        incNumBadTests();
     }
     
     /**
@@ -85,8 +71,6 @@ public class IntegrationTest {
         testCase2.setMethodName("badAppendCom");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        incNumBadTests();
     }
     
     /**
@@ -114,8 +98,6 @@ public class IntegrationTest {
         testCase2.setMethodName("badOpposite");
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
-        
-        incNumBadTests();
     }
     
     /**
@@ -143,8 +125,6 @@ public class IntegrationTest {
         testCase2.setTimeoutTime(1000);
         testCase2.setFloatPrecision(2);
         testCase2.setIsVoid(true);
-        
-        incNumBadTests();
     }
     
     /**
@@ -186,17 +166,7 @@ public class IntegrationTest {
                 actualFailures = Integer.valueOf(end);
             }
         }
-        assertEquals(numBadTests, actualFailures);
-    }
-    
-    /**
-     * Increments the number of bad tests we expect after every test is run.
-     * This uses an after tag because this class creates test cases in pairs, 
-     * so it is assumed that there is a bad test case generated for every test 
-     * that is run.
-     */
-    public void incNumBadTests() {
-        numBadTests += 1;
+        assertEquals(4, actualFailures);
     }
     
 }
