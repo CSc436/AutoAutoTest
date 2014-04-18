@@ -16,6 +16,7 @@
     styleClass="root">
     
 	<MenuBar fx:id="menuBar">
+	    <Menu fx:id="save" text="Save"/>
 	</MenuBar> 
     
     <!-- This is the listview for our tests. -->
