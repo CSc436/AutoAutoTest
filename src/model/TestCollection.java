@@ -27,18 +27,35 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
 
-    private final String saveArgsName = "Args";
-    private final String saveClassName = "ClassName";
-    private final String saveExpectedReturnName = "ExpectedReturn";
-    private final String saveExpectedStdOutName = "ExpectedStandardOut";
-    private final String saveMethodName = "MethodName";
-    private final String saveFloatPrecisionName = "FloatPrecision";
-    private final String saveStockedInputName = "StockedInput";
-    private final String saveTimeoutTimeName = "TimeoutTime";
-    private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
-    private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
-    private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
-    private final String saveIsVoidName = "IsVoid";
+    // private final String saveArgsName = "Args";
+    // private final String saveClassName = "ClassName";
+    // private final String saveExpectedReturnName = "ExpectedReturn";
+    // private final String saveExpectedStdOutName = "ExpectedStandardOut";
+    // private final String saveMethodName = "MethodName";
+    // private final String saveFloatPrecisionName = "FloatPrecision";
+    // private final String saveStockedInputName = "StockedInput";
+    // private final String saveTimeoutTimeName = "TimeoutTime";
+    // private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
+    // private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
+    // private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
+    // private final String saveIsVoidName = "IsVoid";
+
+    private static final String SAVE_ARGS_NAME = "Args";
+    private static final String SAVE_CLASS_NAME = "ClassName";
+    private static final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
+    private static final String SAVE_EXPECTED_STD_OUT_NAME = 
+            "ExpectedStandardOut";
+    private static final String SAVE_METHOD_NAME = "MethodName";
+    private static final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
+    private static final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
+    private static final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
+    private static final String SAVE_IS_IGNORE_CASING_NAME = 
+            "IsIgnoreCasing";
+    private static final String SAVE_IS_IGNORE_PUNCTUATION_NAME = 
+            "IsIgnorePunctuation";
+    private static final String SAVE_IS_IGNORE_WHITESPACE_NAME = 
+            "IsIgnoreWhitespace";
+    private static final String SAVE_IS_VOID_NAME = "IsVoid";
 
     /**
      * Create a new test collection with no tests.
@@ -195,27 +212,26 @@ public class TestCollection {
             Element oneTest = doc.createElement("Test");
             oneTest.setAttribute("name", test.getTestName());
 
-            appendElement(doc, saveArgsName, test.getArgs(), oneTest);
-            appendElement(doc, saveClassName, test.getClassName(), oneTest);
-            appendElement(doc, saveExpectedReturnName,
+            appendElement(doc, SAVE_ARGS_NAME, test.getArgs(), oneTest);
+            appendElement(doc, SAVE_CLASS_NAME, test.getClassName(), oneTest);
+            appendElement(doc, SAVE_EXPECTED_RETURN_NAME,
                     test.getExpectedReturn(), oneTest);
-            appendElement(doc, saveExpectedStdOutName,
+            appendElement(doc, SAVE_EXPECTED_STD_OUT_NAME,
                     test.getExpectedStandardOutput(), oneTest);
-            appendElement(doc, saveMethodName,
-                    test.getMethodName(), oneTest);
-            appendElement(doc, saveFloatPrecisionName,
+            appendElement(doc, SAVE_METHOD_NAME, test.getMethodName(), oneTest);
+            appendElement(doc, SAVE_FLOAT_PRECISION_NAME,
                     "" + test.getFloatPrecision(), oneTest);
-            appendElement(doc, saveStockedInputName, test.getStockedInput(),
+            appendElement(doc, SAVE_STOCKED_INPUT_NAME, test.getStockedInput(),
                     oneTest);
-            appendElement(doc, saveTimeoutTimeName, "" + test.getTimeoutTime(),
-                    oneTest);
-            appendElement(doc, saveIsIgnoreCasingName,
+            appendElement(doc, SAVE_TIMEOUT_TIME_NAME,
+                    "" + test.getTimeoutTime(), oneTest);
+            appendElement(doc, SAVE_IS_IGNORE_CASING_NAME,
                     "" + test.isIgnoreCasing(), oneTest);
-            appendElement(doc, saveIsIgnorePunctuationName,
+            appendElement(doc, SAVE_IS_IGNORE_PUNCTUATION_NAME,
                     "" + test.isIgnorePunctuation(), oneTest);
-            appendElement(doc, saveIsIgnoreWhitespaceName,
+            appendElement(doc, SAVE_IS_IGNORE_WHITESPACE_NAME,
                     "" + test.isIgnoreWhitespace(), oneTest);
-            appendElement(doc, saveIsVoidName, "" + test.isVoid(), oneTest);
+            appendElement(doc, SAVE_IS_VOID_NAME, "" + test.isVoid(), oneTest);
 
             rootElement.appendChild(oneTest);
         }
