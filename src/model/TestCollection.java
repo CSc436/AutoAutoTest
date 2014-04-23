@@ -29,6 +29,19 @@ public class TestCollection {
 
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
+    
+    private final String SAVE_ARGS_NAME = "Args";
+    private final String SAVE_CLASS_NAME = "ClassName";
+    private final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
+    private final String SAVE_EXPECTED_STD_OUT_NAME = "ExpectedStandardOut";
+    private final String SAVE_METHOD_NAME = "MethodName";
+    private final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
+    private final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
+    private final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
+    private final String SAVE_IS_IGNORE_CASING_NAME = "IsIgnoreCasing";
+    private final String SAVE_IS_IGNORE_PUNCTUATION_NAME = "IsIgnorePunctuation";
+    private final String SAVE_IS_IGNORE_WHITESPACE_NAME = "IsIgnoreWhitespace";
+    private final String SAVE_IS_VOID_NAME = "IsVoid";
 
     /**
      * Create a new test collection with no tests.
@@ -179,70 +192,7 @@ public class TestCollection {
         // root elements
         Document doc = docBuilder.parse(new File(fileName));
         Element rootElement = doc.getDocumentElement();
-        NodeList list = rootElement.getChildNodes();
-        for(int i = 0; i < list.getLength(); i++) {
-            
-            Node node = list.item(i);
-            if(node.getAttributes() == null) 
-                continue;
-            
-            
-            String testName = node.getAttributes().getNamedItem("name").toString();
-            System.out.println(testName);
-            
-            System.out.println("TESTING " + node.getAttributes().getNamedItem("Args"));
-            NodeList list2 = node.getChildNodes();
-            
-            String args = list2.item(1).getTextContent();
-            String className = list2.item(3).getTextContent();
-            String expectedReturn = list2.item(5).getTextContent();
-            String expectedStandardOut = list2.item(7).getTextContent();
-            String methodName = list2.item(9).getTextContent();
-            String floatPrecison = list2.item(11).getTextContent();
-            String stockedInput = list2.item(13).getTextContent();
-            String timeoutTime = list2.item(15).getTextContent();
-            String isIgnoreCasing = list2.item(17).getTextContent();
-            String isIgnorePunctuation = list2.item(19).getTextContent();
-            String isIgnoreWhitespace = list2.item(21).getTextContent();
-            String isVoid = list2.item(23).getTextContent();
-            
-//            TestCase currentTest = instance.tests.get(i);
-//            currentTest.setArgs(args);
-            // TODO set current test things
-            
-            System.out.print(list2.item(1).getNodeName() + ": ");
-            System.out.println(args);
-            System.out.print(list2.item(3).getNodeName() + ": ");
-            System.out.println(className);
-            System.out.print(list2.item(5).getNodeName() + ": ");
-            System.out.println(expectedReturn);
-            System.out.print(list2.item(7).getNodeName() + ": ");
-            System.out.println(expectedStandardOut);
-            System.out.print(list2.item(9).getNodeName() + ": ");
-            System.out.println(methodName);
-            System.out.print(list2.item(11).getNodeName() + ": ");
-            System.out.println(floatPrecison);
-            System.out.print(list2.item(13).getNodeName() + ": ");
-            System.out.println(stockedInput);
-            System.out.print(list2.item(15).getNodeName() + ": ");
-            System.out.println(timeoutTime);
-            System.out.print(list2.item(17).getNodeName() + ": ");
-            System.out.println(isIgnoreCasing);
-            System.out.print(list2.item(19).getNodeName() + ": ");
-            System.out.println(isIgnorePunctuation);
-            System.out.print(list2.item(21).getNodeName() + ": ");
-            System.out.println(isIgnoreWhitespace);
-            System.out.print(list2.item(23).getNodeName() + ": ");
-            System.out.println(isVoid);
-            System.out.println();
-        }
-        
-        
-        System.out.println("BEGING TEST!!");
-        System.out.println("BEGING TEST!!");
-        System.out.println("BEGING TEST!!");
-        System.out.println("BEGING TEST!!");
-        list = rootElement.getElementsByTagName("Test");
+        NodeList list = rootElement.getElementsByTagName("Test");
         for (int i = 0; i < list.getLength(); i++) {
      
             Node node = list.item(i);
@@ -251,20 +201,19 @@ public class TestCollection {
                 
                 Element el = (Element) node;
                 System.out.println("name is: " + el.getAttribute("name"));
-                String args = getText(el, "Args");
                 
-                
-                String className = list2.item(3).getTextContent();
-                String expectedReturn = list2.item(5).getTextContent();
-                String expectedStandardOut = list2.item(7).getTextContent();
-                String methodName = list2.item(9).getTextContent();
-                String floatPrecison = list2.item(11).getTextContent();
-                String stockedInput = list2.item(13).getTextContent();
-                String timeoutTime = list2.item(15).getTextContent();
-                String isIgnoreCasing = list2.item(17).getTextContent();
-                String isIgnorePunctuation = list2.item(19).getTextContent();
-                String isIgnoreWhitespace = list2.item(21).getTextContent();
-                String isVoid = list2.item(23).getTextContent();
+                String args = getText(el, SAVE_ARGS_NAME);
+                String className = getText(el, SAVE_CLASS_NAME);
+                String expectedReturn = getText(el, SAVE_EXPECTED_RETURN_NAME);
+                String expectedStandardOut = getText(el, SAVE_EXPECTED_STD_OUT_NAME);
+                String method = getText(el, SAVE_METHOD_NAME);
+                String floatPrecision = getText(el, SAVE_FLOAT_PRECISION_NAME);
+                String stockedInput = getText(el, SAVE_STOCKED_INPUT_NAME);
+                String timeoutTime = getText(el, SAVE_TIMEOUT_TIME_NAME);
+                String isIgnoreCasing = getText(el, SAVE_IS_IGNORE_CASING_NAME);
+                String isIgnorePunctuation = getText(el, SAVE_IS_IGNORE_PUNCTUATION_NAME);
+                String isIgnoreWhitespace = getText(el, SAVE_IS_IGNORE_WHITESPACE_NAME);
+                String isVoid = getText(el, SAVE_IS_VOID_NAME);
         }
         
     }
