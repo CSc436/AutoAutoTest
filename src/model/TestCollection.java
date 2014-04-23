@@ -39,7 +39,7 @@ public class TestCollection {
     private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
     private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
     private final String saveIsVoidName = "IsVoid";
-    
+
     /**
      * Create a new test collection with no tests.
      */
@@ -177,7 +177,8 @@ public class TestCollection {
      * 
      * @param fileName
      *            the name of the file to save
-     * @throws Exception if anything goes wrong
+     * @throws Exception
+     *             if anything goes wrong
      */
     public void save(String fileName) throws Exception {
 
@@ -194,61 +195,25 @@ public class TestCollection {
             Element oneTest = doc.createElement("Test");
             oneTest.setAttribute("name", test.getTestName());
 
-            Element tempElement = doc.createElement(saveArgsName);
-            tempElement.appendChild(doc.createTextNode(test.getArgs()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveClassName);
-            tempElement.appendChild(doc.createTextNode(test.getClassName()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveExpectedReturnName);
-            tempElement
-                    .appendChild(doc.createTextNode(test.getExpectedReturn()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveExpectedStdOutName);
-            tempElement.appendChild(doc.createTextNode(test
-                    .getExpectedStandardOutput()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveMethodName);
-            tempElement.appendChild(doc.createTextNode(test.getMethodName()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveFloatPrecisionName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.getFloatPrecision()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveStockedInputName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.getStockedInput()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveTimeoutTimeName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.getTimeoutTime()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveIsIgnoreCasingName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.isIgnoreCasing()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveIsIgnorePunctuationName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.isIgnorePunctuation()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveIsIgnoreWhitespaceName);
-            tempElement.appendChild(doc.createTextNode(""
-                    + test.isIgnoreWhitespace()));
-            oneTest.appendChild(tempElement);
-
-            tempElement = doc.createElement(saveIsVoidName);
-            tempElement.appendChild(doc.createTextNode("" + test.isVoid()));
-            oneTest.appendChild(tempElement);
+            appendElement(doc, saveArgsName, test.getArgs(), oneTest);
+            appendElement(doc, saveClassName, test.getClassName(), oneTest);
+            appendElement(doc, saveExpectedReturnName,
+                    test.getExpectedReturn(), oneTest);
+            appendElement(doc, saveExpectedStdOutName,
+                    test.getExpectedStandardOutput(), oneTest);
+            appendElement(doc, saveFloatPrecisionName,
+                    "" + test.getFloatPrecision(), oneTest);
+            appendElement(doc, saveStockedInputName, test.getStockedInput(),
+                    oneTest);
+            appendElement(doc, saveTimeoutTimeName, "" + test.getTimeoutTime(),
+                    oneTest);
+            appendElement(doc, saveIsIgnoreCasingName,
+                    "" + test.isIgnoreCasing(), oneTest);
+            appendElement(doc, saveIsIgnorePunctuationName,
+                    "" + test.isIgnorePunctuation(), oneTest);
+            appendElement(doc, saveIsIgnoreWhitespaceName,
+                    "" + test.isIgnoreWhitespace(), oneTest);
+            appendElement(doc, saveIsVoidName, "" + test.isVoid(), oneTest);
 
             rootElement.appendChild(oneTest);
         }
@@ -263,4 +228,22 @@ public class TestCollection {
 
     }
 
+    /**
+     * Appends an element to the save file
+     * 
+     * @param doc
+     *            the document we are working on
+     * @param elementName
+     *            the name to append
+     * @param elementValue
+     *            the value to associate with the name
+     * @param root
+     *            the Element on which to append the new element
+     */
+    private void appendElement(Document doc, String elementName,
+            String elementValue, Element root) {
+        Element tempElement = doc.createElement(elementName);
+        tempElement.appendChild(doc.createTextNode(elementValue));
+        root.appendChild(tempElement);
+    }
 }
