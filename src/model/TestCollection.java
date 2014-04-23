@@ -16,6 +16,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A Class that stores all of the tests. This class is responsible for reading
@@ -176,81 +178,66 @@ public class TestCollection {
 
         // root elements
         Document doc = docBuilder.parse(new File(fileName));
-        System.out.println(doc.getDocumentElement().getNodeName());
+        Element rootElement = doc.getDocumentElement();
+        NodeList list = rootElement.getChildNodes();
+        for(int i = 0; i < list.getLength(); i++) {
+            
+            Node node = list.item(i);
+            if(node.getAttributes() == null) 
+                continue;
+            
+            
+            String testName = node.getAttributes().getNamedItem("name").toString();
+            System.out.println("found test: " + testName);
+            
+            NodeList list2 = node.getChildNodes();
+            
+            String args = list2.item(1).getTextContent();
+            String className = list2.item(3).getTextContent();
+            String expectedReturn = list2.item(5).getTextContent();
+            String expectedStandardOut = list2.item(7).getTextContent();
+            String methodName = list2.item(9).getTextContent();
+            String floatPrecison = list2.item(11).getTextContent();
+            String stockedInput = list2.item(13).getTextContent();
+            String timeoutTime = list2.item(15).getTextContent();
+            String isIgnoreCasing = list2.item(17).getTextContent();
+            String isIgnorePunctuation = list2.item(19).getTextContent();
+            String isIgnoreWhitespace = list2.item(21).getTextContent();
+            String isVoid = list2.item(23).getTextContent();
+            
+            TestCase currentTest = instance.tests.get(i);
+            currentTest.setArgs(args);
+            // TODO set current test things
+            
+            System.out.print(list2.item(1).getNodeName() + ": ");
+            System.out.println(args);
+            System.out.print(list2.item(3).getNodeName() + ": ");
+            System.out.println(className);
+            System.out.print(list2.item(5).getNodeName() + ": ");
+            System.out.println(expectedReturn);
+            System.out.print(list2.item(7).getNodeName() + ": ");
+            System.out.println(expectedStandardOut);
+            System.out.print(list2.item(9).getNodeName() + ": ");
+            System.out.println(methodName);
+            System.out.print(list2.item(11).getNodeName() + ": ");
+            System.out.println(floatPrecison);
+            System.out.print(list2.item(13).getNodeName() + ": ");
+            System.out.println(stockedInput);
+            System.out.print(list2.item(15).getNodeName() + ": ");
+            System.out.println(timeoutTime);
+            System.out.print(list2.item(17).getNodeName() + ": ");
+            System.out.println(isIgnoreCasing);
+            System.out.print(list2.item(19).getNodeName() + ": ");
+            System.out.println(isIgnorePunctuation);
+            System.out.print(list2.item(21).getNodeName() + ": ");
+            System.out.println(isIgnoreWhitespace);
+            System.out.print(list2.item(23).getNodeName() + ": ");
+            System.out.println(isVoid);
+            System.out.println();
+        }
         
-//        Element rootElement = doc.createElement("TestCollection");
-
-//        for (TestCase test : tests) {
-//            Element oneTest = doc.createElement("Test");
-//            oneTest.setAttribute("name", test.getTestName());
-//
-//            Element tempElement = doc.createElement(saveArgsName);
-//            tempElement.appendChild(doc.createTextNode(test.getArgs()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveClassName);
-//            tempElement.appendChild(doc.createTextNode(test.getClassName()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveExpectedReturnName);
-//            tempElement
-//                    .appendChild(doc.createTextNode(test.getExpectedReturn()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveExpectedStdOutName);
-//            tempElement.appendChild(doc.createTextNode(test
-//                    .getExpectedStandardOutput()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveMethodName);
-//            tempElement.appendChild(doc.createTextNode(test.getMethodName()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveFloatPrecisionName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.getFloatPrecision()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveStockedInputName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.getStockedInput()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveTimeoutTimeName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.getTimeoutTime()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveIsIgnoreCasingName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.isIgnoreCasing()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveIsIgnorePunctuationName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.isIgnorePunctuation()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveIsIgnoreWhitespaceName);
-//            tempElement.appendChild(doc.createTextNode(""
-//                    + test.isIgnoreWhitespace()));
-//            oneTest.appendChild(tempElement);
-//
-//            tempElement = doc.createElement(saveIsVoidName);
-//            tempElement.appendChild(doc.createTextNode("" + test.isVoid()));
-//            oneTest.appendChild(tempElement);
-//
-//            rootElement.appendChild(oneTest);
-//        }
-//
-//        TransformerFactory transformerFactory = TransformerFactory
-//                .newInstance();
-//        Transformer transformer = transformerFactory.newTransformer();
-//        DOMSource source = new DOMSource(doc);
-//        StreamResult result = new StreamResult(new File(fileName));
-//
-//        transformer.transform(source, result);
-
     }
+    
+    
 }
 

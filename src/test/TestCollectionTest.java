@@ -167,6 +167,12 @@ public class TestCollectionTest {
     @Test
     public void testLoading() {
         TestCollection collection1 = TestCollection.getInstance();
+        try {
+            collection1.load("test_output/SaveTest.xml");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
