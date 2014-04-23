@@ -39,18 +39,34 @@ public class RelaxedStringFloatCheck {
      */
     public static final int DEFAULT_PRECISION = 2;
 
-    private static final String numberRegex = "[-+]?[0-9]*\\.?[0-9]+";
-    private static final String whitespaceRegex = "\\s";
-    private static final String punctuationRegex = "\\p{Punct}";
+    private static final String NUMBER_REGEX = "[-+]?[0-9]*\\.?[0-9]+";
+    private static final String WHITESPACE_REGEX = "\\s";
+    private static final String PUNCTUATION_REGEX = "\\p{Punct}";
 
-    private Pattern whitespacePattern = Pattern.compile(whitespaceRegex);
-    private Pattern punctuationPattern = Pattern.compile(punctuationRegex);
+    private Pattern whitespacePattern = Pattern.compile(WHITESPACE_REGEX);
+    private Pattern punctuationPattern = Pattern.compile(PUNCTUATION_REGEX);
 
+    /**
+     * Private helper method to see if a character is whitespace.
+     * 
+     * @param ch
+     *            the character to check for being whitespace
+     * 
+     * @return true if the character is whitespace or false if not
+     */
     private boolean isWhitespace(char ch) {
         Matcher test = whitespacePattern.matcher("" + ch);
         return test.matches();
     }
 
+    /**
+     * Private helper method to see if a character is punctuation.
+     * 
+     * @param ch
+     *            the character to check for being punctuation
+     * 
+     * @return true if the character is punctuation or false if not
+     */
     private boolean isPunctuation(char ch) {
         Matcher test = punctuationPattern.matcher("" + ch);
         return test.matches();
@@ -67,7 +83,7 @@ public class RelaxedStringFloatCheck {
      * @return true if the characters are equivalent or false if not
      */
     private boolean charactersMatch(char chA, char chB) {
-        if (ignoreCasing == false) {
+        if (!ignoreCasing) {
             return (chA == chB);
         }
         // if we get here, then do a case-insensitive comparison using String
@@ -75,19 +91,19 @@ public class RelaxedStringFloatCheck {
         String strB = "" + chB;
         return strA.equalsIgnoreCase(strB);
     } // end of charactersMatch
-    
+
     /**
-     * @param ch character to check
-     * @return true if we can ignore this character in the actual or expected string
+     * @param ch
+     *            character to check
+     * @return true if we can ignore this character in the actual or expected
+     *         string
      */
-    private boolean canAdvanceOver(char ch)
-    {
-        if ((ignorePunctuation) && (isPunctuation(ch)))
+    private boolean canAdvanceOver(char ch) {
+        if ((ignorePunctuation) && (isPunctuation(ch))) {
             return true;
-        else if ((ignoreWhitespace) && (isWhitespace(ch)))
-            return true;
-        else
-            return false;  
+        } else {
+            return ((ignoreWhitespace) && (isWhitespace(ch)));
+        }
     }
 
     /**
@@ -112,13 +128,54 @@ public class RelaxedStringFloatCheck {
         ignoreCasing = inputCasing;
         ignoreWhitespace = inputWhitespace;
         ignorePunctuation = inputPunct;
-        if (inputPrecision >= 0)
+        if (inputPrecision >= 0) {
             decPlacesPrecision = inputPrecision;
-        else
+        } else {
             // invalid precision specified
             decPlacesPrecision = DEFAULT_PRECISION;
+        }
     }
 
+    /**
+     * @param inputStr
+     *            The original input string.
+     * @return Returns a new StringBuilder containing the original string, with
+     *         all floating-point numbers multiplied by 10^(decimal places
+     *         precision) and then rounded to the nearest integer, so that the
+     *         numbers no longer contain a decimal point.
+     */
+    private StringBuilder roundAllNumbersInString(String inputStr) {
+        int newIndex = 0; // used for StringBuilder replace
+        String numberAsString = "";
+        double numberAsDecimal = 0;
+        long numberAsRounded = 0;
+        // use the regular expression numberRegex to instantiate a
+        // number-matching pattern
+        Pattern numberPattern = Pattern.compile(NUMBER_REGEX);
+
+        // Construct new StringBuilder to allow us to modify the string
+        // in-place.
+        StringBuilder result = new StringBuilder(inputStr);
+        // Note that the pattern matcher is linked to the original input,
+        // not the new StringBuilder we are building.
+        Matcher inputMatcher = numberPattern.matcher(inputStr);
+
+        while (inputMatcher.find()) {
+            numberAsString = inputMatcher.group();
+            // we now have captured one number, and know its start and end
+            // positions in the input string
+            numberAsDecimal = Double.parseDouble(numberAsString);
+            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
+                    * numberAsDecimal);
+            // we now replace the original number with the rounded number (which
+            // is now an integer because it was multiplied by
+            // 10^decPlacesPrecision)
+            newIndex = result.indexOf(numberAsString);
+            result.replace(newIndex, newIndex + numberAsString.length(), ""
+                    + numberAsRounded);
+        } // end of looping thru all numbers in inputStr
+        return result;
+    } // end of roundAllNumbersInString
 
     /**
      * Determines if the student output is acceptable, compared to the expected
@@ -138,61 +195,14 @@ public class RelaxedStringFloatCheck {
         int actualLength = 0;
         boolean expectedIsExhausted = false;
         boolean actualIsExhausted = false;
-        char chFromActual = '0';;
+        char chFromActual = '0';
         char chFromExpected = '0';
-
-        // use the regular expression numberRegex to instantiate a
-        // number-matching pattern
-        Pattern numberPattern = Pattern.compile(numberRegex);
 
         // we will construct a new StringBuilder for each of the two input
         // strings, because we cannot modify the original strings (nor would we
         // want to, even if we could)
-        StringBuilder newExpected = new StringBuilder(expected);
-        StringBuilder newActual = new StringBuilder(actual);
-
-        int newIndex = 0; // used for StringBuilder replace
-        String numberAsString = "";
-        double numberAsDecimal = 0;
-        long numberAsRounded = 0;
-
-        // Note that the pattern matcher is linked to the original input,
-        // not the new StringBuilder we are building.
-        Matcher expectedMatcher = numberPattern.matcher(expected);
-
-        while (expectedMatcher.find()) {
-            numberAsString = expectedMatcher.group();
-            // we now have captured one number, and know its start and end
-            // positions in the input string
-            numberAsDecimal = Double.parseDouble(numberAsString);
-            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
-                    * numberAsDecimal);
-            // we now replace the original number with the rounded number (which
-            // is now an integer because it was multiplied by
-            // 10^decPlacesPrecision)
-            newIndex = newExpected.indexOf(numberAsString);
-            newExpected.replace(newIndex, newIndex + numberAsString.length(),
-                    "" + numberAsRounded);
-        } // end of looping thru all numbers in newExpected
-
-        // Note that the pattern matcher is linked to the original input,
-        // not the new StringBuilder we are building.
-        Matcher actualMatcher = numberPattern.matcher(actual);
-
-        while (actualMatcher.find()) {
-            numberAsString = actualMatcher.group();
-            // we now have captured one number, and know its start and end
-            // positions in the input string
-            numberAsDecimal = Double.parseDouble(numberAsString);
-            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
-                    * numberAsDecimal);
-            // we now replace the original number with the rounded number (which
-            // is now an integer because it was multiplied by
-            // 10^decPlacesPrecision)
-            newIndex = newActual.indexOf(numberAsString);
-            newActual.replace(newIndex, newIndex + numberAsString.length(), ""
-                    + numberAsRounded);
-        } // end of looping thru all numbers in newActual
+        StringBuilder newExpected = roundAllNumbersInString(expected);
+        StringBuilder newActual = roundAllNumbersInString(actual);
 
         // Now, the StringBuilder variables contain the expected and actual with
         // any numeric values rounded to the specified number of decimal places.
@@ -202,121 +212,111 @@ public class RelaxedStringFloatCheck {
         // parse the new strings for being acceptable
         expectedIndex = 0;
         actualIndex = 0;
-        while ((expectedIsExhausted == false) && (actualIsExhausted == false))
-        {
+        while ((!expectedIsExhausted) && (!actualIsExhausted)) {
             // update current characters to probe
             chFromExpected = newExpected.charAt(expectedIndex);
             chFromActual = newActual.charAt(actualIndex);
-            
-            // advance probe character for each string until we see something we cannot ignore
-            while (canAdvanceOver(chFromExpected))
-            {
+
+            // advance probe character for each string until we see something we
+            // cannot ignore
+            while (canAdvanceOver(chFromExpected)) {
                 expectedIndex++;
                 // check to see if string has been exhausted
-                if (expectedIndex == expectedLength)
-                {
+                if (expectedIndex == expectedLength) {
                     expectedIsExhausted = true;
                     break;
                 }
                 // otherwise, advance probe location
                 chFromExpected = newExpected.charAt(expectedIndex);
             }
-            
-            while (canAdvanceOver(chFromActual))
-            {
+
+            while (canAdvanceOver(chFromActual)) {
                 actualIndex++;
                 // check to see if string has been exhausted
-                if (actualIndex == actualLength)
-                {
+                if (actualIndex == actualLength) {
                     actualIsExhausted = true;
                     break;
                 }
                 // otherwise, advance probe location
                 chFromActual = newActual.charAt(actualIndex);
             }
-            
-            // if we get here, the we are either at the next pair of characters to compare, or at the end of both strings
+
+            // if we get here, the we are either at the next pair of characters
+            // to compare, or at the end of one or both strings
 
             // check to see if we are at the end of both strings, in which case
             // we could be looking at characters which don't match, but are
             // supposed to be ignored
-            if ((actualIsExhausted) && (expectedIsExhausted))
-            {
-                return true;  // both strings exhausted
-            }
-            else if ((actualIsExhausted) && (expectedIsExhausted == false))
-            {
-                return false;  // student output is too short
-            }
-            else if ((actualIsExhausted == false) && (expectedIsExhausted))
-            {
-                return false;  // student output has extraneous characters which are not ignorable
-            }
-            else if ((expectedIndex == expectedLength - 1)
+            if ((actualIsExhausted) && (expectedIsExhausted)) {
+                return true; // both strings exhausted
+            } else if (actualIsExhausted) { // we know that expected cannot be
+                                            // exhausted
+                return false; // student output is too short
+            } else if (expectedIsExhausted) { // we know that actual cannot be
+                                              // exhausted
+                return false; // student output has extraneous characters which
+                              // are not ignorable
+            } else if ((expectedIndex == expectedLength - 1)
                     && (actualIndex == actualLength - 1)) {
                 return charactersMatch(chFromExpected, chFromActual);
             }
-            
-            // if we get here, then we need to compare two characters which are not at the end of their respective strings
-            if ((charactersMatch(chFromExpected, chFromActual) == false)) {
+
+            // if we get here, then we need to compare two characters which are
+            // not at the end of their respective strings
+            if (!(charactersMatch(chFromExpected, chFromActual))) {
                 // the next non-ignored characters do not match, so the student
                 // output is wrong
-                System.out
-                        .println("Student output contains one or more non-matching characters.");
-                System.out
-                        .println("Expected output (beginning with first difference):"
-                                + newExpected.substring(expectedIndex));
-                System.out
-                        .println("Actual output (beginning with first difference):"
-                                + newActual.substring(actualIndex));
                 return false; // quit out of procedure
             }
             // proceed to next iteration of while loop, because there are still
             // characters remaining in the strings which need to be compared.
             expectedIndex++;
             actualIndex++;
-            
-            if (expectedIndex == expectedLength)
+
+            if (expectedIndex == expectedLength) {
                 expectedIsExhausted = true;
-            
-            if (actualIndex == actualLength)
+            }
+
+            if (actualIndex == actualLength) {
                 actualIsExhausted = true;
+            }
 
         } // end of while loop
 
-        // if we get here, then expected or actual was shorter, but we need to see if the difference is due to ignorable characters
-        if (expectedIsExhausted)
-        {
+        // if we get here, then expected or actual was shorter, but we need to
+        // see if the difference is due to ignorable characters
+        if (expectedIsExhausted) {
             chFromActual = newActual.charAt(actualIndex);
-            while ((canAdvanceOver(chFromActual)) && (actualIsExhausted == false))
-            {
+            while ((canAdvanceOver(chFromActual)) && (!actualIsExhausted)) {
                 actualIndex++;
-                if (actualIndex == actualLength)
+                if (actualIndex == actualLength) {
                     actualIsExhausted = true;
-                else
+                } else {
                     chFromActual = newActual.charAt(actualIndex);
+                }
             }
             // if we manage to exhaust actual, then the string was acceptable
-            if (actualIsExhausted)
+            if (actualIsExhausted) {
                 return true;
-        }
-        else if (actualIsExhausted)
-        {
+            }
+        } else { // actual is exhausted
             chFromExpected = newExpected.charAt(expectedIndex);
-            while ((canAdvanceOver(chFromExpected)) && (expectedIsExhausted == false))
-            {
+            while ((canAdvanceOver(chFromExpected)) && (!expectedIsExhausted)) {
                 expectedIndex++;
-                if (expectedIndex == expectedLength)
+                if (expectedIndex == expectedLength) {
                     expectedIsExhausted = true;
-                else
+                } else {
                     chFromExpected = newExpected.charAt(expectedIndex);
+                }
             }
             // if we manage to exhaust expected, then the string was acceptable
-            if (expectedIsExhausted)
+            if (expectedIsExhausted) {
                 return true;
+            }
         }
-        // if we get here, then there is a difference of length between the strings, with characters that we cannot ignore
+        // if we get here, then there is a difference of length between the
+        // strings, with characters that we cannot ignore
         return false;
-    } // end of isAccaptable
+    } // end of isAcceptable
 
 }
