@@ -188,8 +188,9 @@ public class TestCollection {
             
             
             String testName = node.getAttributes().getNamedItem("name").toString();
-            System.out.println("found test: " + testName);
+            System.out.println(testName);
             
+            System.out.println("TESTING " + node.getAttributes().getNamedItem("Args"));
             NodeList list2 = node.getChildNodes();
             
             String args = list2.item(1).getTextContent();
@@ -205,8 +206,8 @@ public class TestCollection {
             String isIgnoreWhitespace = list2.item(21).getTextContent();
             String isVoid = list2.item(23).getTextContent();
             
-            TestCase currentTest = instance.tests.get(i);
-            currentTest.setArgs(args);
+//            TestCase currentTest = instance.tests.get(i);
+//            currentTest.setArgs(args);
             // TODO set current test things
             
             System.out.print(list2.item(1).getNodeName() + ": ");
