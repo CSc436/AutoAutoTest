@@ -318,5 +318,4 @@ public class RelaxedStringFloatCheck {
         // strings, with characters that we cannot ignore
         return false;
     } // end of isAcceptable
-
 }
