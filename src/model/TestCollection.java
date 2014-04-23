@@ -1,10 +1,13 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,7 +80,23 @@ public class TestCollection {
         String className = getClassName(filePath);
         String content = getFileContentString(className);
         writeToFile(content, filePath);
+        copyFiles(filePath, className);
+    }
 
+    /**
+     * copyFiles creates 2 folders, and then calls copyPaths to saves 4 jars and
+     * 2 files, plus the build script to the place the user defines to save the
+     * .java file.
+     * 
+     * @param path
+     *            is the file path in which the test will be saved
+     * @param className
+     *            is the actual classname from the entire directory.
+     * @throws IOException
+     *             is thrown in case the copyPath does not actually copy
+     */
+    public void copyFiles(String path, String className) throws IOException {
+        String filePath = path;
         // getting destination path
         File destination = new File(filePath);
         Path newdir = destination.toPath().getParent();
@@ -92,47 +111,72 @@ public class TestCollection {
         new File(Paths.get(newdir.toString(), "src", "model").toString())
                 .mkdir();
 
-        // copying FakeStandardin
-        Path copyFakeStdIn = new File("./src/model/FakeStandardIn.java")
-                .toPath();
-        Files.copy(copyFakeStdIn, newdir.resolve(copyFakeStdIn),
-                StandardCopyOption.REPLACE_EXISTING);
+        copyPath("./src/model/FakeStandardOutput.java", newdir,
+                Paths.get("src", "model").toString());
 
-        // copying FakeStandardOut
-        Path copyFakeStdOut = new File("./src/model/FakeStandardOutput.java")
-                .toPath();
-        Files.copy(copyFakeStdOut, newdir.resolve(copyFakeStdOut),
-                StandardCopyOption.REPLACE_EXISTING);
+        copyPath("./src/model/FakeStandardIn.java", newdir,
+                Paths.get("src", "model").toString());
 
-        // copying Hamcrest jar
-        Path copyHamcrest = new File("./dev/hamcrest-core-1.3.jar").toPath();
-        Files.copy(copyHamcrest, newdir.resolve(Paths.get("lib", copyHamcrest
+        copyPath("./dev/hamcrest-core-1.3.jar", newdir, "lib");
+        copyPath("./dev/junit-4.11.jar", newdir, "lib");
+        copyPath("./lib/log4j-api-2.0-rc1.jar", newdir, "lib");
+        copyPath("./lib/log4j-core-2.0-rc1.jar", newdir, "lib");
+
+        replaceXMLVariable(className, newdir);
+    }
+
+    /**
+     * copyPath does the actual copying for copyFiles. This creates the files
+     * and puts them in the locations specified
+     * 
+     * @param directory
+     *            is the file path that is used to copy files
+     * @param newdirectory
+     *            is the path the parent of the directory where we are copying
+     * @param folder
+     *            is the directory in which the file is located
+     * @throws IOException
+     *             is thrown if the copy does not actually copy
+     */
+    private void copyPath(String directory, Path newdirectory, String folder)
+            throws IOException {
+        Path filePath = new File(directory).toPath();
+        Path newdir = newdirectory;
+        Files.copy(filePath, newdir.resolve(Paths.get(folder, filePath
                 .getFileName().toString())),
                 StandardCopyOption.REPLACE_EXISTING);
+    }
 
-        // copying JUnit jar
-        Path copyJUnit = new File("./dev/junit-4.11.jar").toPath();
-        Files.copy(copyJUnit, newdir.resolve(Paths.get("lib", copyJUnit
-                .getFileName().toString())),
-                StandardCopyOption.REPLACE_EXISTING);
-
-        // copying log4j api jar
-        Path copyLog4JApi = new File("./lib/log4j-api-2.0-rc1.jar").toPath();
-        Files.copy(copyLog4JApi, newdir.resolve(Paths.get("lib", copyLog4JApi
-                .getFileName().toString())),
-                StandardCopyOption.REPLACE_EXISTING);
-
-        // copying log4j core jar
-        Path copyLog4JCore = new File("./lib/log4j-core-2.0-rc1.jar").toPath();
-        Files.copy(copyLog4JCore, newdir.resolve(Paths.get("lib", copyLog4JCore
-                .getFileName().toString())),
-                StandardCopyOption.REPLACE_EXISTING);
-
-        // copying build.xml
-        Path copyBuildScript = new File("build.xml").toPath();
-        Files.copy(copyBuildScript,
-                newdir.resolve(copyBuildScript.getFileName()),
-                StandardCopyOption.REPLACE_EXISTING);
+    /**
+     * replaceXMLVariable opens the buildscript, and replaces the word CLASSNAME
+     * with the actual classname grabbed from the user
+     * 
+     * @param name
+     *            is the classname that is passed in from the save method.
+     * @param directory
+     *            is the directory in which the new build script will be saved.
+     * @throws IOException
+     *             this is thrown if the build script cannot be opened, or
+     *             cannot be written.
+     */
+    private void replaceXMLVariable(String name, Path directory)
+             throws IOException {
+        File source = new File("build.xml");
+        Path build = source.toPath();
+        Charset charset = Charset.forName("UTF-8");
+        String result = "";
+        BufferedReader reader = Files.newBufferedReader(build, charset);
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains("classname")) {
+                line = line.replace("classname", name);
+            }
+            result += line;
+        }
+        String destination = directory.resolve("build.xml").toString();
+        FileWriter writer = new FileWriter(destination);
+        writer.write(result);
+        writer.close();
     }
 
     /**
