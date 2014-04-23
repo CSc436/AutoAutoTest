@@ -27,19 +27,6 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
 
-    // private final String saveArgsName = "Args";
-    // private final String saveClassName = "ClassName";
-    // private final String saveExpectedReturnName = "ExpectedReturn";
-    // private final String saveExpectedStdOutName = "ExpectedStandardOut";
-    // private final String saveMethodName = "MethodName";
-    // private final String saveFloatPrecisionName = "FloatPrecision";
-    // private final String saveStockedInputName = "StockedInput";
-    // private final String saveTimeoutTimeName = "TimeoutTime";
-    // private final String saveIsIgnoreCasingName = "IsIgnoreCasing";
-    // private final String saveIsIgnorePunctuationName = "IsIgnorePunctuation";
-    // private final String saveIsIgnoreWhitespaceName = "IsIgnoreWhitespace";
-    // private final String saveIsVoidName = "IsVoid";
-
     private static final String SAVE_ARGS_NAME = "Args";
     private static final String SAVE_CLASS_NAME = "ClassName";
     private static final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
