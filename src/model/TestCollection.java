@@ -237,6 +237,40 @@ public class TestCollection {
             System.out.println();
         }
         
+        
+        System.out.println("BEGING TEST!!");
+        System.out.println("BEGING TEST!!");
+        System.out.println("BEGING TEST!!");
+        System.out.println("BEGING TEST!!");
+        list = rootElement.getElementsByTagName("Test");
+        for (int i = 0; i < list.getLength(); i++) {
+     
+            Node node = list.item(i);
+            if (node.getNodeType() != Node.ELEMENT_NODE) 
+                continue;
+                
+                Element el = (Element) node;
+                System.out.println("name is: " + el.getAttribute("name"));
+                String args = getText(el, "Args");
+                
+                
+                String className = list2.item(3).getTextContent();
+                String expectedReturn = list2.item(5).getTextContent();
+                String expectedStandardOut = list2.item(7).getTextContent();
+                String methodName = list2.item(9).getTextContent();
+                String floatPrecison = list2.item(11).getTextContent();
+                String stockedInput = list2.item(13).getTextContent();
+                String timeoutTime = list2.item(15).getTextContent();
+                String isIgnoreCasing = list2.item(17).getTextContent();
+                String isIgnorePunctuation = list2.item(19).getTextContent();
+                String isIgnoreWhitespace = list2.item(21).getTextContent();
+                String isVoid = list2.item(23).getTextContent();
+        }
+        
+    }
+
+    private String getText(Element el, String name) {
+        return el.getElementsByTagName(name).item(0).getTextContent();
     }
     
     
