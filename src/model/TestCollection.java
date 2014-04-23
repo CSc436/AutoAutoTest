@@ -97,26 +97,18 @@ public class TestCollection {
      */
     public void copyFiles(String path, String className) throws IOException {
         String filePath = path;
-        // getting destination path
         File destination = new File(filePath);
         Path newdir = destination.toPath().getParent();
+        String dirString = newdir.toString();
+        
+        String [][] args = {{"src"}, {"lib"}, {"src", "model"}};
+        for (String[] dirs : args) {
+            String dirPath = Paths.get(dirString, dirs).toString();
+            new File(dirPath).mkdir();
+        }
 
-        // making src folder
-        new File(Paths.get(newdir.toString(), "src").toString()).mkdir();
-
-        // making lib folder
-        new File(Paths.get(newdir.toString(), "lib").toString()).mkdir();
-
-        // making src/model folder
-        new File(Paths.get(newdir.toString(), "src", "model").toString())
-                .mkdir();
-
-        copyPath("./src/model/FakeStandardOutput.java", newdir,
-                Paths.get("src", "model").toString());
-
-        copyPath("./src/model/FakeStandardIn.java", newdir,
-                Paths.get("src", "model").toString());
-
+        copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");
+        copyPath("./src/model/FakeStandardIn.java", newdir, "src", "model");
         copyPath("./dev/hamcrest-core-1.3.jar", newdir, "lib");
         copyPath("./dev/junit-4.11.jar", newdir, "lib");
         copyPath("./lib/log4j-api-2.0-rc1.jar", newdir, "lib");
@@ -133,18 +125,18 @@ public class TestCollection {
      *            is the file path that is used to copy files
      * @param newdirectory
      *            is the path the parent of the directory where we are copying
-     * @param folder
-     *            is the directory in which the file is located
+     * @param paths is a list of paths.
      * @throws IOException
      *             is thrown if the copy does not actually copy
      */
-    private void copyPath(String directory, Path newdirectory, String folder)
+    private void copyPath(String directory, Path newdirectory, String... paths)
             throws IOException {
         Path filePath = new File(directory).toPath();
         Path newdir = newdirectory;
-        Files.copy(filePath, newdir.resolve(Paths.get(folder, filePath
-                .getFileName().toString())),
-                StandardCopyOption.REPLACE_EXISTING);
+        Path dst = newdir.resolve(Paths.get("", paths));
+        dst = Paths.get(dst.toString(), filePath.getFileName().toString());
+        StandardCopyOption options = StandardCopyOption.REPLACE_EXISTING;
+        Files.copy(filePath, dst, options);
     }
 
     /**
@@ -160,17 +152,15 @@ public class TestCollection {
      *             cannot be written.
      */
     private void replaceXMLVariable(String name, Path directory)
-             throws IOException {
-        File source = new File("build.xml");
+            throws IOException {
+        File source = new File("./res/build.xml");
         Path build = source.toPath();
         Charset charset = Charset.forName("UTF-8");
         String result = "";
         BufferedReader reader = Files.newBufferedReader(build, charset);
         String line = null;
         while ((line = reader.readLine()) != null) {
-            if (line.contains("classname")) {
-                line = line.replace("classname", name);
-            }
+            line = line.replace("CLASSNAME", name);
             result += line;
         }
         String destination = directory.resolve("build.xml").toString();
