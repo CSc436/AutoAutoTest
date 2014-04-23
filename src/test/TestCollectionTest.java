@@ -163,6 +163,11 @@ public class TestCollectionTest {
         TestCollection collection2 = TestCollection.getInstance();
         assertSame(collection1, collection2);
     }
+    
+    @Test
+    public void testLoading() {
+        TestCollection collection1 = TestCollection.getInstance();
+    }
 
 }
 

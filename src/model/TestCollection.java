@@ -7,6 +7,16 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
  * A Class that stores all of the tests. This class is responsible for reading
  * and writing files associated with the tests.
@@ -150,5 +160,97 @@ public class TestCollection {
         return instance;
     }
 
+    
+    /**
+     * Saves all the information in the TestCollection in xml format.
+     * 
+     * @param fileName
+     *            the name of the file to save
+     * @throws Exception if anything goes wrong
+     */
+    public void load(String fileName) throws Exception {
+
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory
+                .newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+        // root elements
+        Document doc = docBuilder.parse(new File(fileName));
+        System.out.println(doc.getDocumentElement().getNodeName());
+        
+//        Element rootElement = doc.createElement("TestCollection");
+
+//        for (TestCase test : tests) {
+//            Element oneTest = doc.createElement("Test");
+//            oneTest.setAttribute("name", test.getTestName());
+//
+//            Element tempElement = doc.createElement(saveArgsName);
+//            tempElement.appendChild(doc.createTextNode(test.getArgs()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveClassName);
+//            tempElement.appendChild(doc.createTextNode(test.getClassName()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveExpectedReturnName);
+//            tempElement
+//                    .appendChild(doc.createTextNode(test.getExpectedReturn()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveExpectedStdOutName);
+//            tempElement.appendChild(doc.createTextNode(test
+//                    .getExpectedStandardOutput()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveMethodName);
+//            tempElement.appendChild(doc.createTextNode(test.getMethodName()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveFloatPrecisionName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.getFloatPrecision()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveStockedInputName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.getStockedInput()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveTimeoutTimeName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.getTimeoutTime()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveIsIgnoreCasingName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.isIgnoreCasing()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveIsIgnorePunctuationName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.isIgnorePunctuation()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveIsIgnoreWhitespaceName);
+//            tempElement.appendChild(doc.createTextNode(""
+//                    + test.isIgnoreWhitespace()));
+//            oneTest.appendChild(tempElement);
+//
+//            tempElement = doc.createElement(saveIsVoidName);
+//            tempElement.appendChild(doc.createTextNode("" + test.isVoid()));
+//            oneTest.appendChild(tempElement);
+//
+//            rootElement.appendChild(oneTest);
+//        }
+//
+//        TransformerFactory transformerFactory = TransformerFactory
+//                .newInstance();
+//        Transformer transformer = transformerFactory.newTransformer();
+//        DOMSource source = new DOMSource(doc);
+//        StreamResult result = new StreamResult(new File(fileName));
+//
+//        transformer.transform(source, result);
+
+    }
 }
 
