@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * @author dillon
  */
 public class View extends Application {
-
+    
     /**
      * This is the generic main method, it launches the gui.
      * 

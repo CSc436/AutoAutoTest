@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -60,13 +60,13 @@ public class ViewController {
     @FXML
     private ListView<String> listView;
     @FXML
-    private CheckBox ignoreCasingBox;
+    private CheckMenuItem ignoreCasingBox;
     @FXML
-    private CheckBox ignoreWhitespaceBox;
+    private CheckMenuItem ignoreWhitespaceBox;
     @FXML
-    private CheckBox ignorePunctuationBox;
+    private CheckMenuItem ignorePunctuationBox;
     @FXML
-    private CheckBox returnVoidBox;
+    private CheckMenuItem returnVoidBox;
     
     /**
      * Generic constructor used for tests.
@@ -89,14 +89,6 @@ public class ViewController {
     @FXML
     public void handleLoadTestsMenuOption() {
         System.out.println("Load");
-    }
-    
-    /**
-     * Saves the tests via the menu.
-     */
-    @FXML
-    public void handleSaveTestsMenuOption() {
-        System.out.println("Save");
     }
     
     /**
@@ -152,7 +144,7 @@ public class ViewController {
      *             Throws an exception if the file is not found.
      */
     @FXML
-    public void handleSaveButtonAction(ActionEvent event) throws Exception {
+    public void handleSaveMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());

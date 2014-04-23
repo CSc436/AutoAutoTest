@@ -15,37 +15,38 @@
     vgap="10" 
     styleClass="root">
     
+    <stylesheets>
+        <URL value="@View.css" />
+    </stylesheets>
+    
     <!-- Here is our menu bar with its menus. -->
 	<MenuBar>
 	    <Menu text="File">
-	        <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
 		    <MenuItem text="Load" onAction="#handleLoadTestsMenuOption"/>
-		    <MenuItem text="Save" onAction="#handleSaveTestsMenuOption"/>
+		    <MenuItem text="Save" onAction="#handleSaveMenuOption"/>
 		    <MenuItem text="Export" onAction="#handleExportTestsMenuOption"/>
+		    <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
 	    </Menu>
-	</MenuBar> 
+	    <Menu text="Method Options">
+	        <CheckMenuItem text="Return Void" id="returnVoidBox"/>
+	        <CheckMenuItem text="Ignore Casing" id="ignoreCasingBox"/>
+	        <CheckMenuItem text="Ignore WhiteSpace" id="ignoreWhiteSpaceBox"/>
+	        <CheckMenuItem text="Ignore Punctuation" id="ignorePunctuationBox"/>
+	    </Menu>
+	</MenuBar>
     
     <!-- This is the listview for our tests. -->
     <ListView fx:id="listView"
             GridPane.columnIndex="1"
             GridPane.rowIndex="1"> 
     </ListView>
-    
-    <!-- This is the Save button. -->
-    <HBox spacing="10"
-            alignment="bottom_right"
-            GridPane.columnIndex="1"
-            GridPane.rowIndex="3">
-        <Button text="Save All Tests"
-                onAction="#handleSaveButtonAction"/>
-    </HBox>
 
      <!-- This is the container for the labels and input fields. -->
      <GridPane hgap="10"
              vgap="10"
              GridPane.columnIndex="0"
              GridPane.rowIndex="1">
-        
+             
         <!-- These are the text labels. -->
         <Label text="Test Name:"
                 GridPane.columnIndex="0"
@@ -73,19 +74,7 @@
         		GridPane.rowIndex="8"/>
         <Label text="Float Precision:"
         		GridPane.columnIndex="0"
-        		GridPane.rowIndex="9"/>
-        <Label text="Ignore Casing:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="10"/>
-        <Label text="Ignore Whitespace:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="11"/>
-        <Label text="Ignore Punctuation:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="12"/>
-        <Label text="Return Void:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="13"/>                
+        		GridPane.rowIndex="9"/>              
          
         <!-- These are the input fields. -->
         <TextField fx:id="namefield"
@@ -115,18 +104,6 @@
         <TextField fx:id="floatprecisionfield"
                 GridPane.columnIndex="1"
                 GridPane.rowIndex="9"/>
-        <CheckBox fx:id="ignoreCasingBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="10"/>
-        <CheckBox fx:id="ignoreWhitespaceBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="11"/>        
-        <CheckBox fx:id="ignorePunctuationBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="12"/>
-        <CheckBox fx:id="returnVoidBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="13"/>
         
         <!-- This is the Generate Button. -->
         <HBox spacing="10"
@@ -153,9 +130,5 @@
                 GridPane.rowIndex="0"
                 GridPane.columnSpan="2"/>
     </GridPane>
-    
-    <stylesheets>
-        <URL value="@View.css" />
-    </stylesheets>
     
 </GridPane>
