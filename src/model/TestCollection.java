@@ -201,6 +201,8 @@ public class TestCollection {
                     test.getExpectedReturn(), oneTest);
             appendElement(doc, saveExpectedStdOutName,
                     test.getExpectedStandardOutput(), oneTest);
+            appendElement(doc, saveMethodName,
+                    test.getMethodName(), oneTest);
             appendElement(doc, saveFloatPrecisionName,
                     "" + test.getFloatPrecision(), oneTest);
             appendElement(doc, saveStockedInputName, test.getStockedInput(),
