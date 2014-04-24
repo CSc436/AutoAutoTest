@@ -27,23 +27,6 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
 
-    private static final String SAVE_ARGS_NAME = "Args";
-    private static final String SAVE_CLASS_NAME = "ClassName";
-    private static final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
-    private static final String SAVE_EXPECTED_STD_OUT_NAME = 
-            "ExpectedStandardOut";
-    private static final String SAVE_METHOD_NAME = "MethodName";
-    private static final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
-    private static final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
-    private static final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
-    private static final String SAVE_IS_IGNORE_CASING_NAME = 
-            "IsIgnoreCasing";
-    private static final String SAVE_IS_IGNORE_PUNCTUATION_NAME = 
-            "IsIgnorePunctuation";
-    private static final String SAVE_IS_IGNORE_WHITESPACE_NAME = 
-            "IsIgnoreWhitespace";
-    private static final String SAVE_IS_VOID_NAME = "IsVoid";
-
     /**
      * Create a new test collection with no tests.
      */
@@ -195,33 +178,7 @@ public class TestCollection {
         Element rootElement = doc.createElement("TestCollection");
         doc.appendChild(rootElement);
 
-        for (TestCase test : tests) {
-            Element oneTest = doc.createElement("Test");
-            oneTest.setAttribute("name", test.getTestName());
-
-            appendElement(doc, SAVE_ARGS_NAME, test.getArgs(), oneTest);
-            appendElement(doc, SAVE_CLASS_NAME, test.getClassName(), oneTest);
-            appendElement(doc, SAVE_EXPECTED_RETURN_NAME,
-                    test.getExpectedReturn(), oneTest);
-            appendElement(doc, SAVE_EXPECTED_STD_OUT_NAME,
-                    test.getExpectedStandardOutput(), oneTest);
-            appendElement(doc, SAVE_METHOD_NAME, test.getMethodName(), oneTest);
-            appendElement(doc, SAVE_FLOAT_PRECISION_NAME,
-                    "" + test.getFloatPrecision(), oneTest);
-            appendElement(doc, SAVE_STOCKED_INPUT_NAME, test.getStockedInput(),
-                    oneTest);
-            appendElement(doc, SAVE_TIMEOUT_TIME_NAME,
-                    "" + test.getTimeoutTime(), oneTest);
-            appendElement(doc, SAVE_IS_IGNORE_CASING_NAME,
-                    "" + test.isIgnoreCasing(), oneTest);
-            appendElement(doc, SAVE_IS_IGNORE_PUNCTUATION_NAME,
-                    "" + test.isIgnorePunctuation(), oneTest);
-            appendElement(doc, SAVE_IS_IGNORE_WHITESPACE_NAME,
-                    "" + test.isIgnoreWhitespace(), oneTest);
-            appendElement(doc, SAVE_IS_VOID_NAME, "" + test.isVoid(), oneTest);
-
-            rootElement.appendChild(oneTest);
-        }
+        writeData(doc, rootElement);
 
         TransformerFactory transformerFactory = TransformerFactory
                 .newInstance();
@@ -231,6 +188,48 @@ public class TestCollection {
 
         transformer.transform(source, result);
 
+    }
+
+    /**
+     * iterates through the tests list, writing data to the doc
+     * 
+     * @param doc
+     *            The document to be written through
+     * @param rootElement
+     *            the root xml element to add a test too.
+     */
+    private void writeData(Document doc, Element rootElement) {
+        for (TestCase test : tests) {
+            Element oneTest = doc.createElement("Test");
+            oneTest.setAttribute("name", test.getTestName());
+
+            appendElement(doc, XmlNames.SAVE_ARGS_NAME, 
+                    test.getArgs(), oneTest);
+            appendElement(doc, XmlNames.SAVE_CLASS_NAME, test.getClassName(),
+                    oneTest);
+            appendElement(doc, XmlNames.SAVE_EXPECTED_RETURN_NAME,
+                    test.getExpectedReturn(), oneTest);
+            appendElement(doc, XmlNames.SAVE_EXPECTED_STD_OUT_NAME,
+                    test.getExpectedStandardOutput(), oneTest);
+            appendElement(doc, XmlNames.SAVE_METHOD_NAME, test.getMethodName(),
+                    oneTest);
+            appendElement(doc, XmlNames.SAVE_FLOAT_PRECISION_NAME,
+                    "" + test.getFloatPrecision(), oneTest);
+            appendElement(doc, XmlNames.SAVE_STOCKED_INPUT_NAME,
+                    test.getStockedInput(), oneTest);
+            appendElement(doc, XmlNames.SAVE_TIMEOUT_TIME_NAME,
+                    "" + test.getTimeoutTime(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_CASING_NAME,
+                    "" + test.isIgnoreCasing(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME, ""
+                    + test.isIgnorePunctuation(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME, ""
+                    + test.isIgnoreWhitespace(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_VOID_NAME, "" + test.isVoid(),
+                    oneTest);
+
+            rootElement.appendChild(oneTest);
+        }
     }
 
     /**
