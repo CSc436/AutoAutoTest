@@ -23,15 +23,19 @@
 	<MenuBar>
 	    <Menu text="File">
 		    <MenuItem text="Load" onAction="#handleLoadTestsMenuOption"/>
-		    <MenuItem text="Save" onAction="#handleSaveMenuOption"/>
+		    <MenuItem text="Save" onAction="#handleSaveTestsMenuOption"/>
 		    <MenuItem text="Export" onAction="#handleExportTestsMenuOption"/>
 		    <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
 	    </Menu>
 	    <Menu text="Method Options">
-	        <CheckMenuItem text="Return Void" id="returnVoidBox"/>
-	        <CheckMenuItem text="Ignore Casing" id="ignoreCasingBox"/>
-	        <CheckMenuItem text="Ignore WhiteSpace" id="ignoreWhiteSpaceBox"/>
-	        <CheckMenuItem text="Ignore Punctuation" id="ignorePunctuationBox"/>
+	        <CheckMenuItem text="Return Void"
+	                onAction="#handleVoidMenuCheckBox"/>
+	        <CheckMenuItem text="Ignore Casing" 
+	                onAction="#handleCasingMenuCheckBox"/>
+	        <CheckMenuItem text="Ignore WhiteSpace"
+	                onAction="#handleWhiteSpaceMenuCheckBox"/>
+	        <CheckMenuItem text="Ignore Punctuation"
+	                onAction="#handlePunctuationMenuCheckBox"/>
 	    </Menu>
 	</MenuBar>
     

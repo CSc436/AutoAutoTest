@@ -1,6 +1,7 @@
 package view;
 
 import java.io.File;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
@@ -8,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckMenuItem;
+//import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -38,7 +39,8 @@ public class ViewController {
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
     private boolean isVoid;
-
+    private LinkedList<TestCase> currentTests;
+    
     @FXML
     private TextField namefield;
     @FXML
@@ -59,22 +61,56 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
-    @FXML
-    private CheckMenuItem ignoreCasingBox;
-    @FXML
-    private CheckMenuItem ignoreWhitespaceBox;
-    @FXML
-    private CheckMenuItem ignorePunctuationBox;
-    @FXML
-    private CheckMenuItem returnVoidBox;
-    
-    //TODO: make a linked list of test cases that we might save, but are not added to the collection yet
+//    @FXML
+//    private CheckMenuItem ignoreCasingBox;
+//    @FXML
+//    private CheckMenuItem ignoreWhitespaceBox;
+//    @FXML
+//    private CheckMenuItem ignorePunctuationBox;
+//    @FXML
+//    private CheckMenuItem returnVoidBox;
     
     /**
      * Generic constructor used for tests.
      */
     public ViewController() {
+        isVoid = false;
+        ignoreCasing = false;
+        ignorePunctuation = false;
+        ignoreWhitespace = false;
         myTestCollection = TestCollection.getInstance();
+    }
+    
+    /**
+     * Handles the clicking of the return void menu checkbox.
+     */
+    @FXML
+    public void handleVoidMenuCheckBox() {
+        isVoid = !isVoid;
+    }
+    
+    /**
+     * Handles the clicking of the ignore casing menu checkbox.
+     */
+    @FXML
+    public void handleCasingMenuCheckBox() {
+        ignoreCasing = !ignoreCasing;
+    }
+    
+    /**
+     * Handles the clicking of the ignore whitespace menu checkbox.
+     */
+    @FXML
+    public void handleWhiteSpaceMenuCheckBox() {
+        ignoreWhitespace = !ignoreWhitespace;
+    }
+    
+    /**
+     * Handles the clicking of the ignore punctuation menu checkbox.
+     */
+    @FXML
+    public void handlePunctuationMenuCheckbox() {
+        ignorePunctuation = !ignorePunctuation;
     }
     
     /**
@@ -90,15 +126,28 @@ public class ViewController {
      */
     @FXML
     public void handleLoadTestsMenuOption() {
-        //TODO: load tests
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Load Tests");
+        File file = myFileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+           //TODO: LOAD TESTS 
+            myTestCollection.newTest();
+        }
     }
     
     /**
      * Exports the tests to a .java file via the menu.
+     * @throws Exception Saving Exception.
      */
     @FXML
-    public void handleExportTestsMenuOption() {
-        //TODO: export tests to a file 'old save'
+    public void handleExportTestsMenuOption() throws Exception {
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Save Tests");
+        File file = myFileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            String filePath = file.getAbsolutePath();
+            myTestCollection.save(filePath);
+        }
     }
     
     /**
@@ -109,7 +158,9 @@ public class ViewController {
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
-            generateTest(); //TODO: this puts the test into the collection, only do this if the user saves
+            TestCase newTest = new TestCase();
+            sendAllDataToTestCase(newTest);
+            currentTests.add(newTest);
             String anotherTest = getTestForView(myTestCollection
                 .getTest(myTestCollection.testCount() - 1));
             listView.getItems().add(anotherTest);
@@ -118,8 +169,7 @@ public class ViewController {
 
     /**
      * This method is the response to the user clicking the 'Delete Button'. The
-     * selected test in the listview is deleted from the TestCollection data
-     * structure, and is then removed from the list.
+     * selected test in the listview is deleted from the listview.
      * 
      * @param event
      *            The event that triggers this method. In this case, pressing
@@ -129,58 +179,67 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
-            deleteTest(testIndex); // TODO: only need to delete from the listview now
             listView.getItems().remove(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
         }
     }
 
-    //TODO: put this code into the export method
     /**
-     * This method saves all of the created tests.
+     * This method saves all of the created tests to the TestCollection Class. 
+     * For every testcase in our current list, it creates a new test case 
+     * inside the test collection, and then sets all of the required data for 
+     * the new test case inside the collection.
      * 
      * @param event
-     *            The event that triggers this method. In this case, pressing
-     *            the 'Save' button.
-     * @throws Exception
-     *             Throws an exception if the file is not found.
+     *            The event that triggers this method. In this case, clicking
+     *            on the save menu option.
      */
     @FXML
-    public void handleSaveMenuOption(ActionEvent event) throws Exception {
-        FileChooser myFileChooser = new FileChooser();
-        myFileChooser.setTitle("Save Tests");
-        File file = myFileChooser.showSaveDialog(new Stage());
-        if (file != null) {
-            String filePath = file.getAbsolutePath();
-            myTestCollection.save(filePath);
+    public void handleSaveTestsMenuOption(ActionEvent event) {
+        for (TestCase testCase : currentTests) {
+            TestCase anotherTestCase = myTestCollection.newTest();
+            anotherTestCase.setArgs(testCase.getArgs());
+            anotherTestCase.setClassName(testCase.getClassName());
+            anotherTestCase.setExpectedReturn(testCase.getExpectedReturn());
+            anotherTestCase.setExpectedStandardOutput(
+                   testCase.getExpectedStandardOutput());
+            anotherTestCase.setFloatPrecision(testCase.getFloatPrecision());
+            anotherTestCase.setIgnoreCasing(testCase.isIgnoreCasing());
+            anotherTestCase.setIgnorePunctuation(testCase.isIgnorePunctuation());
+            anotherTestCase.setIgnoreWhitespace(testCase.isIgnoreWhitespace());
+            anotherTestCase.setIsVoid(testCase.isVoid());
+            anotherTestCase.setMethodName(testCase.getMethodName());
+            anotherTestCase.setStockedInput(testCase.getStockedInput());
+            anotherTestCase.setTestName(testCase.getTestName());
+            anotherTestCase.setTimeoutTime(testCase.getTimeoutTime());
         }
+        currentTests.clear();
+        listView.getItems().removeAll();
     }
 
-    /**
-     * This method is a sub method to make the model generate a new test. A new
-     * test is created and all of the required data is sent it.
-     * 
-     * @return Returns the newly created testcase. This is mostly for testing
-     *         purposes.
-     */
-    private TestCase generateTest() {
-        TestCase oneTestCase = myTestCollection.newTest();
-        sendAllDataToTestCase(oneTestCase);
-        return oneTestCase;
-    }
+//    /**
+//     * This method is a sub method to make the model generate a new test. A new
+//     * test is created and all of the required data is sent it.
+//     * 
+//     * @return Returns the newly created testcase. This is mostly for testing
+//     *         purposes.
+//     */
+//    private TestCase generateTest() {
+//        TestCase oneTestCase = myTestCollection.newTest();
+//        sendAllDataToTestCase(oneTestCase);
+//        return oneTestCase;
+//    }
 
-    //TODO: probably don't need this anymore, or turn it into a delete all
-    // along with the add test to test collection method (add all from list)
-    /**
-     * Deletes the test from the TestCollection at the specified index.
-     * 
-     * @param pindex
-     *            The integer index of the desired TestCase.
-     */
-    private void deleteTest(int pindex) {
-        myTestCollection.removeTest(pindex);
-    }
+//    /**
+//     * Deletes the test from the TestCollection at the specified index.
+//     * 
+//     * @param pindex
+//     *            The integer index of the desired TestCase.
+//     */
+//    private void deleteTest(int pindex) {
+//        myTestCollection.removeTest(pindex);
+//    }
 
     /**
      * This method is a sub method that is used to pull all of the data from the
@@ -195,10 +254,10 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = classnamefield.getText();
         methodname = methodnamefield.getText();
-        ignoreCasing = ignoreCasingBox.isSelected();
-        ignoreWhitespace = ignoreWhitespaceBox.isSelected();
-        ignorePunctuation = ignorePunctuationBox.isSelected();
-        isVoid = returnVoidBox.isSelected();
+        //ignoreCasing = ignoreCasingBox.isSelected();
+        //ignoreWhitespace = ignoreWhitespaceBox.isSelected();
+        //ignorePunctuation = ignorePunctuationBox.isSelected();
+        //isVoid = returnVoidBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
