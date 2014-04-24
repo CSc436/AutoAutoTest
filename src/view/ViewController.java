@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-//import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -78,49 +77,55 @@ public class ViewController {
     
     /**
      * Handles the clicking of the return void menu checkbox.
+     * @param event Clicking on the menu item.
      */
     @FXML
-    public void handleVoidMenuCheckBox() {
+    protected void handleVoidMenuCheckBox(ActionEvent event) {
         isVoid = !isVoid;
     }
     
     /**
      * Handles the clicking of the ignore casing menu checkbox.
+     * @param event Clicking on the menu item.
      */
     @FXML
-    public void handleCasingMenuCheckBox() {
+    protected void handleCasingMenuCheckBox(ActionEvent event) {
         ignoreCasing = !ignoreCasing;
     }
     
     /**
      * Handles the clicking of the ignore whitespace menu checkbox.
+     * @param event Clicking on the menu item. 
      */
     @FXML
-    public void handleWhiteSpaceMenuCheckBox() {
+    protected void handleWhiteSpaceMenuCheckBox(ActionEvent event) {
         ignoreWhitespace = !ignoreWhitespace;
     }
     
     /**
      * Handles the clicking of the ignore punctuation menu checkbox.
+     * @param event Clicking on the menu item.
      */
     @FXML
-    public void handlePunctuationMenuCheckbox() {
+    protected void handlePunctuationMenuCheckbox(ActionEvent event) {
         ignorePunctuation = !ignorePunctuation;
     }
     
     /**
      * This method handles the action of exiting the GUI via the menu.
+     * @param event Clicking on the menu item.
      */
     @FXML
-    public void handleExitMenuOption() {
+    protected void handleExitMenuOption(ActionEvent event) {
         Platform.exit();
     }
     
     /**
      * Loads the tests into the program via the menu.
+     * @param event Clicking on the menu item.
      */
     @FXML
-    public void handleLoadTestsMenuOption() {
+    protected void handleLoadTestsMenuOption(ActionEvent event) {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Load Tests");
         File file = myFileChooser.showOpenDialog(new Stage());
@@ -131,10 +136,11 @@ public class ViewController {
     
     /**
      * Exports the tests to a .java file via the menu.
+     * @param event Clicking on the Export Tests menu item.
      * @throws Exception Saving Exception.
      */
     @FXML
-    public void handleExportTestsMenuOption() throws Exception {
+    protected void handleExportTestsMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
@@ -149,7 +155,7 @@ public class ViewController {
      *            This method generates a new test when the button is pressed.
      */
     @FXML
-    public void handleGenerateButtonAction(ActionEvent event) {
+    protected void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
             TestCase newTest = new TestCase();
@@ -169,7 +175,7 @@ public class ViewController {
      *            the 'Delete' button.
      */
     @FXML
-    public void handleDeleteButtonAction(ActionEvent event) {
+    protected void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
             String testNameToRemove = listView.getItems().remove(testIndex);
@@ -197,7 +203,7 @@ public class ViewController {
      *            on the save menu option.
      */
     @FXML
-    public void handleSaveTestsMenuOption(ActionEvent event) {
+    protected void handleSaveTestsMenuOption(ActionEvent event) {
         for (TestCase testCase : currentTests) {
             TestCase anotherTestCase = myTestCollection.newTest();
             anotherTestCase.setArgs(testCase.getArgs());
