@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -41,9 +40,6 @@ public class ViewControllerTest {
             field.setAccessible(true);
             if (field.getType() == TextField.class) {
                 field.set(viewController, new TextField());
-            }
-            if (field.getType() == CheckBox.class) {
-                field.set(viewController, new CheckBox());
             }
         }
         listViewField = viewControllerClass.getDeclaredField("listView");

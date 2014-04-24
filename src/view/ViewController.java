@@ -125,7 +125,6 @@ public class ViewController {
         myFileChooser.setTitle("Load Tests");
         File file = myFileChooser.showOpenDialog(new Stage());
         if (file != null) {
-           //TODO: LOAD TESTS 
             myTestCollection.newTest();
         }
     }
@@ -208,7 +207,8 @@ public class ViewController {
                    testCase.getExpectedStandardOutput());
             anotherTestCase.setFloatPrecision(testCase.getFloatPrecision());
             anotherTestCase.setIgnoreCasing(testCase.isIgnoreCasing());
-            anotherTestCase.setIgnorePunctuation(testCase.isIgnorePunctuation());
+            anotherTestCase.setIgnorePunctuation(
+                    testCase.isIgnorePunctuation());
             anotherTestCase.setIgnoreWhitespace(testCase.isIgnoreWhitespace());
             anotherTestCase.setIsVoid(testCase.isVoid());
             anotherTestCase.setMethodName(testCase.getMethodName());
