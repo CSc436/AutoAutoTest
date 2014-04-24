@@ -68,6 +68,8 @@ public class ViewController {
     @FXML
     private CheckMenuItem returnVoidBox;
     
+    //TODO: make a linked list of test cases that we might save, but are not added to the collection yet
+    
     /**
      * Generic constructor used for tests.
      */
@@ -80,7 +82,7 @@ public class ViewController {
      */
     @FXML
     public void handleExitMenuOption() {
-        System.out.println("Exit");
+        //TODO: exit
     }
     
     /**
@@ -88,7 +90,7 @@ public class ViewController {
      */
     @FXML
     public void handleLoadTestsMenuOption() {
-        System.out.println("Load");
+        //TODO: load tests
     }
     
     /**
@@ -96,7 +98,7 @@ public class ViewController {
      */
     @FXML
     public void handleExportTestsMenuOption() {
-        System.out.println("Export");
+        //TODO: export tests to a file 'old save'
     }
     
     /**
@@ -107,7 +109,7 @@ public class ViewController {
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
-            generateTest();
+            generateTest(); //TODO: this puts the test into the collection, only do this if the user saves
             String anotherTest = getTestForView(myTestCollection
                 .getTest(myTestCollection.testCount() - 1));
             listView.getItems().add(anotherTest);
@@ -127,13 +129,14 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
-            deleteTest(testIndex);
+            deleteTest(testIndex); // TODO: only need to delete from the listview now
             listView.getItems().remove(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
         }
     }
 
+    //TODO: put this code into the export method
     /**
      * This method saves all of the created tests.
      * 
@@ -167,6 +170,8 @@ public class ViewController {
         return oneTestCase;
     }
 
+    //TODO: probably don't need this anymore, or turn it into a delete all
+    // along with the add test to test collection method (add all from list)
     /**
      * Deletes the test from the TestCollection at the specified index.
      * 
