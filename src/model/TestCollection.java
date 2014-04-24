@@ -9,10 +9,6 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,18 +26,22 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
     
-    private final String SAVE_ARGS_NAME = "Args";
-    private final String SAVE_CLASS_NAME = "ClassName";
-    private final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
-    private final String SAVE_EXPECTED_STD_OUT_NAME = "ExpectedStandardOut";
-    private final String SAVE_METHOD_NAME = "MethodName";
-    private final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
-    private final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
-    private final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
-    private final String SAVE_IS_IGNORE_CASING_NAME = "IsIgnoreCasing";
-    private final String SAVE_IS_IGNORE_PUNCTUATION_NAME = "IsIgnorePunctuation";
-    private final String SAVE_IS_IGNORE_WHITESPACE_NAME = "IsIgnoreWhitespace";
-    private final String SAVE_IS_VOID_NAME = "IsVoid";
+    private static final String SAVE_ARGS_NAME = "Args";
+    private static final String SAVE_CLASS_NAME = "ClassName";
+    private static final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
+    private static final String SAVE_EXPECTED_STD_OUT_NAME = 
+            "ExpectedStandardOut";
+    private static final String SAVE_METHOD_NAME = "MethodName";
+    private static final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
+    private static final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
+    private static final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
+    private static final String SAVE_IS_IGNORE_CASING_NAME = 
+            "IsIgnoreCasing";
+    private static final String SAVE_IS_IGNORE_PUNCTUATION_NAME = 
+            "IsIgnorePunctuation";
+    private static final String SAVE_IS_IGNORE_WHITESPACE_NAME = 
+            "IsIgnoreWhitespace";
+    private static final String SAVE_IS_VOID_NAME = "IsVoid";
 
     /**
      * Create a new test collection with no tests.
@@ -185,6 +185,9 @@ public class TestCollection {
      */
     public void load(String fileName) throws Exception {
 
+        // reset the tests
+        tests = new ArrayList<TestCase>();
+        
         DocumentBuilderFactory docFactory = DocumentBuilderFactory
                 .newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -202,6 +205,7 @@ public class TestCollection {
                 Element el = (Element) node;
                 System.out.println("name is: " + el.getAttribute("name"));
                 
+                // get arguments for test case
                 String args = getText(el, SAVE_ARGS_NAME);
                 String className = getText(el, SAVE_CLASS_NAME);
                 String expectedReturn = getText(el, SAVE_EXPECTED_RETURN_NAME);
@@ -214,6 +218,21 @@ public class TestCollection {
                 String isIgnorePunctuation = getText(el, SAVE_IS_IGNORE_PUNCTUATION_NAME);
                 String isIgnoreWhitespace = getText(el, SAVE_IS_IGNORE_WHITESPACE_NAME);
                 String isVoid = getText(el, SAVE_IS_VOID_NAME);
+                
+                // set test case args
+                TestCase test = newTest();
+                test.setArgs(args);
+                test.setClassName(className);
+                test.setExpectedReturn(expectedReturn);
+                test.setExpectedStandardOutput(expectedStandardOut);
+                test.setMethodName(method);
+                test.setFloatPrecision(Integer.parseInt(floatPrecision));
+                test.setStockedInput(stockedInput);
+                test.setTimeoutTime(Integer.parseInt(timeoutTime));
+                test.setIgnoreCasing(Boolean.parseBoolean(isIgnoreCasing));
+                test.setIgnorePunctuation(Boolean.parseBoolean(isIgnorePunctuation));
+                test.setIgnoreWhitespace(Boolean.parseBoolean(isIgnoreWhitespace));
+                test.setIsVoid(Boolean.parseBoolean(isVoid));
         }
         
     }
