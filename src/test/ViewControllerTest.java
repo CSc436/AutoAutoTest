@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.TestCollection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import view.ViewController;
  * Tests for the view controller
  * 
  * @author jeffersd
- * 
  */
 
 public class ViewControllerTest {
@@ -26,9 +24,6 @@ public class ViewControllerTest {
     private Field listViewField;
     private ViewController viewController;
     private Class<ViewController> viewControllerClass;
-    /**
-     * This is used for testing, because our test collection is a singleton.
-     */
     private int currentnumberoftests;
 
     /**
@@ -65,16 +60,21 @@ public class ViewControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteButtonAction() throws Exception {
+        int actual = viewController.getNumberOfCurrentTests();
+        assertEquals(currentnumberoftests, actual);
+        
         setupBogusValues("testname", "className", "methodName", "1");
         viewController.handleGenerateButtonAction(null);
-        currentnumberoftests = TestCollection.getInstance().testCount();
-        ListView<String> theListView;
-        theListView = (ListView<String>) listViewField.get(viewController);
+        currentnumberoftests += 1;
+        actual = viewController.getNumberOfCurrentTests();
+        assertEquals(currentnumberoftests, actual);
+        
+        ListView<String> theListView = 
+                (ListView<String>) listViewField.get(viewController);
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;
-        
-        int actual = TestCollection.getInstance().testCount();
+        actual = viewController.getNumberOfCurrentTests();
         assertEquals(currentnumberoftests, actual);
     }
 
@@ -88,14 +88,13 @@ public class ViewControllerTest {
      */
     @Test
     public void testGetNumberOfTests() throws Exception {
-        currentnumberoftests = TestCollection.getInstance().testCount();
+        currentnumberoftests = viewController.getNumberOfCurrentTests();
         for (int i = 0; i < 100; i++) {
             setupBogusValues("testname" + i, "className", "methodName", "1");
             viewController.handleGenerateButtonAction(null);
         }
-
         currentnumberoftests += 100;
-        int actual = TestCollection.getInstance().testCount();
+        int actual = viewController.getNumberOfCurrentTests();
         assertEquals(currentnumberoftests, actual);
     }
     

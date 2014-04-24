@@ -34,8 +34,7 @@
 	                onAction="#handleCasingMenuCheckBox"/>
 	        <CheckMenuItem text="Ignore WhiteSpace"
 	                onAction="#handleWhiteSpaceMenuCheckBox"/>
-	        <CheckMenuItem text="Ignore Punctuation"
-	                onAction="#handlePunctuationMenuCheckBox"/>
+
 	    </Menu>
 	</MenuBar>
     

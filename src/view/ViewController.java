@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 //import javafx.scene.control.CheckMenuItem;
@@ -40,6 +41,7 @@ public class ViewController {
     private boolean ignorePunctuation;
     private boolean isVoid;
     private LinkedList<TestCase> currentTests;
+    private static final int LIST_VIEW_TITLE_LENGTH = 11;
     
     @FXML
     private TextField namefield;
@@ -61,14 +63,6 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
-//    @FXML
-//    private CheckMenuItem ignoreCasingBox;
-//    @FXML
-//    private CheckMenuItem ignoreWhitespaceBox;
-//    @FXML
-//    private CheckMenuItem ignorePunctuationBox;
-//    @FXML
-//    private CheckMenuItem returnVoidBox;
     
     /**
      * Generic constructor used for tests.
@@ -78,6 +72,7 @@ public class ViewController {
         ignoreCasing = false;
         ignorePunctuation = false;
         ignoreWhitespace = false;
+        currentTests = new LinkedList<TestCase>();
         myTestCollection = TestCollection.getInstance();
     }
     
@@ -118,7 +113,7 @@ public class ViewController {
      */
     @FXML
     public void handleExitMenuOption() {
-        //TODO: exit
+        Platform.exit();
     }
     
     /**
@@ -161,8 +156,7 @@ public class ViewController {
             TestCase newTest = new TestCase();
             sendAllDataToTestCase(newTest);
             currentTests.add(newTest);
-            String anotherTest = getTestForView(myTestCollection
-                .getTest(myTestCollection.testCount() - 1));
+            String anotherTest = getTestForView(newTest);
             listView.getItems().add(anotherTest);
         }
     }
@@ -179,7 +173,15 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
-            listView.getItems().remove(testIndex);
+            String testNameToRemove = listView.getItems().remove(testIndex);
+            testNameToRemove = testNameToRemove.substring(
+                    LIST_VIEW_TITLE_LENGTH, testNameToRemove.length());
+            for (TestCase test : currentTests) {
+                if (test.getTestName().equals(testNameToRemove)) {
+                    currentTests.remove(test);
+                    break;
+                }
+            }
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
         }
@@ -218,29 +220,6 @@ public class ViewController {
         listView.getItems().removeAll();
     }
 
-//    /**
-//     * This method is a sub method to make the model generate a new test. A new
-//     * test is created and all of the required data is sent it.
-//     * 
-//     * @return Returns the newly created testcase. This is mostly for testing
-//     *         purposes.
-//     */
-//    private TestCase generateTest() {
-//        TestCase oneTestCase = myTestCollection.newTest();
-//        sendAllDataToTestCase(oneTestCase);
-//        return oneTestCase;
-//    }
-
-//    /**
-//     * Deletes the test from the TestCollection at the specified index.
-//     * 
-//     * @param pindex
-//     *            The integer index of the desired TestCase.
-//     */
-//    private void deleteTest(int pindex) {
-//        myTestCollection.removeTest(pindex);
-//    }
-
     /**
      * This method is a sub method that is used to pull all of the data from the
      * text fields in the gui.
@@ -254,10 +233,6 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = classnamefield.getText();
         methodname = methodnamefield.getText();
-        //ignoreCasing = ignoreCasingBox.isSelected();
-        //ignoreWhitespace = ignoreWhitespaceBox.isSelected();
-        //ignorePunctuation = ignorePunctuationBox.isSelected();
-        //isVoid = returnVoidBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -307,6 +282,14 @@ public class ViewController {
         String lname = pnewTestCase.getTestName();
         String message = "Test Name: " + lname;
         return message;
+    }
+    
+    /**
+     * 
+     * @return The number of currently created tests.
+     */
+    public int getNumberOfCurrentTests() {
+        return currentTests.size();
     }
     
     /**
