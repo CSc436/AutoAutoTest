@@ -130,7 +130,7 @@ public class ViewController {
         myFileChooser.setTitle("Load Tests");
         File file = myFileChooser.showOpenDialog(new Stage());
         if (file != null) {
-            myTestCollection.newTest();
+            // LOAD TESTS HERE
         }
     }
     
