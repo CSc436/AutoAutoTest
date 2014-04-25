@@ -8,24 +8,10 @@ import java.util.regex.Pattern;
  * 
  */
 public class RelaxedStringFloatCheck {
-    /**
-     * Stores a boolean value which if true means that we ignore casing (i.e. we
-     * treat capital and lowercase letters the same). This relaxation applies
-     * only to the ASCII characters A-Z and a-z.
-     */
+
     // instance variables for RelaxedStringFloatCheck
     private boolean ignoreCasing;
-    /**
-     * Stores a boolean value which if true means that we ignore spaces and tabs
-     * in the output. if false, then we do not ignore spaces and tabs.
-     */
     private boolean ignoreWhitespace;
-    /**
-     * Stores a boolean value which if true means that we ignore special
-     * characters in the output (basically any Unicode characters which are NOT
-     * digits, numbers, or spaces). If false, then we do not ignore special
-     * characters.
-     */
     private boolean ignorePunctuation;
     /**
      * Stores the number of decimal places to which the expected and actual must
@@ -34,17 +20,48 @@ public class RelaxedStringFloatCheck {
      * Math.Round is invoked, and the results should be equal.
      */
     private int decPlacesPrecision;
+    private Pattern whitespacePattern;
+    private Pattern punctuationPattern;
     /**
      * This is the default number of decimal places to evaluate to.
      */
     public static final int DEFAULT_PRECISION = 2;
-
     private static final String NUMBER_REGEX = "[-+]?[0-9]*\\.?[0-9]+";
     private static final String WHITESPACE_REGEX = "\\s";
     private static final String PUNCTUATION_REGEX = "\\p{Punct}";
 
-    private Pattern whitespacePattern = Pattern.compile(WHITESPACE_REGEX);
-    private Pattern punctuationPattern = Pattern.compile(PUNCTUATION_REGEX);
+    /**
+     * @param inputCasing
+     *            If set to true, specifies that character casing shall be
+     *            ignored.
+     * @param inputWhitespace
+     *            If set to true, specifies that differences in whitespace (e.g.
+     *            spaces, tabs, carriage returns) shall be ignored.
+     * @param inputPunct
+     *            If set to true, specifies that differences in punctuation
+     *            characters shall be ignored.
+     * @param inputPrecision
+     *            Specifies the number of decimal places of precision we are
+     *            testing for. All numbers in a line of actual input will be
+     *            compared with the corresponding values in the expected line of
+     *            input to see if they are within this level of precision.
+     * 
+     */
+    public RelaxedStringFloatCheck(boolean inputCasing,
+            boolean inputWhitespace, boolean inputPunct, int inputPrecision) {
+        ignoreCasing = inputCasing;
+        ignoreWhitespace = inputWhitespace;
+        ignorePunctuation = inputPunct;
+        whitespacePattern = Pattern.compile(WHITESPACE_REGEX);
+        punctuationPattern = Pattern.compile(PUNCTUATION_REGEX);
+
+        if (inputPrecision >= 0) {
+            decPlacesPrecision = inputPrecision;
+        } else {
+            // invalid precision specified
+            decPlacesPrecision = DEFAULT_PRECISION;
+        }
+    }
 
     /**
      * Private helper method to see if a character is whitespace.
@@ -99,41 +116,44 @@ public class RelaxedStringFloatCheck {
      *         string
      */
     private boolean canAdvanceOver(char ch) {
-        if ((ignorePunctuation) && (isPunctuation(ch))) {
+        if (ignorePunctuation && isPunctuation(ch)) {
             return true;
         } else {
-            return ((ignoreWhitespace) && (isWhitespace(ch)));
+            return (ignoreWhitespace && isWhitespace(ch));
         }
     }
 
     /**
-     * @param inputCasing
-     *            If set to true, specifies that character casing shall be
-     *            ignored.
-     * @param inputWhitespace
-     *            If set to true, specifies that differences in whitespace (e.g.
-     *            spaces, tabs, carriage returns) shall be ignored.
-     * @param inputPunct
-     *            If set to true, specifies that differences in punctuation
-     *            characters shall be ignored.
-     * @param inputPrecision
-     *            Specifies the number of decimal places of precision we are
-     *            testing for. All numbers in a line of actual input will be
-     *            compared with the corresponding values in the expected line of
-     *            input to see if they are within this level of precision.
+     * This method is used when one of the two strings (student output or
+     * expected output) has been exhausted, but the other string still has
+     * unexamined characters remaining. This method will make a pass through the
+     * unexhausted string, starting at the character index which exhausted the
+     * other string. The method determines if the remaining characters can be
+     * ignored given our settings or not.
      * 
+     * @param inputStr
+     *            The string which we are checking.
+     * @param probeLocation
+     *            The current character index within the string, which we are
+     *            examining.
+     * @return Returns true if the remaining characters can be ignored or false
+     *         if they cannot.
      */
-    public RelaxedStringFloatCheck(boolean inputCasing,
-            boolean inputWhitespace, boolean inputPunct, int inputPrecision) {
-        ignoreCasing = inputCasing;
-        ignoreWhitespace = inputWhitespace;
-        ignorePunctuation = inputPunct;
-        if (inputPrecision >= 0) {
-            decPlacesPrecision = inputPrecision;
-        } else {
-            // invalid precision specified
-            decPlacesPrecision = DEFAULT_PRECISION;
+    private boolean canAdvanceToEnd(StringBuilder inputStr, int probeLocation) {
+        boolean stringIsExhausted = false;
+        int inputLength = inputStr.length();
+        char probeChar = inputStr.charAt(probeLocation);
+
+        while ((canAdvanceOver(probeChar)) && (!stringIsExhausted)) {
+            probeLocation++;
+            if (probeLocation == inputLength) {
+                stringIsExhausted = true;
+            } else {
+                probeChar = inputStr.charAt(probeLocation);
+            }
         }
+        // if we managed to exhaust the string, then the string was acceptable
+        return stringIsExhausted;
     }
 
     /**
@@ -145,32 +165,23 @@ public class RelaxedStringFloatCheck {
      *         numbers no longer contain a decimal point.
      */
     private StringBuilder roundAllNumbersInString(String inputStr) {
-        int newIndex = 0; // used for StringBuilder replace
-        String numberAsString = "";
-        double numberAsDecimal = 0;
-        long numberAsRounded = 0;
         // use the regular expression numberRegex to instantiate a
         // number-matching pattern
         Pattern numberPattern = Pattern.compile(NUMBER_REGEX);
-
-        // Construct new StringBuilder to allow us to modify the string
-        // in-place.
         StringBuilder result = new StringBuilder(inputStr);
-        // Note that the pattern matcher is linked to the original input,
-        // not the new StringBuilder we are building.
         Matcher inputMatcher = numberPattern.matcher(inputStr);
 
         while (inputMatcher.find()) {
-            numberAsString = inputMatcher.group();
+            String numberAsString = inputMatcher.group();
             // we now have captured one number, and know its start and end
             // positions in the input string
-            numberAsDecimal = Double.parseDouble(numberAsString);
-            numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
+            double numberAsDecimal = Double.parseDouble(numberAsString);
+            long numberAsRounded = Math.round(Math.pow(10, decPlacesPrecision)
                     * numberAsDecimal);
             // we now replace the original number with the rounded number (which
             // is now an integer because it was multiplied by
             // 10^decPlacesPrecision)
-            newIndex = result.indexOf(numberAsString);
+            int newIndex = result.indexOf(numberAsString);
             result.replace(newIndex, newIndex + numberAsString.length(), ""
                     + numberAsRounded);
         } // end of looping thru all numbers in inputStr
@@ -198,9 +209,6 @@ public class RelaxedStringFloatCheck {
         char chFromActual = '0';
         char chFromExpected = '0';
 
-        // we will construct a new StringBuilder for each of the two input
-        // strings, because we cannot modify the original strings (nor would we
-        // want to, even if we could)
         StringBuilder newExpected = roundAllNumbersInString(expected);
         StringBuilder newActual = roundAllNumbersInString(actual);
 
@@ -286,36 +294,9 @@ public class RelaxedStringFloatCheck {
         // if we get here, then expected or actual was shorter, but we need to
         // see if the difference is due to ignorable characters
         if (expectedIsExhausted) {
-            chFromActual = newActual.charAt(actualIndex);
-            while ((canAdvanceOver(chFromActual)) && (!actualIsExhausted)) {
-                actualIndex++;
-                if (actualIndex == actualLength) {
-                    actualIsExhausted = true;
-                } else {
-                    chFromActual = newActual.charAt(actualIndex);
-                }
-            }
-            // if we manage to exhaust actual, then the string was acceptable
-            if (actualIsExhausted) {
-                return true;
-            }
+            return canAdvanceToEnd(newActual, actualIndex);
         } else { // actual is exhausted
-            chFromExpected = newExpected.charAt(expectedIndex);
-            while ((canAdvanceOver(chFromExpected)) && (!expectedIsExhausted)) {
-                expectedIndex++;
-                if (expectedIndex == expectedLength) {
-                    expectedIsExhausted = true;
-                } else {
-                    chFromExpected = newExpected.charAt(expectedIndex);
-                }
-            }
-            // if we manage to exhaust expected, then the string was acceptable
-            if (expectedIsExhausted) {
-                return true;
-            }
+            return canAdvanceToEnd(newExpected, expectedIndex);
         }
-        // if we get here, then there is a difference of length between the
-        // strings, with characters that we cannot ignore
-        return false;
     } // end of isAcceptable
 }
