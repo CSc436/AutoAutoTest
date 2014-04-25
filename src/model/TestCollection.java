@@ -214,18 +214,18 @@ public class TestCollection {
             appendElement(doc, XmlNames.SAVE_METHOD_NAME, test.getMethodName(),
                     oneTest);
             appendElement(doc, XmlNames.SAVE_FLOAT_PRECISION_NAME,
-                    "" + test.getFloatPrecision(), oneTest);
+                    test.getFloatPrecision(), oneTest);
             appendElement(doc, XmlNames.SAVE_STOCKED_INPUT_NAME,
                     test.getStockedInput(), oneTest);
             appendElement(doc, XmlNames.SAVE_TIMEOUT_TIME_NAME,
-                    "" + test.getTimeoutTime(), oneTest);
+                    test.getTimeoutTime(), oneTest);
             appendElement(doc, XmlNames.SAVE_IS_IGNORE_CASING_NAME,
-                    "" + test.isIgnoreCasing(), oneTest);
-            appendElement(doc, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME, ""
-                    + test.isIgnorePunctuation(), oneTest);
-            appendElement(doc, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME, ""
-                    + test.isIgnoreWhitespace(), oneTest);
-            appendElement(doc, XmlNames.SAVE_IS_VOID_NAME, "" + test.isVoid(),
+                    test.isIgnoreCasing(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME,
+                    test.isIgnorePunctuation(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME,
+                    test.isIgnoreWhitespace(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_VOID_NAME, test.isVoid(),
                     oneTest);
 
             rootElement.appendChild(oneTest);
@@ -245,9 +245,9 @@ public class TestCollection {
      *            the Element on which to append the new element
      */
     private void appendElement(Document doc, String elementName,
-            String elementValue, Element root) {
+            Object elementValue, Element root) {
         Element tempElement = doc.createElement(elementName);
-        tempElement.appendChild(doc.createTextNode(elementValue));
+        tempElement.appendChild(doc.createTextNode(elementValue.toString()));
         root.appendChild(tempElement);
     }
 }
