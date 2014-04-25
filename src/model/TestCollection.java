@@ -92,10 +92,9 @@ public class TestCollection {
      *            is the file path in which the test will be saved
      * @param className
      *            is the actual classname from the entire directory.
-     * @throws IOException
-     *             is thrown in case the copyPath does not actually copy
+     * @throws Exception is thrown if the file could not be created.
      */
-    public void copyFiles(String path, String className) throws IOException {
+    public void copyFiles(String path, String className) throws Exception {
         String filePath = path;
         File destination = new File(filePath);
         Path newdir = destination.toPath().getParent();
@@ -104,7 +103,9 @@ public class TestCollection {
         String [][] args = {{"src"}, {"lib"}, {"src", "model"}};
         for (String[] dirs : args) {
             String dirPath = Paths.get(dirString, dirs).toString();
-            new File(dirPath).mkdir();
+            if(!new File(dirPath).mkdir()){
+                throw new Exception("Could not create the directory");
+            }
         }
 
         copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");
