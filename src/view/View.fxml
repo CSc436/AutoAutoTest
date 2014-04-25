@@ -24,7 +24,7 @@
 	    <Menu text="File">
 		    <MenuItem text="Load" onAction="#handleLoadTestsMenuOption"/>
 		    <MenuItem text="Save" onAction="#handleSaveTestsMenuOption"/>
-		    <MenuItem text="Export" onAction="#handleExportTestsMenuOption"/>
+		    <MenuItem text="Export" onAction="#handleExportMenuOption"/>
 		    <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
 	    </Menu>
 	    <Menu text="Method Options">

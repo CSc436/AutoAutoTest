@@ -126,12 +126,12 @@ public class ViewController {
      */
     @FXML
     public void handleLoadTestsMenuOption(ActionEvent event) {
-        FileChooser myFileChooser = new FileChooser();
-        myFileChooser.setTitle("Load Tests");
-        File file = myFileChooser.showOpenDialog(new Stage());
-        if (file != null) {
-            // LOAD TESTS HERE
-        }
+//        FileChooser myFileChooser = new FileChooser();
+//        myFileChooser.setTitle("Load Tests");
+//        File file = myFileChooser.showOpenDialog(new Stage());
+//        if (file != null) {
+//            // LOAD TESTS HERE
+//        }
     }
     
     /**
@@ -140,7 +140,7 @@ public class ViewController {
      * @throws Exception Saving Exception.
      */
     @FXML
-    public void handleExportTestsMenuOption(ActionEvent event) throws Exception {
+    public void handleExportMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
