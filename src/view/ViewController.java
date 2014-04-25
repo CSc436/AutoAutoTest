@@ -80,7 +80,7 @@ public class ViewController {
      * @param event Clicking on the menu item.
      */
     @FXML
-    protected void handleVoidMenuCheckBox(ActionEvent event) {
+    public void handleVoidMenuCheckBox(ActionEvent event) {
         isVoid = !isVoid;
     }
     
@@ -89,7 +89,7 @@ public class ViewController {
      * @param event Clicking on the menu item.
      */
     @FXML
-    protected void handleCasingMenuCheckBox(ActionEvent event) {
+    public void handleCasingMenuCheckBox(ActionEvent event) {
         ignoreCasing = !ignoreCasing;
     }
     
@@ -98,7 +98,7 @@ public class ViewController {
      * @param event Clicking on the menu item. 
      */
     @FXML
-    protected void handleWhiteSpaceMenuCheckBox(ActionEvent event) {
+    public void handleWhiteSpaceMenuCheckBox(ActionEvent event) {
         ignoreWhitespace = !ignoreWhitespace;
     }
     
@@ -107,7 +107,7 @@ public class ViewController {
      * @param event Clicking on the menu item.
      */
     @FXML
-    protected void handlePunctuationMenuCheckbox(ActionEvent event) {
+    public void handlePunctuationMenuCheckBox(ActionEvent event) {
         ignorePunctuation = !ignorePunctuation;
     }
     
@@ -116,7 +116,7 @@ public class ViewController {
      * @param event Clicking on the menu item.
      */
     @FXML
-    protected void handleExitMenuOption(ActionEvent event) {
+    public void handleExitMenuOption(ActionEvent event) {
         Platform.exit();
     }
     
@@ -125,7 +125,7 @@ public class ViewController {
      * @param event Clicking on the menu item.
      */
     @FXML
-    protected void handleLoadTestsMenuOption(ActionEvent event) {
+    public void handleLoadTestsMenuOption(ActionEvent event) {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Load Tests");
         File file = myFileChooser.showOpenDialog(new Stage());
@@ -140,7 +140,7 @@ public class ViewController {
      * @throws Exception Saving Exception.
      */
     @FXML
-    protected void handleExportTestsMenuOption(ActionEvent event) throws Exception {
+    public void handleExportTestsMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
@@ -155,7 +155,7 @@ public class ViewController {
      *            This method generates a new test when the button is pressed.
      */
     @FXML
-    protected void handleGenerateButtonAction(ActionEvent event) {
+    public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
             TestCase newTest = new TestCase();
@@ -175,7 +175,7 @@ public class ViewController {
      *            the 'Delete' button.
      */
     @FXML
-    protected void handleDeleteButtonAction(ActionEvent event) {
+    public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
             String testNameToRemove = listView.getItems().remove(testIndex);
@@ -203,7 +203,7 @@ public class ViewController {
      *            on the save menu option.
      */
     @FXML
-    protected void handleSaveTestsMenuOption(ActionEvent event) {
+    public void handleSaveTestsMenuOption(ActionEvent event) {
         for (TestCase testCase : currentTests) {
             TestCase anotherTestCase = myTestCollection.newTest();
             anotherTestCase.setArgs(testCase.getArgs());
