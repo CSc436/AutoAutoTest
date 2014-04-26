@@ -40,6 +40,8 @@ public class ViewController {
     private boolean ignorePunctuation;
     private boolean isVoid;
     private LinkedList<TestCase> currentTests;
+    
+    // this is the length of 'Test Name: ' before the actual name in the view
     private static final int LIST_VIEW_TITLE_LENGTH = 11;
     
     @FXML
@@ -309,7 +311,17 @@ public class ViewController {
         }
         for (int i = 0; i < myTestCollection.testCount(); i++) {
             if (myTestCollection.getTest(i).getTestName().equals(testname)) {
-                JOptionPane.showMessageDialog(null, "Test name exists, "
+                JOptionPane.showMessageDialog(null, "Test name exists in "
+                        + "the Test Collection, "
+                        + "please choose a different name");
+                return false;
+            }
+        }
+        // this was added to check the current list of tests as well
+        for (TestCase test : currentTests) {
+            if (test.getTestName().equals(testname)) {
+                JOptionPane.showMessageDialog(null, "Test name exists, in the "
+                        + "temporary list, "
                         + "please choose a different name");
                 return false;
             }

@@ -84,7 +84,6 @@ public class ViewControllerTest {
      */
     @Test
     public void testGetNumberOfTests() throws Exception {
-        currentnumberoftests = viewController.getNumberOfCurrentTests();
         for (int i = 0; i < 100; i++) {
             setupBogusValues("testname" + i, "className", "methodName", "1");
             viewController.handleGenerateButtonAction(null);
