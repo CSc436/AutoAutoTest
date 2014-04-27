@@ -33,7 +33,7 @@
 		</MenuBar>
 	</top>
 	
-    <right> 
+    <right>
 	    <!-- This is the listview for our tests. -->
 	    <ListView fx:id="listView"/> 
     </right>
