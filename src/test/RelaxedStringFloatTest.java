@@ -167,10 +167,18 @@ public class RelaxedStringFloatTest {
         RelaxedStringFloatCheck myRSFC = new RelaxedStringFloatCheck(false,
                 false, false, -1);
         String strExp = "Pi to 2 decimal places is 3.14";
-        String strAct = "Pi to 2 decimal places is 3.14159";
+        String strAct1 = "Pi to 2 decimal places is 3.14159";
+        String strAct2 = "Pi to 2 decimal places is 3.1";
+        String strAct3 = "Pi to 2 decimal places is 3";
 
-        boolean result = myRSFC.isAcceptable(strExp, strAct);
+        boolean result = myRSFC.isAcceptable(strExp, strAct1);
         assertTrue(result);
+        
+        result = myRSFC.isAcceptable(strExp, strAct2);
+        assertFalse(result);
+        
+        result = myRSFC.isAcceptable(strExp, strAct3);
+        assertFalse(result);
     }
 
     /**
@@ -280,11 +288,10 @@ public class RelaxedStringFloatTest {
     }
 
     /**
-     * Additional unit tests to try and cover hard-to-reach branches in the
-     * program.
+     * Additional unit tests to try and exhaust one string first.
      */
     @Test
-    public void testCodeCoverage() {
+    public void testExhaustOneStringFirst() {
         RelaxedStringFloatCheck myRSFC = new RelaxedStringFloatCheck(true,
                 true, true, 2);
         String strExp1 = "T....b";
