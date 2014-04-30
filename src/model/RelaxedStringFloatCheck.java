@@ -227,28 +227,24 @@ public class RelaxedStringFloatCheck {
 
             // advance probe character for each string until we see something we
             // cannot ignore
-            while (canAdvanceOver(chFromExpected)) {
-                expectedIndex++;
-                // check to see if string has been exhausted
-                if (expectedIndex == expectedLength) {
-                    expectedIsExhausted = true;
-                    break;
-                }
-                // otherwise, advance probe location
+            expectedIndex = skip(expectedIndex, expectedLength, newExpected);
+            actualIndex = skip(actualIndex, actualLength, newActual);
+            if (expectedIndex == expectedLength) {
+                expectedIsExhausted = true;
+                chFromExpected = newExpected.charAt(expectedIndex - 1);
+            }
+            else { 
                 chFromExpected = newExpected.charAt(expectedIndex);
             }
-
-            while (canAdvanceOver(chFromActual)) {
-                actualIndex++;
-                // check to see if string has been exhausted
-                if (actualIndex == actualLength) {
-                    actualIsExhausted = true;
-                    break;
-                }
-                // otherwise, advance probe location
+            if (actualIndex == actualLength) {
+                actualIsExhausted = true;
+                chFromActual = newActual.charAt(actualIndex - 1);
+            }
+            else { 
                 chFromActual = newActual.charAt(actualIndex);
             }
-
+            
+            
             // if we get here, the we are either at the next pair of characters
             // to compare, or at the end of one or both strings
 
@@ -299,4 +295,30 @@ public class RelaxedStringFloatCheck {
             return canAdvanceToEnd(newExpected, expectedIndex);
         }
     } // end of isAcceptable
+    
+    
+    
+    
+    
+    
+    
+    private int skip(int index, int length, StringBuilder builder) {
+        char ch = builder.charAt(index);
+        for( ; index < length; index++) {
+            ch = builder.charAt(index);
+            if(canAdvanceOver(ch) == false) {
+                break;
+            }
+        }
+        while (canAdvanceOver(ch)) {
+            index++;
+            // check to see if string has been exhausted
+            if (index == length) {
+                break;
+            }
+            // otherwise, advance probe location
+            ch = builder.charAt(index);
+        }
+        return index;
+    }
 }
