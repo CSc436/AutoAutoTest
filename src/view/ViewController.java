@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.TestCase;
@@ -76,6 +77,47 @@ public class ViewController {
     }
 
     /**
+     * 
+     * @param event
+     *             Repopulates the fields with the data from the test
+     *              to be changed.
+     */
+    @FXML
+    public void handleClickOnListAction(MouseEvent event) {
+        int index = listView.getSelectionModel().getSelectedIndex();
+        
+        // change the data in the fields to the data from the selected test
+        namefield.setText(
+                myTestCollection.getTest(index).getTestName());
+        paramsfield.setText(
+                myTestCollection.getTest(index).getArgs());
+        returnfield.setText(
+                myTestCollection.getTest(index).getExpectedReturn());
+        stdinfield.setText(
+                myTestCollection.getTest(index).getStockedInput());
+        stdoutfield.setText(
+                myTestCollection.getTest(index).getExpectedStandardOutput());
+        methodnamefield.setText(
+                myTestCollection.getTest(index).getMethodName());
+        classnamefield.setText(
+                myTestCollection.getTest(index).getClassName());
+        timeoutfield.setText(
+                Integer.toString(
+                        myTestCollection.getTest(index).getTimeoutTime()));
+        floatprecisionfield.setText(
+                Integer.toString(
+                        myTestCollection.getTest(index).getFloatPrecision()));
+        ignoreCasingBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnoreCasing());
+        ignorePunctuationBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnorePunctuation());
+        ignoreWhitespaceBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnoreWhitespace());
+        returnVoidBox.selectedProperty().set(
+                myTestCollection.getTest(index).isVoid());
+    }
+    
+    /**
      * @param event
      *            This method generates a new test when the button is pressed.
      */
@@ -88,6 +130,18 @@ public class ViewController {
                 .getTest(myTestCollection.testCount() - 1));
             listView.getItems().add(anotherTest);
         }
+    }
+    
+    /**
+     * 
+     * @param event
+     *             This method will replace the selected test from the listview
+     *             with new data.
+     */
+    @FXML
+    public void handleReplaceButtonAction(ActionEvent event) {
+        getAllData();
+        replaceTest();
     }
 
     /**
@@ -141,6 +195,15 @@ public class ViewController {
         TestCase oneTestCase = myTestCollection.newTest();
         sendAllDataToTestCase(oneTestCase);
         return oneTestCase;
+    }
+    
+    /**
+     * Replaces the data of a test inside of the test collection.
+     */
+    private void replaceTest() {
+        int index = listView.getSelectionModel().getSelectedIndex();
+        TestCase testToReplace = myTestCollection.getTest(index);
+        sendAllDataToTestCase(testToReplace);
     }
 
     /**
