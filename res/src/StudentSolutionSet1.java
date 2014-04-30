@@ -12,6 +12,10 @@ public class StudentSolutionSet1 {
         return !val;
     }
     
+    public void helloWorld() {
+        System.out.print("Hello World!");
+    }
+    
     public int badAdd1(int num) {
         return num - 1;
     }
@@ -22,6 +26,10 @@ public class StudentSolutionSet1 {
     
     public boolean badOpposite(boolean val) {
         return val;
+    }
+    
+    public void badHelloWorld() {
+        System.out.print("Goodbye World!");
     }
     
 }
