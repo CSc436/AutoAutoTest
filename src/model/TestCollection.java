@@ -77,10 +77,11 @@ public class TestCollection {
      *             If the filePath isn't a .java file or can't be written to.
      */
     public void save(String filePath) throws Exception {
+        String root = new File(filePath).getParentFile().toString();
         String className = getClassName(filePath);
         String content = getFileContentString(className);
-        writeToFile(content, filePath);
         copyFiles(filePath, className);
+        writeToFile(content, root, className);
     }
 
     /**
@@ -109,6 +110,7 @@ public class TestCollection {
         }
 
         copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");
+        copyPath("./src/model/StringOutputStream.java", newdir, "src", "model");
         copyPath("./src/model/FakeStandardIn.java", newdir, "src", "model");
         copyPath("./dev/hamcrest-core-1.3.jar", newdir, "lib");
         copyPath("./dev/junit-4.11.jar", newdir, "lib");
@@ -230,8 +232,10 @@ public class TestCollection {
      * @throws IOException
      *             If the file cannot be written to for some reason
      */
-    private void writeToFile(String content, String filePath)
+    private void writeToFile(String content, String dir, String className)
             throws IOException {
+        Path p = Paths.get(dir, "src", className + ".java");
+        String filePath = p.toString();
         FileOutputStream outStream = new FileOutputStream(filePath);
         OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF8");
         writer.write(content);

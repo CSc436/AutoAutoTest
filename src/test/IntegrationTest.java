@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import model.TestCase;
@@ -25,14 +26,11 @@ import org.junit.Test;
  */
 public class IntegrationTest {
 
-    private static String tempFileName;
     private static File tempDir;
 
     @BeforeClass
     public static void setUp() throws IOException {
         tempDir = Files.createTempDirectory("AutoAutoTest").toFile();
-        Path path = Paths.get(tempDir.getAbsolutePath(), "SampleTests.java");
-        tempFileName = path.toString();
     }
 
     private static String getAntCommand() throws IOException {
@@ -172,6 +170,9 @@ public class IntegrationTest {
      */
     public static void saveGeneratedTests() throws Exception {
         TestCollection collection = TestCollection.getInstance();
+        String root = tempDir.getAbsolutePath();
+        Path path = Paths.get(root, "SampleTests.java");
+        String tempFileName = path.toString();
         collection.save(tempFileName);
     }
 
@@ -188,6 +189,10 @@ public class IntegrationTest {
     public static void testOurTest() throws Exception {
         saveGeneratedTests();
         int actualFailures = 0;
+        String fileName = "StudentSolutionSet1.java";
+        Path src = Paths.get("res", "src", fileName);
+        Path dst = Paths.get(tempDir.getAbsolutePath(), "src", fileName);
+        Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
         ProcessBuilder pb = new ProcessBuilder(getAntCommand());
         pb.directory(tempDir);
         Process p = pb.start();
@@ -202,7 +207,6 @@ public class IntegrationTest {
                 actualFailures = Integer.valueOf(end);
             }
         }
-        System.out.println(tempDir);
         tempDir.delete();
         assertEquals(4, actualFailures);
     }
