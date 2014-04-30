@@ -36,4 +36,6 @@ public class FuzzyMatchingModel {
         int result = (totalChars - changes) / totalChars;
         return result;
     }
+    
+    
 }
