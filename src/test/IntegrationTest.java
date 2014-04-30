@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 
 import model.TestCase;
 import model.TestCollection;
@@ -28,11 +27,22 @@ public class IntegrationTest {
 
     private static File tempDir;
 
+    /**
+     * Create temp directory.
+     * 
+     * @throws IOException If it can't make the directory.
+     */
     @BeforeClass
     public static void setUp() throws IOException {
         tempDir = Files.createTempDirectory("AutoAutoTest").toFile();
     }
 
+    /**
+     * Return the right get command for the host operating system.
+     * 
+     * @return The ant command
+     * @throws IOException If we can't get the output of the where command
+     */
     private static String getAntCommand() throws IOException {
         if (System.getProperty("os.name").contains("Windows")) {
             ProcessBuilder pb = new ProcessBuilder("where", "ant");
@@ -200,6 +210,7 @@ public class IntegrationTest {
                 p.getInputStream()));
         String line = null;
         while ((line = reader.readLine()) != null) {
+            System.out.println(line);
             if (line.contains("Failures: ")) {
                 String end = line.substring(line.indexOf("Failures: "));
                 end = end.substring(10);

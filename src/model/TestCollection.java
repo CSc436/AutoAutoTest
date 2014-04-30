@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
@@ -77,8 +76,8 @@ public class TestCollection {
      *             If the filePath isn't a .java file or can't be written to.
      */
     public void save(String filePath) throws Exception {
-        String root = new File(filePath).getParentFile().toString();
         String className = getClassName(filePath);
+        String root = new File(filePath).getParentFile().toString();
         String content = getFileContentString(className);
         copyFiles(filePath, className);
         writeToFile(content, root, className);
@@ -104,8 +103,9 @@ public class TestCollection {
         String [][] args = {{"src"}, {"lib"}, {"src", "model"}};
         for (String[] dirs : args) {
             String dirPath = Paths.get(dirString, dirs).toString();
-            if(!new File(dirPath).mkdir()){
-                throw new Exception("Could not create the directory");
+            File newDir = new File(dirPath);
+            if (!newDir.exists()) {
+                Files.createDirectory(newDir.toPath());
             }
         }
 
@@ -159,16 +159,17 @@ public class TestCollection {
         File source = new File("./res/build.xml");
         Path build = source.toPath();
         Charset charset = Charset.forName("UTF-8");
-        String result = "";
+        StringBuffer result = new StringBuffer();
         BufferedReader reader = Files.newBufferedReader(build, charset);
         String line = null;
         while ((line = reader.readLine()) != null) {
             line = line.replace("CLASSNAME", name);
-            result += line;
+            result.append(line);
         }
         String destination = directory.resolve("build.xml").toString();
-        FileWriter writer = new FileWriter(destination);
-        writer.write(result);
+        FileOutputStream outStream = new FileOutputStream(destination);
+        OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF8");
+        writer.write(result.toString());
         writer.close();
     }
 
@@ -227,8 +228,10 @@ public class TestCollection {
      * 
      * @param content
      *            The contents of the file as a string
-     * @param filePath
-     *            The path to the file that will be written to
+     * @param dir
+     *            The path to the directory that will be written to
+     * @param className
+     *            The name of the Java file being written
      * @throws IOException
      *             If the file cannot be written to for some reason
      */
