@@ -87,19 +87,34 @@ public class ViewController {
         int index = listView.getSelectionModel().getSelectedIndex();
         
         // change the data in the fields to the data from the selected test
-        namefield.setText(myTestCollection.getTest(index).getTestName());
-        paramsfield.setText(myTestCollection.getTest(index).getArgs());
-        returnfield.setText(myTestCollection.getTest(index).getExpectedReturn());
-        stdinfield.setText(myTestCollection.getTest(index).getStockedInput());
-        stdoutfield.setText(myTestCollection.getTest(index).getExpectedStandardOutput());
-        methodnamefield.setText(myTestCollection.getTest(index).getMethodName());
-        classnamefield.setText(myTestCollection.getTest(index).getClassName());
-        timeoutfield.setText(Integer.toString(myTestCollection.getTest(index).getTimeoutTime()));
-        floatprecisionfield.setText(Integer.toString(myTestCollection.getTest(index).getFloatPrecision()));
-        ignoreCasingBox.selectedProperty().set(myTestCollection.getTest(index).isIgnoreCasing());
-        ignorePunctuationBox.selectedProperty().set(myTestCollection.getTest(index).isIgnorePunctuation());
-        ignoreWhitespaceBox.selectedProperty().set(myTestCollection.getTest(index).isIgnoreWhitespace());
-        returnVoidBox.selectedProperty().set(myTestCollection.getTest(index).isVoid());
+        namefield.setText(
+                myTestCollection.getTest(index).getTestName());
+        paramsfield.setText(
+                myTestCollection.getTest(index).getArgs());
+        returnfield.setText(
+                myTestCollection.getTest(index).getExpectedReturn());
+        stdinfield.setText(
+                myTestCollection.getTest(index).getStockedInput());
+        stdoutfield.setText(
+                myTestCollection.getTest(index).getExpectedStandardOutput());
+        methodnamefield.setText(
+                myTestCollection.getTest(index).getMethodName());
+        classnamefield.setText(
+                myTestCollection.getTest(index).getClassName());
+        timeoutfield.setText(
+                Integer.toString(
+                        myTestCollection.getTest(index).getTimeoutTime()));
+        floatprecisionfield.setText(
+                Integer.toString(
+                        myTestCollection.getTest(index).getFloatPrecision()));
+        ignoreCasingBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnoreCasing());
+        ignorePunctuationBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnorePunctuation());
+        ignoreWhitespaceBox.selectedProperty().set(
+                myTestCollection.getTest(index).isIgnoreWhitespace());
+        returnVoidBox.selectedProperty().set(
+                myTestCollection.getTest(index).isVoid());
     }
     
     /**
