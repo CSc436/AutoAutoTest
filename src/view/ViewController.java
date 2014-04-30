@@ -96,7 +96,8 @@ public class ViewController {
             stdinfield.setText(
                     myTestCollection.getTest(index).getStockedInput());
             stdoutfield.setText(
-                    myTestCollection.getTest(index).getExpectedStandardOutput());
+                    myTestCollection.getTest(index).
+                    getExpectedStandardOutput());
             methodnamefield.setText(
                     myTestCollection.getTest(index).getMethodName());
             classnamefield.setText(
@@ -106,7 +107,8 @@ public class ViewController {
                             myTestCollection.getTest(index).getTimeoutTime()));
             floatprecisionfield.setText(
                     Integer.toString(
-                            myTestCollection.getTest(index).getFloatPrecision()));
+                            myTestCollection.getTest(index).
+                            getFloatPrecision()));
             ignoreCasingBox.selectedProperty().set(
                     myTestCollection.getTest(index).isIgnoreCasing());
             ignorePunctuationBox.selectedProperty().set(
