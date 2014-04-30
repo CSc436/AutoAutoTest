@@ -136,7 +136,7 @@ public class IntegrationTest {
      */
     public static void saveGeneratedTests() throws Exception {
         TestCollection collection = TestCollection.getInstance();
-        collection.save("res/src/SampleTests.java");
+        collection.export("res/src/SampleTests.java");
     }
     
     /**

@@ -14,6 +14,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * A Class that stores all of the tests. This class is responsible for reading
@@ -94,7 +100,7 @@ public class TestCollection {
      * @throws Exception
      *             If the filePath isn't a .java file or can't be written to.
      */
-    public void save(String filePath) throws Exception {
+    public void export(String filePath) throws Exception {
         String className = getClassName(filePath);
         String content = getFileContentString(className);
         writeToFile(content, filePath);
@@ -144,7 +150,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -175,7 +181,6 @@ public class TestCollection {
         return instance;
     }
 
-    
     /**
      * Saves all the information in the TestCollection in xml format.
      * 
@@ -187,7 +192,7 @@ public class TestCollection {
 
         // reset the tests
         tests = new ArrayList<TestCase>();
-        
+
         DocumentBuilderFactory docFactory = DocumentBuilderFactory
                 .newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -234,13 +239,98 @@ public class TestCollection {
                 test.setIgnoreWhitespace(Boolean.parseBoolean(isIgnoreWhitespace));
                 test.setIsVoid(Boolean.parseBoolean(isVoid));
         }
-        
     }
-
+    
     private String getText(Element el, String name) {
         return el.getElementsByTagName(name).item(0).getTextContent();
     }
-    
-    
-}
 
+    /**
+     * Saves all the information in the TestCollection in xml format.
+     * 
+     * @param fileName
+     *            the name of the file to save
+     * @throws Exception
+     *             if anything goes wrong
+     */
+    public void save(String fileName) throws Exception {
+
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory
+                .newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("TestCollection");
+        doc.appendChild(rootElement);
+
+        writeData(doc, rootElement);
+
+        TransformerFactory transformerFactory = TransformerFactory
+                .newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(fileName));
+
+        transformer.transform(source, result);
+    }
+
+    /**
+     * iterates through the tests list, writing data to the doc
+     * 
+     * @param doc
+     *            The document to be written through
+     * @param rootElement
+     *            the root xml element to add a test too.
+     */
+    private void writeData(Document doc, Element rootElement) {
+        for (TestCase test : tests) {
+            Element oneTest = doc.createElement("Test");
+            oneTest.setAttribute("name", test.getTestName());
+
+            appendElement(doc, XmlNames.SAVE_ARGS_NAME, 
+                    test.getArgs(), oneTest);
+            appendElement(doc, XmlNames.SAVE_CLASS_NAME, test.getClassName(),
+                    oneTest);
+            appendElement(doc, XmlNames.SAVE_EXPECTED_RETURN_NAME,
+                    test.getExpectedReturn(), oneTest);
+            appendElement(doc, XmlNames.SAVE_EXPECTED_STD_OUT_NAME,
+                    test.getExpectedStandardOutput(), oneTest);
+            appendElement(doc, XmlNames.SAVE_METHOD_NAME, test.getMethodName(),
+                    oneTest);
+            appendElement(doc, XmlNames.SAVE_FLOAT_PRECISION_NAME,
+                    test.getFloatPrecision(), oneTest);
+            appendElement(doc, XmlNames.SAVE_STOCKED_INPUT_NAME,
+                    test.getStockedInput(), oneTest);
+            appendElement(doc, XmlNames.SAVE_TIMEOUT_TIME_NAME,
+                    test.getTimeoutTime(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_CASING_NAME,
+                    test.isIgnoreCasing(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME,
+                    test.isIgnorePunctuation(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME,
+                    test.isIgnoreWhitespace(), oneTest);
+            appendElement(doc, XmlNames.SAVE_IS_VOID_NAME, test.isVoid(),
+                    oneTest);
+
+            rootElement.appendChild(oneTest);
+        }
+    }
+
+    /**
+     * Appends an element to the save file
+     * 
+     * @param doc
+     *            the document we are working on
+     * @param elementName
+     *            the name to append
+     * @param elementValue
+     *            the value to associate with the name
+     * @param root
+     *            the Element on which to append the new element
+     */
+    private void appendElement(Document doc, String elementName,
+            Object elementValue, Element root) {
+        Element tempElement = doc.createElement(elementName);
+        tempElement.appendChild(doc.createTextNode(elementValue.toString()));
+        root.appendChild(tempElement);
+    }
+}
