@@ -39,7 +39,7 @@ public class IntegrationTest {
             Process p = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     p.getInputStream()));
-            return reader.readLine();
+            return reader.readLine() + ".bat";
         }
         return "ant";
     }
@@ -200,7 +200,6 @@ public class IntegrationTest {
                 p.getInputStream()));
         String line = null;
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
             if (line.contains("Failures: ")) {
                 String end = line.substring(line.indexOf("Failures: "));
                 end = end.substring(10);
