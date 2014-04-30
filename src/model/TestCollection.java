@@ -103,12 +103,9 @@ public class TestCollection {
         String [][] args = {{"src"}, {"lib"}, {"src", "model"}};
         for (String[] dirs : args) {
             String dirPath = Paths.get(dirString, dirs).toString();
-//            System.out.println(dirPath);
-//            System.out.flush();
-//            if(!new File(dirPath).mkdir()){
-  //              System.out.println(dirPath);
-    //            throw new Exception("Could not create the directory");
-      //      }
+            if(!new File(dirPath).mkdir()){
+                throw new Exception("Could not create the directory");
+            }
         }
 
         copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");

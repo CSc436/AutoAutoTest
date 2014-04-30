@@ -30,9 +30,9 @@ public class IntegrationTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-//        tempDir = Files.createTempDirectory("AutoAutoTest").toFile();
-//        Path path = Paths.get(tempDir.getAbsolutePath(), "SampleTests.java");
-//        tempFileName = path.toString();
+        tempDir = Files.createTempDirectory("AutoAutoTest").toFile();
+        Path path = Paths.get(tempDir.getAbsolutePath(), "SampleTests.java");
+        tempFileName = path.toString();
     }
 
     private static String getAntCommand() throws IOException {
@@ -195,12 +195,14 @@ public class IntegrationTest {
                 p.getInputStream()));
         String line = null;
         while ((line = reader.readLine()) != null) {
+            System.out.println(line);
             if (line.contains("Failures: ")) {
                 String end = line.substring(line.indexOf("Failures: "));
                 end = end.substring(10);
                 actualFailures = Integer.valueOf(end);
             }
         }
+        System.out.println(tempDir);
         tempDir.delete();
         assertEquals(4, actualFailures);
     }
