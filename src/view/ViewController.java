@@ -162,7 +162,11 @@ public class ViewController {
             listView.getItems().remove(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
-            handleClickOnListAction(null);
+            if (newSelected == -1) {
+                clearFields();
+            } else {
+                handleClickOnListAction(null);
+            }
         }
     }
 
@@ -330,6 +334,25 @@ public class ViewController {
         }
         
         return true;
+    }
+    
+    /**
+     * Clears the data in the input fields.
+     */
+    public void clearFields() {
+        namefield.setText(null);
+        paramsfield.setText(null);
+        returnfield.setText(null);
+        stdinfield.setText(null);
+        stdoutfield.setText(null);
+        methodnamefield.setText(null);
+        classnamefield.setText(null);
+        timeoutfield.setText(null);
+        floatprecisionfield.setText(null);
+        ignoreCasingBox.selectedProperty().set(false);
+        ignorePunctuationBox.selectedProperty().set(false);
+        ignoreWhitespaceBox.selectedProperty().set(false);
+        returnVoidBox.selectedProperty().set(false);
     }
 
 }
