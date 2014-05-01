@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.TestCollection;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class ViewControllerTest {
     private static Class<ViewController> viewControllerClass;
     private static int currentnumberoftests;
     private static TestCollection testCollection;
-
+    
     /**
      * Set up reflection for each of the tests.
      * 
@@ -35,7 +36,6 @@ public class ViewControllerTest {
      */
     @BeforeClass
     public static void makeEverythingPublic() throws Exception {
-        currentnumberoftests = 0;
         viewController = new ViewController();
         testCollection = TestCollection.getInstance();
         viewControllerClass = ViewController.class;
@@ -51,6 +51,15 @@ public class ViewControllerTest {
     }
     
     /**
+     * Updates the current number of tests to be asserted against before the 
+     * running of every test.
+     */
+    @Before
+    public void updateCurrentNumberOfTests() {
+        currentnumberoftests = getActualNumberOfTests();
+    }
+    
+    /**
      * Tests the deletion of a test from the list.
      * 
      * @throws Exception
@@ -59,8 +68,6 @@ public class ViewControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteButtonAction() throws Exception {
-        assertEquals(currentnumberoftests, getActualNumberOfTests());
-        
         setupBogusValues("testname", "className", "methodName", "1");
         viewController.handleGenerateButtonAction(null);
         currentnumberoftests += 1;
