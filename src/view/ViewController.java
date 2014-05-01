@@ -216,6 +216,7 @@ public class ViewController {
     private void replaceTest(int index) {     
         TestCase testToReplace = myTestCollection.getTest(index);
         sendAllDataToTestCase(testToReplace);
+        listView.getItems().set(index, getTestForView(testToReplace));
     }
 
     /**
