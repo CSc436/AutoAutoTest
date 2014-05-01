@@ -23,13 +23,13 @@
             onMouseClicked="#handleClickOnListAction"> 
     </ListView>
     
-    <!-- This is the Save button. -->
+    <!-- This is the Export button. -->
     <HBox spacing="10"
             alignment="bottom_right"
             GridPane.columnIndex="1"
             GridPane.rowIndex="2">
-        <Button text="Save All Tests"
-                onAction="#handleSaveButtonAction"/>
+        <Button text="Export All Tests"
+                onAction="#handleExportButtonAction"/>
     </HBox>
 
      <!-- This is the container for the labels and input fields. -->

@@ -105,7 +105,7 @@
                 </sourcefiles>
             </structure>
             <check>
-                <rule element="CLASS" excludes="package-info:*Constants*:*ExceptionsTest:*view*">
+                <rule element="CLASS" excludes="package-info:*XmlNames*:*ExceptionsTest:*IntegrationTest:*view*">
                     <limit counter="INSTRUCTION" value="COVEREDRATIO" minimum="1.00"/>
                     <limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
                 </rule>

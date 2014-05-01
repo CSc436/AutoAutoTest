@@ -173,22 +173,22 @@ public class ViewController {
     }
 
     /**
-     * This method saves all of the created tests.
+     * This method exports all of the created tests.
      * 
      * @param event
      *            The event that triggers this method. In this case, pressing
-     *            the 'Save' button.
+     *            the 'Export' button.
      * @throws Exception
      *             Throws an exception if the file is not found.
      */
     @FXML
-    public void handleSaveButtonAction(ActionEvent event) throws Exception {
+    public void handleExportButtonAction(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
-        myFileChooser.setTitle("Save Tests");
+        myFileChooser.setTitle("Export Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
         if (file != null) {
             String filePath = file.getAbsolutePath();
-            myTestCollection.save(filePath);
+            myTestCollection.export(filePath);
         }
     }
 
