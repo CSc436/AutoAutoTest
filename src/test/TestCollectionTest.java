@@ -120,7 +120,7 @@ public class TestCollectionTest {
      *             If the test file couldn't be written
      */
     @Test
-    public void testSavingTests() throws Exception {
+    public void testExportingTests() throws Exception {
         collection.newTest();
         TestCase theTest = collection.getTest(0);
         theTest.setMethodName("helloWorld");
@@ -128,7 +128,7 @@ public class TestCollectionTest {
         String base = tempDir.toString();
         String savePath = Paths.get(base, "ExampleTest.java").toString();
         String realPath = Paths.get(base, "src", "ExampleTest.java").toString();
-        collection.save(savePath);
+        collection.export(savePath);
         assertTrue(new File(realPath).exists());
     }
 
@@ -139,12 +139,12 @@ public class TestCollectionTest {
      *             If the test file couldn't be written
      */
     @Test
-    public void testSavingTestWithoutJavaExtension() throws Exception {
+    public void testExportingTestWithoutJavaExtension() throws Exception {
         collection.newTest();
         String base = tempDir.toString();
         String savePath = Paths.get(base, "ExampleTest").toString();
         String realPath = Paths.get(base, "src", "ExampleTest").toString();
-        collection.save(savePath);
+        collection.export(savePath);
         realPath += ".java";
         assertTrue(new File(realPath).exists());
     }
@@ -168,4 +168,42 @@ public class TestCollectionTest {
         assertSame(collection1, collection2);
     }
 
+    /**
+     * Saves a test, should have no exceptions
+     * @throws Exception if the test fails
+     */
+    @Test
+    public void testSaving() throws Exception {
+        TestCollection collection1 = TestCollection.getInstance();
+        TestCase test = collection1.newTest();
+        test.setTestName("test1");
+        test.setArgs("1");
+        test.setClassName("class1");
+        test.setExpectedReturn("2");
+        test.setExpectedStandardOutput("");
+        test.setFloatPrecision(2);
+        test.setIgnoreCasing(false);
+        test.setIgnorePunctuation(false);
+        test.setIgnoreWhitespace(false);
+        test.setIsVoid(false);
+        test.setMethodName("method1");
+        test.setStockedInput("");
+        test.setTimeoutTime(1000);
+        
+        test = collection1.newTest();
+        test.setTestName("test2");
+        test.setArgs("2");
+        test.setClassName("class2");
+        test.setExpectedReturn("3");
+        test.setExpectedStandardOutput("");
+        test.setFloatPrecision(3);
+        test.setIgnoreCasing(false);
+        test.setIgnorePunctuation(false);
+        test.setIgnoreWhitespace(false);
+        test.setIsVoid(false);
+        test.setMethodName("method2");
+        test.setStockedInput("");
+        test.setTimeoutTime(1000);
+        collection1.save("test_output/SaveTest.xml");
+    }
 }
