@@ -169,14 +169,39 @@ public class TestCollectionTest {
     }
     
     @Test
-    public void testLoading() {
+    public void testLoading() throws Exception {
+        testSaving(); // run save method so we know exactly what we are loading
+        resetTestCollection(); // reset so old TestCollection doesn't muddle results
         TestCollection collection1 = TestCollection.getInstance();
-        try {
-            collection1.load("test_output/SaveTest.xml");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        collection1.load("test_output/SaveTest.xml");
+        
+        TestCase test1 = collection1.getTest(0);
+        assertEquals("test1", test1.getTestName());
+        assertEquals("1", test1.getArgs());
+        assertEquals("class1", test1.getClassName());
+        assertEquals("2", test1.getExpectedReturn());
+        assertEquals("", test1.getExpectedStandardOutput());
+        assertEquals(2, test1.getFloatPrecision());
+        assertEquals(false, test1.isIgnoreCasing());
+        assertEquals(false, test1.isIgnorePunctuation());
+        assertEquals(false, test1.isIgnoreWhitespace());
+        assertEquals(false, test1.isVoid());
+        assertEquals("method1", test1.getMethodName());
+        assertEquals(1000, test1.getTimeoutTime());
+        
+        TestCase test2 = collection1.getTest(1);
+        assertEquals("test2", test2.getTestName());
+        assertEquals("2", test2.getArgs());
+        assertEquals("class2", test2.getClassName());
+        assertEquals("3", test2.getExpectedReturn());
+        assertEquals("", test2.getExpectedStandardOutput());
+        assertEquals(3, test2.getFloatPrecision());
+        assertEquals(true, test2.isIgnoreCasing());
+        assertEquals(true, test2.isIgnorePunctuation());
+        assertEquals(true, test2.isIgnoreWhitespace());
+        assertEquals(true, test2.isVoid());
+        assertEquals("method2", test2.getMethodName());
+        assertEquals(1111, test2.getTimeoutTime());
     }
 
     /**
@@ -208,13 +233,13 @@ public class TestCollectionTest {
         test.setExpectedReturn("3");
         test.setExpectedStandardOutput("");
         test.setFloatPrecision(3);
-        test.setIgnoreCasing(false);
-        test.setIgnorePunctuation(false);
-        test.setIgnoreWhitespace(false);
-        test.setIsVoid(false);
+        test.setIgnoreCasing(true);
+        test.setIgnorePunctuation(true);
+        test.setIgnoreWhitespace(true);
+        test.setIsVoid(true);
         test.setMethodName("method2");
         test.setStockedInput("");
-        test.setTimeoutTime(1000);
+        test.setTimeoutTime(1111);
         collection1.save("test_output/SaveTest.xml");
     }
 }

@@ -38,23 +38,6 @@ public class TestCollection {
     private static TestCollection instance = new TestCollection();
     private ArrayList<TestCase> tests;
     
-    private static final String SAVE_ARGS_NAME = "Args";
-    private static final String SAVE_CLASS_NAME = "ClassName";
-    private static final String SAVE_EXPECTED_RETURN_NAME = "ExpectedReturn";
-    private static final String SAVE_EXPECTED_STD_OUT_NAME = 
-            "ExpectedStandardOut";
-    private static final String SAVE_METHOD_NAME = "MethodName";
-    private static final String SAVE_FLOAT_PRECISION_NAME = "FloatPrecision";
-    private static final String SAVE_STOCKED_INPUT_NAME = "StockedInput";
-    private static final String SAVE_TIMEOUT_TIME_NAME = "TimeoutTime";
-    private static final String SAVE_IS_IGNORE_CASING_NAME = 
-            "IsIgnoreCasing";
-    private static final String SAVE_IS_IGNORE_PUNCTUATION_NAME = 
-            "IsIgnorePunctuation";
-    private static final String SAVE_IS_IGNORE_WHITESPACE_NAME = 
-            "IsIgnoreWhitespace";
-    private static final String SAVE_IS_VOID_NAME = "IsVoid";
-
     /**
      * Create a new test collection with no tests.
      */
@@ -310,24 +293,25 @@ public class TestCollection {
                 continue;
                 
                 Element el = (Element) node;
-                System.out.println("name is: " + el.getAttribute("name"));
                 
                 // get arguments for test case
-                String args = getText(el, SAVE_ARGS_NAME);
-                String className = getText(el, SAVE_CLASS_NAME);
-                String expectedReturn = getText(el, SAVE_EXPECTED_RETURN_NAME);
-                String expectedStandardOut = getText(el, SAVE_EXPECTED_STD_OUT_NAME);
-                String method = getText(el, SAVE_METHOD_NAME);
-                String floatPrecision = getText(el, SAVE_FLOAT_PRECISION_NAME);
-                String stockedInput = getText(el, SAVE_STOCKED_INPUT_NAME);
-                String timeoutTime = getText(el, SAVE_TIMEOUT_TIME_NAME);
-                String isIgnoreCasing = getText(el, SAVE_IS_IGNORE_CASING_NAME);
-                String isIgnorePunctuation = getText(el, SAVE_IS_IGNORE_PUNCTUATION_NAME);
-                String isIgnoreWhitespace = getText(el, SAVE_IS_IGNORE_WHITESPACE_NAME);
-                String isVoid = getText(el, SAVE_IS_VOID_NAME);
+                String testName = el.getAttribute(XmlNames.SAVE_TEST_NAME_NAME);
+                String args = getText(el, XmlNames.SAVE_ARGS_NAME);
+                String className = getText(el, XmlNames.SAVE_CLASS_NAME);
+                String expectedReturn = getText(el, XmlNames.SAVE_EXPECTED_RETURN_NAME);
+                String expectedStandardOut = getText(el, XmlNames.SAVE_EXPECTED_STD_OUT_NAME);
+                String method = getText(el, XmlNames.SAVE_METHOD_NAME);
+                String floatPrecision = getText(el, XmlNames.SAVE_FLOAT_PRECISION_NAME);
+                String stockedInput = getText(el, XmlNames.SAVE_STOCKED_INPUT_NAME);
+                String timeoutTime = getText(el, XmlNames.SAVE_TIMEOUT_TIME_NAME);
+                String isIgnoreCasing = getText(el, XmlNames.SAVE_IS_IGNORE_CASING_NAME);
+                String isIgnorePunctuation = getText(el, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME);
+                String isIgnoreWhitespace = getText(el, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME);
+                String isVoid = getText(el, XmlNames.SAVE_IS_VOID_NAME);
                 
                 // set test case args
                 TestCase test = newTest();
+                test.setTestName(testName);
                 test.setArgs(args);
                 test.setClassName(className);
                 test.setExpectedReturn(expectedReturn);
@@ -386,7 +370,7 @@ public class TestCollection {
     private void writeData(Document doc, Element rootElement) {
         for (TestCase test : tests) {
             Element oneTest = doc.createElement("Test");
-            oneTest.setAttribute("name", test.getTestName());
+            oneTest.setAttribute(XmlNames.SAVE_TEST_NAME_NAME, test.getTestName());
 
             appendElement(doc, XmlNames.SAVE_ARGS_NAME, 
                     test.getArgs(), oneTest);

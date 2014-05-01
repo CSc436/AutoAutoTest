@@ -14,6 +14,12 @@ public class XmlNames {
     private XmlNames() {
         
     }
+    
+    /**
+     * test name tag
+     */
+    public static final String SAVE_TEST_NAME_NAME = "name";
+    
     /**
      * name of args
      */
