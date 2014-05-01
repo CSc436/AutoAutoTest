@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import model.TestCase;
 import model.TestCollection;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -40,6 +41,7 @@ public class TestCollectionTest {
         String path = Paths.get(baseDir, "AutoAutoTemp").toString();
         tempDir = new File(path);
         tempDir.setWritable(true, false);
+        FileUtils.deleteDirectory(tempDir);
         tempDir.delete();
         tempDir.mkdir();
     }
@@ -124,9 +126,10 @@ public class TestCollectionTest {
         theTest.setMethodName("helloWorld");
         theTest.setExpectedStandardOutput("Hello World!");
         String base = tempDir.toString();
-        String path = Paths.get(base, "ExampleTest.java").toString();
-        collection.export(path);
-        assertTrue(new File(path).exists());
+        String savePath = Paths.get(base, "ExampleTest.java").toString();
+        String realPath = Paths.get(base, "src", "ExampleTest.java").toString();
+        collection.export(savePath);
+        assertTrue(new File(realPath).exists());
     }
 
     /**
@@ -139,10 +142,11 @@ public class TestCollectionTest {
     public void testExportingTestWithoutJavaExtension() throws Exception {
         collection.newTest();
         String base = tempDir.toString();
-        String path = Paths.get(base, "ExampleTest").toString();
-        collection.export(path);
-        path += ".java";
-        assertTrue(new File(path).exists());
+        String savePath = Paths.get(base, "ExampleTest").toString();
+        String realPath = Paths.get(base, "src", "ExampleTest").toString();
+        collection.export(savePath);
+        realPath += ".java";
+        assertTrue(new File(realPath).exists());
     }
 
     /**
@@ -214,4 +218,3 @@ public class TestCollectionTest {
         collection1.save("test_output/SaveTest.xml");
     }
 }
-
