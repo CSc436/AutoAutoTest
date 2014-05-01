@@ -174,7 +174,7 @@ public class TestCollectionTest {
      */
     @Test
     public void testLoading() throws Exception {
-        testSaving(); // run save method so we know exactly what we are loading
+        doSave(); // run save method so we know exactly what we are loading
         resetTestCollection(); // reset so old instance doesn't muddle results
         collection.load("test_output/SaveTest.xml");
         
@@ -211,8 +211,7 @@ public class TestCollectionTest {
      * Saves a test, should have no exceptions
      * @throws Exception if the test fails
      */
-    @Test
-    public void testSaving() throws Exception {
+    private void doSave() throws Exception {
         TestCase test = collection.newTest();
         test.setTestName("test1");
         test.setArgs("1");
