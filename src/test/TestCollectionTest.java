@@ -168,14 +168,17 @@ public class TestCollectionTest {
         assertSame(collection1, collection2);
     }
     
+    /**
+     * Test loading by useing our testSaving function to ensure consistency
+     * @throws Exception if anything goes wrong
+     */
     @Test
     public void testLoading() throws Exception {
         testSaving(); // run save method so we know exactly what we are loading
-        resetTestCollection(); // reset so old TestCollection doesn't muddle results
-        TestCollection collection1 = TestCollection.getInstance();
-        collection1.load("test_output/SaveTest.xml");
+        resetTestCollection(); // reset so old instance doesn't muddle results
+        collection.load("test_output/SaveTest.xml");
         
-        TestCase test1 = collection1.getTest(0);
+        TestCase test1 = collection.getTest(0);
         assertEquals("test1", test1.getTestName());
         assertEquals("1", test1.getArgs());
         assertEquals("class1", test1.getClassName());
@@ -189,7 +192,7 @@ public class TestCollectionTest {
         assertEquals("method1", test1.getMethodName());
         assertEquals(1000, test1.getTimeoutTime());
         
-        TestCase test2 = collection1.getTest(1);
+        TestCase test2 = collection.getTest(1);
         assertEquals("test2", test2.getTestName());
         assertEquals("2", test2.getArgs());
         assertEquals("class2", test2.getClassName());
@@ -210,8 +213,7 @@ public class TestCollectionTest {
      */
     @Test
     public void testSaving() throws Exception {
-        TestCollection collection1 = TestCollection.getInstance();
-        TestCase test = collection1.newTest();
+        TestCase test = collection.newTest();
         test.setTestName("test1");
         test.setArgs("1");
         test.setClassName("class1");
@@ -226,7 +228,7 @@ public class TestCollectionTest {
         test.setStockedInput("");
         test.setTimeoutTime(1000);
         
-        test = collection1.newTest();
+        test = collection.newTest();
         test.setTestName("test2");
         test.setArgs("2");
         test.setClassName("class2");
@@ -240,6 +242,6 @@ public class TestCollectionTest {
         test.setMethodName("method2");
         test.setStockedInput("");
         test.setTimeoutTime(1111);
-        collection1.save("test_output/SaveTest.xml");
+        collection.save("test_output/SaveTest.xml");
     }
 }

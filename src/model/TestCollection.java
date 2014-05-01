@@ -24,8 +24,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * A Class that stores all of the tests. This class is responsible for reading
@@ -274,7 +272,7 @@ public class TestCollection {
      * @throws Exception if anything goes wrong
      */
     public void load(String fileName) throws Exception {
-
+        
         // reset the tests
         tests = new ArrayList<TestCase>();
 
@@ -289,44 +287,53 @@ public class TestCollection {
         for (int i = 0; i < list.getLength(); i++) {
      
             Node node = list.item(i);
-            if (node.getNodeType() != Node.ELEMENT_NODE) 
-                continue;
-                
-                Element el = (Element) node;
-                
-                // get arguments for test case
-                String testName = el.getAttribute(XmlNames.SAVE_TEST_NAME_NAME);
-                String args = getText(el, XmlNames.SAVE_ARGS_NAME);
-                String className = getText(el, XmlNames.SAVE_CLASS_NAME);
-                String expectedReturn = getText(el, XmlNames.SAVE_EXPECTED_RETURN_NAME);
-                String expectedStandardOut = getText(el, XmlNames.SAVE_EXPECTED_STD_OUT_NAME);
-                String method = getText(el, XmlNames.SAVE_METHOD_NAME);
-                String floatPrecision = getText(el, XmlNames.SAVE_FLOAT_PRECISION_NAME);
-                String stockedInput = getText(el, XmlNames.SAVE_STOCKED_INPUT_NAME);
-                String timeoutTime = getText(el, XmlNames.SAVE_TIMEOUT_TIME_NAME);
-                String isIgnoreCasing = getText(el, XmlNames.SAVE_IS_IGNORE_CASING_NAME);
-                String isIgnorePunctuation = getText(el, XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME);
-                String isIgnoreWhitespace = getText(el, XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME);
-                String isVoid = getText(el, XmlNames.SAVE_IS_VOID_NAME);
-                
-                // set test case args
-                TestCase test = newTest();
-                test.setTestName(testName);
-                test.setArgs(args);
-                test.setClassName(className);
-                test.setExpectedReturn(expectedReturn);
-                test.setExpectedStandardOutput(expectedStandardOut);
-                test.setMethodName(method);
-                test.setFloatPrecision(Integer.parseInt(floatPrecision));
-                test.setStockedInput(stockedInput);
-                test.setTimeoutTime(Integer.parseInt(timeoutTime));
-                test.setIgnoreCasing(Boolean.parseBoolean(isIgnoreCasing));
-                test.setIgnorePunctuation(Boolean.parseBoolean(isIgnorePunctuation));
-                test.setIgnoreWhitespace(Boolean.parseBoolean(isIgnoreWhitespace));
-                test.setIsVoid(Boolean.parseBoolean(isVoid));
+            Element el = (Element) node;
+
+            // get arguments for test case
+            String testName = el.getAttribute(XmlNames.SAVE_TEST_NAME_NAME);
+            String args = getText(el, XmlNames.SAVE_ARGS_NAME);
+            String className = getText(el, XmlNames.SAVE_CLASS_NAME);
+            String expectedReturn = getText(el,
+                    XmlNames.SAVE_EXPECTED_RETURN_NAME);
+            String expectedStandardOut = getText(el,
+                    XmlNames.SAVE_EXPECTED_STD_OUT_NAME);
+            String method = getText(el, XmlNames.SAVE_METHOD_NAME);
+            String floatPrecision = getText(el,
+                    XmlNames.SAVE_FLOAT_PRECISION_NAME);
+            String stockedInput = getText(el, XmlNames.SAVE_STOCKED_INPUT_NAME);
+            String timeoutTime = getText(el, XmlNames.SAVE_TIMEOUT_TIME_NAME);
+            String isIgnoreCasing = getText(el,
+                    XmlNames.SAVE_IS_IGNORE_CASING_NAME);
+            String isIgnorePunctuation = getText(el,
+                    XmlNames.SAVE_IS_IGNORE_PUNCTUATION_NAME);
+            String isIgnoreWhitespace = getText(el,
+                    XmlNames.SAVE_IS_IGNORE_WHITESPACE_NAME);
+            String isVoid = getText(el, XmlNames.SAVE_IS_VOID_NAME);
+
+            // set test case args
+            TestCase test = newTest();
+            test.setTestName(testName);
+            test.setArgs(args);
+            test.setClassName(className);
+            test.setExpectedReturn(expectedReturn);
+            test.setExpectedStandardOutput(expectedStandardOut);
+            test.setMethodName(method);
+            test.setFloatPrecision(Integer.parseInt(floatPrecision));
+            test.setStockedInput(stockedInput);
+            test.setTimeoutTime(Integer.parseInt(timeoutTime));
+            test.setIgnoreCasing(Boolean.parseBoolean(isIgnoreCasing));
+            test.setIgnorePunctuation(
+                    Boolean.parseBoolean(isIgnorePunctuation));
+            test.setIgnoreWhitespace(Boolean.parseBoolean(isIgnoreWhitespace));
+            test.setIsVoid(Boolean.parseBoolean(isVoid));
         }
     }
     
+    /**
+     * @param el the element to check
+     * @param name the name the element holds
+     * @return the string associated with el's name variable
+     */
     private String getText(Element el, String name) {
         return el.getElementsByTagName(name).item(0).getTextContent();
     }
@@ -370,7 +377,8 @@ public class TestCollection {
     private void writeData(Document doc, Element rootElement) {
         for (TestCase test : tests) {
             Element oneTest = doc.createElement("Test");
-            oneTest.setAttribute(XmlNames.SAVE_TEST_NAME_NAME, test.getTestName());
+            oneTest.setAttribute(XmlNames.SAVE_TEST_NAME_NAME, 
+                    test.getTestName());
 
             appendElement(doc, XmlNames.SAVE_ARGS_NAME, 
                     test.getArgs(), oneTest);
