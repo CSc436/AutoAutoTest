@@ -289,7 +289,6 @@ public class TestCollection {
         StreamResult result = new StreamResult(new File(fileName));
 
         transformer.transform(source, result);
-
     }
 
     /**
