@@ -11,6 +11,16 @@ import org.junit.Test;
  * 
  */
 public class RelaxedStringFloatTest {
+    
+    
+    @Test
+    public void testEmptyStrings() {
+        String expected = "";
+        String actual = "";
+        RelaxedStringFloatCheck rsfc = new RelaxedStringFloatCheck(false, false, false, 2);
+        assertTrue(rsfc.isAcceptable(expected, actual));
+    }
+
     /**
      * These unit tests test the relaxed checking with ONLY differences in
      * whitespace being ignored.

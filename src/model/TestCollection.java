@@ -123,6 +123,12 @@ public class TestCollection {
 
         copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");
         copyPath("./src/model/StringOutputStream.java", newdir, "src", "model");
+        copyPath(
+                "./src/model/RelaxedStringFloatCheck.java",
+                newdir,
+                "src",
+                "model"
+        );
         copyPath("./src/model/FakeStandardIn.java", newdir, "src", "model");
         copyPath("./dev/hamcrest-core-1.3.jar", newdir, "lib");
         copyPath("./dev/junit-4.11.jar", newdir, "lib");
