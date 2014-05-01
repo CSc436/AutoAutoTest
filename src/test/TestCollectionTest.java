@@ -167,15 +167,52 @@ public class TestCollectionTest {
         TestCollection collection2 = TestCollection.getInstance();
         assertSame(collection1, collection2);
     }
+    
+    /**
+     * Test loading by useing our testSaving function to ensure consistency
+     * @throws Exception if anything goes wrong
+     */
+    @Test
+    public void testLoading() throws Exception {
+        doSave(); // run save method so we know exactly what we are loading
+        resetTestCollection(); // reset so old instance doesn't muddle results
+        collection.load("test_output/SaveTest.xml");
+        
+        TestCase test1 = collection.getTest(0);
+        assertEquals("test1", test1.getTestName());
+        assertEquals("1", test1.getArgs());
+        assertEquals("class1", test1.getClassName());
+        assertEquals("2", test1.getExpectedReturn());
+        assertEquals("", test1.getExpectedStandardOutput());
+        assertEquals(2, test1.getFloatPrecision());
+        assertEquals(false, test1.isIgnoreCasing());
+        assertEquals(false, test1.isIgnorePunctuation());
+        assertEquals(false, test1.isIgnoreWhitespace());
+        assertEquals(false, test1.isVoid());
+        assertEquals("method1", test1.getMethodName());
+        assertEquals(1000, test1.getTimeoutTime());
+        
+        TestCase test2 = collection.getTest(1);
+        assertEquals("test2", test2.getTestName());
+        assertEquals("2", test2.getArgs());
+        assertEquals("class2", test2.getClassName());
+        assertEquals("3", test2.getExpectedReturn());
+        assertEquals("", test2.getExpectedStandardOutput());
+        assertEquals(3, test2.getFloatPrecision());
+        assertEquals(true, test2.isIgnoreCasing());
+        assertEquals(true, test2.isIgnorePunctuation());
+        assertEquals(true, test2.isIgnoreWhitespace());
+        assertEquals(true, test2.isVoid());
+        assertEquals("method2", test2.getMethodName());
+        assertEquals(1111, test2.getTimeoutTime());
+    }
 
     /**
      * Saves a test, should have no exceptions
      * @throws Exception if the test fails
      */
-    @Test
-    public void testSaving() throws Exception {
-        TestCollection collection1 = TestCollection.getInstance();
-        TestCase test = collection1.newTest();
+    private void doSave() throws Exception {
+        TestCase test = collection.newTest();
         test.setTestName("test1");
         test.setArgs("1");
         test.setClassName("class1");
@@ -190,20 +227,20 @@ public class TestCollectionTest {
         test.setStockedInput("");
         test.setTimeoutTime(1000);
         
-        test = collection1.newTest();
+        test = collection.newTest();
         test.setTestName("test2");
         test.setArgs("2");
         test.setClassName("class2");
         test.setExpectedReturn("3");
         test.setExpectedStandardOutput("");
         test.setFloatPrecision(3);
-        test.setIgnoreCasing(false);
-        test.setIgnorePunctuation(false);
-        test.setIgnoreWhitespace(false);
-        test.setIsVoid(false);
+        test.setIgnoreCasing(true);
+        test.setIgnorePunctuation(true);
+        test.setIgnoreWhitespace(true);
+        test.setIsVoid(true);
         test.setMethodName("method2");
         test.setStockedInput("");
-        test.setTimeoutTime(1000);
-        collection1.save("test_output/SaveTest.xml");
+        test.setTimeoutTime(1111);
+        collection.save("test_output/SaveTest.xml");
     }
 }
