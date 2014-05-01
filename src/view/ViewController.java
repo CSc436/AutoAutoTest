@@ -146,7 +146,9 @@ public class ViewController {
         int index = listView.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             getAllData();
-            replaceTest(index);
+            if (dataIsAcceptable()) {
+                replaceTest(index);
+            }
         }
     }
 
