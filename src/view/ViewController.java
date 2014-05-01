@@ -122,16 +122,17 @@ public class ViewController {
     /**
      * Loads the tests into the program via the menu.
      * @param event Clicking on the menu item.
+     * @throws Exception File loading.
      */
     @FXML
-    public void handleLoadTestsMenuOption(ActionEvent event) {
-//        FileChooser myFileChooser = new FileChooser();
-//        myFileChooser.setTitle("Load Tests");
-//        File file = myFileChooser.showOpenDialog(new Stage());
-//        if (file != null) {
-//            //TODO: LOAD TESTS HERE
-              // I assume it will just be myTestCollection.load();
-//        }
+    public void handleLoadTestsMenuOption(ActionEvent event) throws Exception {
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Load Tests");
+        File file = myFileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            String fileName = file.getAbsolutePath();
+            myTestCollection.load(fileName);
+        }
     }
     
     /**
