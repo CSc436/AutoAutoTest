@@ -1,7 +1,6 @@
 package view;
 
 import java.io.File;
-import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
@@ -39,7 +38,6 @@ public class ViewController {
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
     private boolean isVoid;
-    private LinkedList<TestCase> currentTests;
     
     // this is the length of 'Test Name: ' before the actual name in the view
     private static final int LIST_VIEW_TITLE_LENGTH = 11;
@@ -73,7 +71,6 @@ public class ViewController {
         ignoreCasing = false;
         ignorePunctuation = false;
         ignoreWhitespace = false;
-        currentTests = new LinkedList<TestCase>();
         myTestCollection = TestCollection.getInstance();
     }
     
@@ -144,11 +141,11 @@ public class ViewController {
     @FXML
     public void handleExportMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
-        myFileChooser.setTitle("Save Tests");
+        myFileChooser.setTitle("Export Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
         if (file != null) {
             String filePath = file.getAbsolutePath();
-            myTestCollection.save(filePath);
+            myTestCollection.export(filePath);
         }
     }
     
@@ -160,9 +157,8 @@ public class ViewController {
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
-            TestCase newTest = new TestCase();
+            TestCase newTest = myTestCollection.newTest();
             sendAllDataToTestCase(newTest);
-            currentTests.add(newTest);
             String anotherTest = getTestForView(newTest);
             listView.getItems().add(anotherTest);
         }
@@ -170,7 +166,8 @@ public class ViewController {
 
     /**
      * This method is the response to the user clicking the 'Delete Button'. The
-     * selected test in the listview is deleted from the listview.
+     * selected test in the listview is deleted from the listview, and from the
+     * test collection.
      * 
      * @param event
      *            The event that triggers this method. In this case, pressing
@@ -183,49 +180,31 @@ public class ViewController {
             String testNameToRemove = listView.getItems().remove(testIndex);
             testNameToRemove = testNameToRemove.substring(
                     LIST_VIEW_TITLE_LENGTH, testNameToRemove.length());
-            for (TestCase test : currentTests) {
-                if (test.getTestName().equals(testNameToRemove)) {
-                    currentTests.remove(test);
-                    break;
-                }
-            }
+            myTestCollection.removeTest(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
         }
     }
 
     /**
-     * This method saves all of the created tests to the TestCollection Class. 
-     * For every testcase in our current list, it creates a new test case 
-     * inside the test collection, and then sets all of the required data for 
-     * the new test case inside the collection.
+     * This method saves all of tests in the TestCollection. It calls the save
+     * method in the test collection, and the test collection will save the 
+     * tests in an xml format to be loaded later.
      * 
      * @param event
      *            The event that triggers this method. In this case, clicking
      *            on the save menu option.
+     * @throws Exception Due to file errors.
      */
     @FXML
-    public void handleSaveTestsMenuOption(ActionEvent event) {
-        for (TestCase testCase : currentTests) {
-            TestCase anotherTestCase = myTestCollection.newTest();
-            anotherTestCase.setArgs(testCase.getArgs());
-            anotherTestCase.setClassName(testCase.getClassName());
-            anotherTestCase.setExpectedReturn(testCase.getExpectedReturn());
-            anotherTestCase.setExpectedStandardOutput(
-                   testCase.getExpectedStandardOutput());
-            anotherTestCase.setFloatPrecision(testCase.getFloatPrecision());
-            anotherTestCase.setIgnoreCasing(testCase.isIgnoreCasing());
-            anotherTestCase.setIgnorePunctuation(
-                    testCase.isIgnorePunctuation());
-            anotherTestCase.setIgnoreWhitespace(testCase.isIgnoreWhitespace());
-            anotherTestCase.setIsVoid(testCase.isVoid());
-            anotherTestCase.setMethodName(testCase.getMethodName());
-            anotherTestCase.setStockedInput(testCase.getStockedInput());
-            anotherTestCase.setTestName(testCase.getTestName());
-            anotherTestCase.setTimeoutTime(testCase.getTimeoutTime());
+    public void handleSaveTestsMenuOption(ActionEvent event) throws Exception {
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Save Tests");
+        File file = myFileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            String filePath = file.getAbsolutePath();
+            myTestCollection.save(filePath);
         }
-        currentTests.clear();
-        listView.getItems().removeAll();
     }
 
     /**
@@ -293,14 +272,6 @@ public class ViewController {
     }
     
     /**
-     * 
-     * @return The number of currently created tests.
-     */
-    public int getNumberOfCurrentTests() {
-        return currentTests.size();
-    }
-    
-    /**
      * Checks for bad input, will display messages accordingly
      * @return true if there is acceptable input
      */
@@ -311,17 +282,7 @@ public class ViewController {
         }
         for (int i = 0; i < myTestCollection.testCount(); i++) {
             if (myTestCollection.getTest(i).getTestName().equals(testname)) {
-                JOptionPane.showMessageDialog(null, "Test name exists in "
-                        + "the Test Collection, "
-                        + "please choose a different name");
-                return false;
-            }
-        }
-        // this was added to check the current list of tests as well
-        for (TestCase test : currentTests) {
-            if (test.getTestName().equals(testname)) {
-                JOptionPane.showMessageDialog(null, "Test name exists, in the "
-                        + "temporary list, "
+                JOptionPane.showMessageDialog(null, "Test name exists, "
                         + "please choose a different name");
                 return false;
             }

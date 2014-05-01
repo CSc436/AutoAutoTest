@@ -1,15 +1,12 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-
 import java.lang.reflect.Field;
-
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-
-import org.junit.Before;
+import model.TestCollection;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
 import view.ViewController;
 
 /**
@@ -24,6 +21,7 @@ public class ViewControllerTest {
     private ViewController viewController;
     private Class<ViewController> viewControllerClass;
     private int currentnumberoftests;
+    private TestCollection testCollection;
 
     /**
      * Set up reflection for each of the tests.
@@ -31,10 +29,11 @@ public class ViewControllerTest {
      * @throws Exception
      *             If reflection isn't allowed
      */
-    @Before
+    @BeforeClass
     public void makeEverythingPublic() throws Exception {
         currentnumberoftests = 0;
         viewController = new ViewController();
+        testCollection = TestCollection.getInstance();
         viewControllerClass = ViewController.class;
         for (Field field : viewControllerClass.getDeclaredFields()) {
             field.setAccessible(true);
@@ -56,22 +55,19 @@ public class ViewControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testDeleteButtonAction() throws Exception {
-        int actual = viewController.getNumberOfCurrentTests();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
         
         setupBogusValues("testname", "className", "methodName", "1");
         viewController.handleGenerateButtonAction(null);
         currentnumberoftests += 1;
-        actual = viewController.getNumberOfCurrentTests();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
         
         ListView<String> theListView = 
                 (ListView<String>) listViewField.get(viewController);
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;
-        actual = viewController.getNumberOfCurrentTests();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
     }
 
     /**
@@ -89,8 +85,7 @@ public class ViewControllerTest {
             viewController.handleGenerateButtonAction(null);
         }
         currentnumberoftests += 100;
-        int actual = viewController.getNumberOfCurrentTests();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
     }
     
     /**
@@ -120,5 +115,13 @@ public class ViewControllerTest {
         ((TextField) methodfield.get(viewController)).setText(methodName);
         ((TextField) returnfield.get(viewController)).setText(returnValue);
     }
-
+    
+    /**
+     * 
+     * @return The actual number of tests in the test collection.
+     */
+    private int getActualNumberOfTests() {
+        return testCollection.testCount();
+    }
+    
 }
