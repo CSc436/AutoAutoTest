@@ -12,12 +12,15 @@ import org.junit.Test;
  */
 public class RelaxedStringFloatTest {
     
-    
+    /**
+     * Make sure that empty strings match.
+     */
     @Test
     public void testEmptyStrings() {
         String expected = "";
         String actual = "";
-        RelaxedStringFloatCheck rsfc = new RelaxedStringFloatCheck(false, false, false, 2);
+        RelaxedStringFloatCheck rsfc = new RelaxedStringFloatCheck(
+                false, false, false, 2);
         assertTrue(rsfc.isAcceptable(expected, actual));
     }
 
