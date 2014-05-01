@@ -1,12 +1,16 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Field;
+
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.TestCollection;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import view.ViewController;
 
 /**
@@ -17,11 +21,11 @@ import view.ViewController;
 
 public class ViewControllerTest {
 
-    private Field listViewField;
-    private ViewController viewController;
-    private Class<ViewController> viewControllerClass;
-    private int currentnumberoftests;
-    private TestCollection testCollection;
+    private static Field listViewField;
+    private static ViewController viewController;
+    private static Class<ViewController> viewControllerClass;
+    private static int currentnumberoftests;
+    private static TestCollection testCollection;
 
     /**
      * Set up reflection for each of the tests.
@@ -30,7 +34,7 @@ public class ViewControllerTest {
      *             If reflection isn't allowed
      */
     @BeforeClass
-    public void makeEverythingPublic() throws Exception {
+    public static void makeEverythingPublic() throws Exception {
         currentnumberoftests = 0;
         viewController = new ViewController();
         testCollection = TestCollection.getInstance();
@@ -45,7 +49,7 @@ public class ViewControllerTest {
         listViewField.setAccessible(true);
         listViewField.set(viewController, new ListView<String>());
     }
-
+    
     /**
      * Tests the deletion of a test from the list.
      * 
@@ -100,20 +104,26 @@ public class ViewControllerTest {
     private void setupBogusValues(String testName, String className,
             String methodName, String returnValue) throws Exception {
 
-        Field namefield = viewControllerClass.getDeclaredField("namefield");
+        Field namefield = viewControllerClass
+                .getDeclaredField("namefield");
         Field classfield = viewControllerClass
                 .getDeclaredField("classnamefield");
         Field methodfield = viewControllerClass
                 .getDeclaredField("methodnamefield");
-        Field returnfield = viewControllerClass.getDeclaredField("returnfield");
+        Field returnfield = viewControllerClass
+                .getDeclaredField("returnfield");
         namefield.setAccessible(true);
         classfield.setAccessible(true);
         methodfield.setAccessible(true);
         returnfield.setAccessible(true);
-        ((TextField) namefield.get(viewController)).setText(testName);
-        ((TextField) classfield.get(viewController)).setText(className);
-        ((TextField) methodfield.get(viewController)).setText(methodName);
-        ((TextField) returnfield.get(viewController)).setText(returnValue);
+        ((TextField) namefield
+                .get(viewController)).setText(testName);
+        ((TextField) classfield
+                .get(viewController)).setText(className);
+        ((TextField) methodfield
+                .get(viewController)).setText(methodName);
+        ((TextField) returnfield
+                .get(viewController)).setText(returnValue);
     }
     
     /**

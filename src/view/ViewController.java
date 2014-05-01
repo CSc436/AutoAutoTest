@@ -130,6 +130,7 @@ public class ViewController {
 //        File file = myFileChooser.showOpenDialog(new Stage());
 //        if (file != null) {
 //            //TODO: LOAD TESTS HERE
+              // I assume it will just be myTestCollection.load();
 //        }
     }
     
