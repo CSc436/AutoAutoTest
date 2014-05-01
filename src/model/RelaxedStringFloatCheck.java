@@ -13,6 +13,15 @@ public class RelaxedStringFloatCheck {
     private boolean ignoreCasing;
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
+
+    private int expectedLength;
+    private int expectedIndex;
+    private int actualLength;
+    private int actualIndex;
+
+    private StringBuilder newExpected;
+    private StringBuilder newActual;
+
     /**
      * Stores the number of decimal places to which the expected and actual must
      * round to the same value. For example, if a decimal places precision of 2
@@ -87,6 +96,36 @@ public class RelaxedStringFloatCheck {
     private boolean isPunctuation(char ch) {
         Matcher test = punctuationPattern.matcher("" + ch);
         return test.matches();
+    }
+
+    /**
+     * @return true if there are no more characters to read from the expected
+     *         string
+     */
+    private boolean expectedIsExhausted() {
+        return expectedIndex == expectedLength;
+    }
+
+    /**
+     * @return true if there are no more characters to read from the actual
+     *         string
+     */
+    private boolean actualIsExhausted() {
+        return actualIndex == actualLength;
+    }
+
+    /**
+     * @return the char of the index we are at from the expected string
+     */
+    private char currentExpectedChar() {
+        return newExpected.charAt(expectedIndex);
+    }
+
+    /**
+     * @return the char of the index we are at from the actual string
+     */
+    private char currentActualChar() {
+        return newActual.charAt(actualIndex);
     }
 
     /**
@@ -189,6 +228,27 @@ public class RelaxedStringFloatCheck {
     } // end of roundAllNumbersInString
 
     /**
+     * skips characters until the character can not be skips
+     * 
+     * @param index
+     *            the index to start at
+     * @param length
+     *            the maximum index of the input
+     * @param builder
+     *            the object that holds the character data
+     * @return returns the index of the next unskippable char
+     */
+    private int skip(int index, int length, StringBuilder builder) {
+        for (; index < length; index++) {
+            char ch = builder.charAt(index);
+            if (!canAdvanceOver(ch)) {
+                break;
+            }
+        }
+        return index;
+    }
+
+    /**
      * Determines if the student output is acceptable, compared to the expected
      * output, taking into account whatever relaxed checks have been enabled.
      * 
@@ -200,17 +260,12 @@ public class RelaxedStringFloatCheck {
      *         is not acceptable.
      */
     public boolean isAcceptable(String expected, String actual) {
-        int expectedIndex = 0; // tracks the index as we parse expected string
-        int actualIndex = 0; // tracks the index as we parse actual string
-        int expectedLength = 0;
-        int actualLength = 0;
-        boolean expectedIsExhausted = false;
-        boolean actualIsExhausted = false;
-        char chFromActual = '0';
-        char chFromExpected = '0';
-
-        StringBuilder newExpected = roundAllNumbersInString(expected);
-        StringBuilder newActual = roundAllNumbersInString(actual);
+        expectedIndex = 0; // tracks the index as we parse expected string
+        actualIndex = 0; // tracks the index as we parse actual string
+        expectedLength = 0;
+        actualLength = 0;
+        newExpected = roundAllNumbersInString(expected);
+        newActual = roundAllNumbersInString(actual);
 
         // Now, the StringBuilder variables contain the expected and actual with
         // any numeric values rounded to the specified number of decimal places.
@@ -220,54 +275,38 @@ public class RelaxedStringFloatCheck {
         // parse the new strings for being acceptable
         expectedIndex = 0;
         actualIndex = 0;
-        while ((!expectedIsExhausted) && (!actualIsExhausted)) {
-            // update current characters to probe
-            chFromExpected = newExpected.charAt(expectedIndex);
-            chFromActual = newActual.charAt(actualIndex);
+        while ((!expectedIsExhausted()) && (!actualIsExhausted())) {
 
             // advance probe character for each string until we see something we
             // cannot ignore
             expectedIndex = skip(expectedIndex, expectedLength, newExpected);
             actualIndex = skip(actualIndex, actualLength, newActual);
-            if (expectedIndex == expectedLength) {
-                expectedIsExhausted = true;
-                chFromExpected = newExpected.charAt(expectedIndex - 1);
-            }
-            else { 
-                chFromExpected = newExpected.charAt(expectedIndex);
-            }
-            if (actualIndex == actualLength) {
-                actualIsExhausted = true;
-                chFromActual = newActual.charAt(actualIndex - 1);
-            }
-            else { 
-                chFromActual = newActual.charAt(actualIndex);
-            }
-            
-            
+
             // if we get here, the we are either at the next pair of characters
             // to compare, or at the end of one or both strings
 
             // check to see if we are at the end of both strings, in which case
             // we could be looking at characters which don't match, but are
             // supposed to be ignored
-            if ((actualIsExhausted) && (expectedIsExhausted)) {
+            if ((actualIsExhausted()) && (expectedIsExhausted())) {
                 return true; // both strings exhausted
-            } else if (actualIsExhausted) { // we know that expected cannot be
-                                            // exhausted
-                return false; // student output is too short
-            } else if (expectedIsExhausted) { // we know that actual cannot be
+            } else if (actualIsExhausted()) { // we know that expected cannot be
                                               // exhausted
+                return false; // student output is too short
+            } else if (expectedIsExhausted()) { // we know that actual cannot be
+                                                // exhausted
                 return false; // student output has extraneous characters which
                               // are not ignorable
             } else if ((expectedIndex == expectedLength - 1)
                     && (actualIndex == actualLength - 1)) {
-                return charactersMatch(chFromExpected, chFromActual);
+                return charactersMatch(currentExpectedChar(),
+                        currentActualChar());
             }
 
             // if we get here, then we need to compare two characters which are
             // not at the end of their respective strings
-            if (!(charactersMatch(chFromExpected, chFromActual))) {
+            if (!(charactersMatch(currentExpectedChar(), 
+                    currentActualChar()))) {
                 // the next non-ignored characters do not match, so the student
                 // output is wrong
                 return false; // quit out of procedure
@@ -277,48 +316,15 @@ public class RelaxedStringFloatCheck {
             expectedIndex++;
             actualIndex++;
 
-            if (expectedIndex == expectedLength) {
-                expectedIsExhausted = true;
-            }
-
-            if (actualIndex == actualLength) {
-                actualIsExhausted = true;
-            }
-
         } // end of while loop
 
         // if we get here, then expected or actual was shorter, but we need to
         // see if the difference is due to ignorable characters
-        if (expectedIsExhausted) {
+        if (expectedIsExhausted()) {
             return canAdvanceToEnd(newActual, actualIndex);
         } else { // actual is exhausted
             return canAdvanceToEnd(newExpected, expectedIndex);
         }
     } // end of isAcceptable
-    
-    
-    
-    
-    
-    
-    
-    private int skip(int index, int length, StringBuilder builder) {
-        char ch = builder.charAt(index);
-        for( ; index < length; index++) {
-            ch = builder.charAt(index);
-            if(canAdvanceOver(ch) == false) {
-                break;
-            }
-        }
-        while (canAdvanceOver(ch)) {
-            index++;
-            // check to see if string has been exhausted
-            if (index == length) {
-                break;
-            }
-            // otherwise, advance probe location
-            ch = builder.charAt(index);
-        }
-        return index;
-    }
+
 }
