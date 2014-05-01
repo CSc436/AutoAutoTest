@@ -39,9 +39,6 @@ public class ViewController {
     private boolean ignorePunctuation;
     private boolean isVoid;
     
-    // this is the length of 'Test Name: ' before the actual name in the view
-    private static final int LIST_VIEW_TITLE_LENGTH = 11;
-    
     @FXML
     private TextField namefield;
     @FXML
@@ -183,9 +180,7 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
-            String testNameToRemove = listView.getItems().remove(testIndex);
-            testNameToRemove = testNameToRemove.substring(
-                    LIST_VIEW_TITLE_LENGTH, testNameToRemove.length());
+            listView.getItems().remove(testIndex);
             myTestCollection.removeTest(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
