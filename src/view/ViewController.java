@@ -132,6 +132,10 @@ public class ViewController {
         if (file != null) {
             String fileName = file.getAbsolutePath();
             myTestCollection.load(fileName);
+            for (int i = 0; i < myTestCollection.testCount(); i++) {
+                listView.getItems().add(
+                        getTestForView(myTestCollection.getTest(i)));
+            }
         }
     }
     
