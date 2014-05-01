@@ -183,7 +183,7 @@ public class IntegrationTest {
         String root = tempDir.getAbsolutePath();
         Path path = Paths.get(root, "SampleTests.java");
         String tempFileName = path.toString();
-        collection.save(tempFileName);
+        collection.export(tempFileName);
     }
 
     /**
@@ -220,5 +220,4 @@ public class IntegrationTest {
         tempDir.delete();
         assertEquals(4, actualFailures);
     }
-
 }
