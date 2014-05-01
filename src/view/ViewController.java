@@ -143,8 +143,11 @@ public class ViewController {
      */
     @FXML
     public void handleReplaceButtonAction(ActionEvent event) {
-        getAllData();
-        replaceTest();
+        int index = listView.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            getAllData();
+            replaceTest(index);
+        }
     }
 
     /**
@@ -208,8 +211,7 @@ public class ViewController {
     /**
      * Replaces the data of a test inside of the test collection.
      */
-    private void replaceTest() {
-        int index = listView.getSelectionModel().getSelectedIndex();
+    private void replaceTest(int index) {     
         TestCase testToReplace = myTestCollection.getTest(index);
         sendAllDataToTestCase(testToReplace);
     }
