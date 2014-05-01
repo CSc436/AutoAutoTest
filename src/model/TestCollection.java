@@ -1,10 +1,16 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 /**
@@ -71,8 +77,100 @@ public class TestCollection {
      */
     public void save(String filePath) throws Exception {
         String className = getClassName(filePath);
+        String root = new File(filePath).getParentFile().toString();
         String content = getFileContentString(className);
-        writeToFile(content, filePath);
+        copyFiles(filePath, className);
+        writeToFile(content, root, className);
+    }
+
+    /**
+     * copyFiles creates 2 folders, and then calls copyPaths to saves 4 jars and
+     * 2 files, plus the build script to the place the user defines to save the
+     * .java file.
+     * 
+     * @param path
+     *            is the file path in which the test will be saved
+     * @param className
+     *            is the actual classname from the entire directory.
+     * @throws Exception is thrown if the file could not be created.
+     */
+    public void copyFiles(String path, String className) throws Exception {
+        String filePath = path;
+        File destination = new File(filePath);
+        Path newdir = destination.toPath().getParent();
+        String dirString = newdir.toString();
+        
+        String [][] args = {{"src"}, {"lib"}, {"src", "model"}};
+        for (String[] dirs : args) {
+            String dirPath = Paths.get(dirString, dirs).toString();
+            File newDir = new File(dirPath);
+            if (!newDir.exists()) {
+                Files.createDirectory(newDir.toPath());
+            }
+        }
+
+        copyPath("./src/model/FakeStandardOutput.java", newdir, "src", "model");
+        copyPath("./src/model/StringOutputStream.java", newdir, "src", "model");
+        copyPath("./src/model/FakeStandardIn.java", newdir, "src", "model");
+        copyPath("./dev/hamcrest-core-1.3.jar", newdir, "lib");
+        copyPath("./dev/junit-4.11.jar", newdir, "lib");
+        copyPath("./lib/log4j-api-2.0-rc1.jar", newdir, "lib");
+        copyPath("./lib/log4j-core-2.0-rc1.jar", newdir, "lib");
+
+        replaceXMLVariable(className, newdir);
+    }
+
+    /**
+     * copyPath does the actual copying for copyFiles. This creates the files
+     * and puts them in the locations specified
+     * 
+     * @param directory
+     *            is the file path that is used to copy files
+     * @param newdirectory
+     *            is the path the parent of the directory where we are copying
+     * @param paths is a list of paths.
+     * @throws IOException
+     *             is thrown if the copy does not actually copy
+     */
+    private void copyPath(String directory, Path newdirectory, String... paths)
+            throws IOException {
+        Path filePath = new File(directory).toPath();
+        Path newdir = newdirectory;
+        Path dst = newdir.resolve(Paths.get("", paths));
+        dst = Paths.get(dst.toString(), filePath.getFileName().toString());
+        StandardCopyOption options = StandardCopyOption.REPLACE_EXISTING;
+        Files.copy(filePath, dst, options);
+    }
+
+    /**
+     * replaceXMLVariable opens the buildscript, and replaces the word CLASSNAME
+     * with the actual classname grabbed from the user
+     * 
+     * @param name
+     *            is the classname that is passed in from the save method.
+     * @param directory
+     *            is the directory in which the new build script will be saved.
+     * @throws IOException
+     *             this is thrown if the build script cannot be opened, or
+     *             cannot be written.
+     */
+    private void replaceXMLVariable(String name, Path directory)
+            throws IOException {
+        File source = new File("./res/build.xml");
+        Path build = source.toPath();
+        Charset charset = Charset.forName("UTF-8");
+        StringBuffer result = new StringBuffer();
+        BufferedReader reader = Files.newBufferedReader(build, charset);
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            line = line.replace("CLASSNAME", name);
+            result.append(line);
+        }
+        String destination = directory.resolve("build.xml").toString();
+        FileOutputStream outStream = new FileOutputStream(destination);
+        OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF8");
+        writer.write(result.toString());
+        writer.close();
     }
 
     /**
@@ -119,7 +217,7 @@ public class TestCollection {
             testCaseCode.append("\n");
         }
         template = template.replace("TESTS", testCaseCode.toString());
-        
+
         return template;
     }
 
@@ -130,13 +228,17 @@ public class TestCollection {
      * 
      * @param content
      *            The contents of the file as a string
-     * @param filePath
-     *            The path to the file that will be written to
+     * @param dir
+     *            The path to the directory that will be written to
+     * @param className
+     *            The name of the Java file being written
      * @throws IOException
      *             If the file cannot be written to for some reason
      */
-    private void writeToFile(String content, String filePath)
+    private void writeToFile(String content, String dir, String className)
             throws IOException {
+        Path p = Paths.get(dir, "src", className + ".java");
+        String filePath = p.toString();
         FileOutputStream outStream = new FileOutputStream(filePath);
         OutputStreamWriter writer = new OutputStreamWriter(outStream, "UTF8");
         writer.write(content);
@@ -151,4 +253,3 @@ public class TestCollection {
     }
 
 }
-
