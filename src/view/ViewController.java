@@ -274,19 +274,6 @@ public class ViewController {
             myTestCollection.save(filePath);
         }
     }
-
-    /**
-     * This method is a sub method to make the model generate a new test. A new
-     * test is created and all of the required data is sent it.
-     * 
-     * @return Returns the newly created testcase. This is mostly for testing
-     *         purposes.
-     */
-    private TestCase generateTest() {
-        TestCase oneTestCase = myTestCollection.newTest();
-        sendAllDataToTestCase(oneTestCase);
-        return oneTestCase;
-    }
     
     /**
      * Replaces the data of a test inside of the test collection.
@@ -295,16 +282,6 @@ public class ViewController {
         TestCase testToReplace = myTestCollection.getTest(index);
         sendAllDataToTestCase(testToReplace);
         listView.getItems().set(index, getTestForView(testToReplace));
-    }
-
-    /**
-     * Deletes the test from the TestCollection at the specified index.
-     * 
-     * @param pindex
-     *            The integer index of the desired TestCase.
-     */
-    private void deleteTest(int pindex) {
-        myTestCollection.removeTest(pindex);
     }
 
     /**
