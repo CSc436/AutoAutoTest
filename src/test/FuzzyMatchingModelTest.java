@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import model.FuzzyMatchingModel;
 
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.Test;
  * 
  */
 public class FuzzyMatchingModelTest {
-    
+
     /**
      * TODO
      */
@@ -33,88 +33,100 @@ public class FuzzyMatchingModelTest {
         boolean answer = model1.getResult("Hello", "Hell", .80);
         assertEquals(answer, true);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithFailingRatio(){
+    public void testTwoStringsWithFailingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, false, false,
                 2);
         boolean answer = model1.getResult("Hello", "Hell", .90);
         assertEquals(answer, false);
     }
-    
+
     /**
      * 
      */
     @Test
-    public void testTwoStringsWithIgnoreCasingAndPassingRatio(){
+    public void testTwoStringsWithIgnoreCasingAndPassingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, false, true,
                 2);
-//        double result = model1.getRatio("HeLLO", "Hell");
+        // double result = model1.getRatio("HeLLO", "Hell");
         boolean answer = model1.getResult("HeLLO", "Hell", .80);
-//        assertEquals(.89, result, 2);
+        // assertEquals(.89, result, 2);
         assertEquals(answer, true);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithIgnoreCasingAndFailingRatio(){
+    public void testTwoStringsWithIgnoreCasingAndFailingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, false, true,
                 2);
         boolean answer = model1.getResult("HeLLO", "Hell", .90);
         assertEquals(answer, false);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithIgnoringWhiteSpaceAndPassingRatio(){
+    public void testTwoStringsWithIgnoringWhiteSpaceAndPassingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(true, false, false,
                 2);
         String one = "hel  l l";
         String two = "hell";
         boolean answer = model1.getResult(one, two, .80);
-        assertEquals(answer,true);
+        assertEquals(answer, true);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithIgnoringWhiteSpaceAndFailingRatio(){
+    public void testTwoStringsWithIgnoringWhiteSpaceAndFailingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(true, false, false,
                 2);
         String one = "hel  l l";
         String two = "hell";
         boolean answer = model1.getResult(one, two, .90);
-        assertEquals(answer,false);
+        assertEquals(answer, false);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithIgnorePunctAndPassingRatio(){
+    public void testTwoStringsWithIgnorePunctAndPassingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, true, false,
                 2);
         boolean answer = model1.getResult("hello!!!", "hell.", .80);
         assertEquals(answer, true);
     }
-    
+
     /**
      * TODO
      */
     @Test
-    public void testTwoStringsWithIgnorePunctAndFailingRatio(){
+    public void testTwoStringsWithIgnorePunctAndFailingRatio() {
         FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, true, false,
                 2);
         boolean answer = model1.getResult("hello!!!", "hell.", .90);
         assertEquals(answer, false);
     }
-    
+
+    /**
+     * TODO
+     */
+    @Test
+    public void testTwoStringsWithFloatsInThemAndPassing() {
+        FuzzyMatchingModel model1 = new FuzzyMatchingModel(false, true, false,
+                2);
+        boolean answer = model1.getResult("Cost is: 3.00",
+                "Cost is: 3.0000001", 1.00);
+        assertEquals(answer, true);
+    }
+
 }

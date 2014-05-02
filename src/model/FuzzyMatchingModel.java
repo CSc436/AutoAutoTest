@@ -18,22 +18,28 @@ public class FuzzyMatchingModel {
     private boolean caseInsensitive;
 
     /**
-     * @param ignoreWhiteSpace
-     * @param ignorePunct
-     * @param caseInsensitive
-     * @param floatPrecision
+     * @param igWhiteSpace
+     *            is a boolean to see if ignoreWhiteSpace is to be used.
+     * @param igPunct
+     *            is a boolean to see if ignorePunct is to be used.
+     * @param caseInsen
+     *            is a boolean to see if caseInsensitive is to be used.
+     * @param floatPrec
+     *            is a boolean to show the rounding precision.
      */
-    public FuzzyMatchingModel(Boolean ignoreWhiteSpace, Boolean ignorePunct,
-            Boolean caseInsensitive, int floatPrecision) {
-        this.floatPrecision = floatPrecision;
-        this.ignoreWhiteSpace = ignoreWhiteSpace;
-        this.ignorePunct = ignorePunct;
-        this.caseInsensitive = caseInsensitive;
+    public FuzzyMatchingModel(Boolean igWhiteSpace, Boolean igPunct,
+            Boolean caseInsen, int floatPrec) {
+        this.floatPrecision = floatPrec;
+        this.ignoreWhiteSpace = igWhiteSpace;
+        this.ignorePunct = igPunct;
+        this.caseInsensitive = caseInsen;
     }
 
     /**
      * @param one
+     *            is the first string to be compared.
      * @param two
+     *            is the second string to be compared.
      * @return result, which is the the ratio of the two of total number num of
      *         combined cars minus the number of changes needed to change one
      *         string to the other, divided by the total number of chars from
@@ -45,14 +51,24 @@ public class FuzzyMatchingModel {
         double result = (totalChars - changes) / totalChars;
         return result;
     }
-    
+
+    /**
+     * 
+     * @param str is the string to be filtered.
+     * @return the string filtered.
+     */
     private String filterCasing(String str) {
-        if(caseInsensitive){
+        if (caseInsensitive) {
             return str.toLowerCase();
         }
         return str;
     }
-    
+
+    /**
+     * 
+     * @param str is the string to be filtered.
+     * @return the string filtered.
+     */
     private String filterWhitespace(String str) {
         if (ignoreWhiteSpace) {
             Pattern whitespacePattern = Pattern.compile("\\s");
@@ -61,7 +77,12 @@ public class FuzzyMatchingModel {
         }
         return str;
     }
-    
+
+    /**
+     * 
+     * @param str is the string to be filtered.
+     * @return the string filtered.
+     */
     private String filterPunctuation(String str) {
         if (ignorePunct) {
             Pattern punctuationPattern = Pattern.compile("\\p{Punct}");
@@ -70,7 +91,7 @@ public class FuzzyMatchingModel {
         }
         return str;
     }
-    
+
     /**
      * @param str
      *            Any string
@@ -89,27 +110,34 @@ public class FuzzyMatchingModel {
         }
         return str;
     }
-    
+
+    /**
+     * 
+     * @param str is the string that will be filtered.
+     * @return the string filtered depending on booleans.
+     */
     private String filterString(String str) {
+        str = roundFloats(str);
         str = filterWhitespace(str);
         str = filterPunctuation(str);
         str = filterCasing(str);
-        str = roundFloats(str);
         return str;
     }
-    
+
     /**
      * @param one
+     *            is the first string to be compared.
      * @param two
+     *            is the second string to be compared.
      * @param expectedRatio
-     * @return
-     * TODO
+     *            is the ratio that we are testing for.
+     * @return whether or not the ratio expected was achieved or not. TODO
      */
-    public boolean getResult(String one, String two, double expectedRatio){
+    public boolean getResult(String one, String two, double expectedRatio) {
         one = filterString(one);
         two = filterString(two);
         double actualRatio = getRatio(one, two);
         return actualRatio >= expectedRatio;
     }
-    
+
 }
