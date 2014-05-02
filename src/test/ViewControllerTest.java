@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.TestCollection;
@@ -43,6 +44,9 @@ public class ViewControllerTest {
             field.setAccessible(true);
             if (field.getType() == TextField.class) {
                 field.set(viewController, new TextField());
+            }
+            if (field.getType() == CheckMenuItem.class) {
+                field.set(viewController, new CheckMenuItem());
             }
         }
         listViewField = viewControllerClass.getDeclaredField("listView");

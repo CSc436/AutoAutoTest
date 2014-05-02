@@ -196,10 +196,14 @@ public class ViewController {
                     Integer.toString(
                             myTestCollection.getTest(index).
                             getFloatPrecision()));
-            ignoreCasingMenuItem.setSelected(myTestCollection.getTest(index).isIgnoreCasing());
-            ignorePunctuationMenuItem.setSelected(myTestCollection.getTest(index).isIgnorePunctuation());
-            ignoreWhitespaceMenuItem.setSelected(myTestCollection.getTest(index).isIgnoreWhitespace());
-            returnVoidMenuItem.setSelected(myTestCollection.getTest(index).isVoid());
+            ignoreCasingMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnoreCasing());
+            ignorePunctuationMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnorePunctuation());
+            ignoreWhitespaceMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnoreWhitespace());
+            returnVoidMenuItem.setSelected(
+                    myTestCollection.getTest(index).isVoid());
         }
     }
     
@@ -283,8 +287,10 @@ public class ViewController {
     
     /**
      * Replaces the data of a test inside of the test collection.
+     * @param index The index of the test to replace inside of the 
+     * test collection and the list view.
      */
-    private void replaceTest(int index) {     
+    public void replaceTest(int index) {     
         TestCase testToReplace = myTestCollection.getTest(index);
         sendAllDataToTestCase(testToReplace);
         listView.getItems().set(index, getTestForView(testToReplace));
