@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -60,6 +61,15 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
+    @FXML
+    private CheckMenuItem returnVoidMenuItem;
+    @FXML
+    private CheckMenuItem ignoreCasingMenuItem;
+    @FXML
+    private CheckMenuItem ignoreWhitespaceMenuItem;
+    @FXML
+    private CheckMenuItem ignorePunctuationMenuItem;    
+    
     
     /**
      * Generic constructor used for tests.
@@ -186,14 +196,10 @@ public class ViewController {
                     Integer.toString(
                             myTestCollection.getTest(index).
                             getFloatPrecision()));
-//            ignoreCasingBox.selectedProperty().set(
-//                    myTestCollection.getTest(index).isIgnoreCasing());
-//            ignorePunctuationBox.selectedProperty().set(
-//                    myTestCollection.getTest(index).isIgnorePunctuation());
-//            ignoreWhitespaceBox.selectedProperty().set(
-//                    myTestCollection.getTest(index).isIgnoreWhitespace());
-//            returnVoidBox.selectedProperty().set(
-//                    myTestCollection.getTest(index).isVoid());
+            ignoreCasingMenuItem.setSelected(myTestCollection.getTest(index).isIgnoreCasing());
+            ignorePunctuationMenuItem.setSelected(myTestCollection.getTest(index).isIgnorePunctuation());
+            ignoreWhitespaceMenuItem.setSelected(myTestCollection.getTest(index).isIgnoreWhitespace());
+            returnVoidMenuItem.setSelected(myTestCollection.getTest(index).isVoid());
         }
     }
     
@@ -407,10 +413,10 @@ public class ViewController {
         classnamefield.setText(null);
         timeoutfield.setText(null);
         floatprecisionfield.setText(null);
-//        ignoreCasingBox.selectedProperty().set(false);
-//        ignorePunctuationBox.selectedProperty().set(false);
-//        ignoreWhitespaceBox.selectedProperty().set(false);
-//        returnVoidBox.selectedProperty().set(false);
+        ignoreCasingMenuItem.setSelected(false);
+        ignorePunctuationMenuItem.setSelected(false);
+        ignoreWhitespaceMenuItem.setSelected(false);
+        returnVoidMenuItem.setSelected(false);
     }
 
 }

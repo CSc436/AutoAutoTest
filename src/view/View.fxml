@@ -21,13 +21,17 @@
 			    <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
 		    </Menu>
 		    <Menu text="Method Options">
-		        <CheckMenuItem text="Return Void"
+		        <CheckMenuItem fx:id="returnVoidMenuItem" 
+		                text="Return Void"
 		                onAction="#handleVoidMenuCheckBox"/>
-		        <CheckMenuItem text="Ignore Casing" 
+		        <CheckMenuItem fx:id="ignoreCasingMenuItem"
+		                text="Ignore Casing" 
 		                onAction="#handleCasingMenuCheckBox"/>
-		        <CheckMenuItem text="Ignore WhiteSpace"
+		        <CheckMenuItem fx:id="ignoreWhitespaceMenuItem"
+		                text="Ignore WhiteSpace"
 		                onAction="#handleWhiteSpaceMenuCheckBox"/>
-		        <CheckMenuItem text="Ignore Punctuation"
+		        <CheckMenuItem fx:id="ignorePunctuationMenuItem"
+		                text="Ignore Punctuation"
 		                onAction="#handlePunctuationMenuCheckBox"/>
 		    </Menu>
 		</MenuBar>
