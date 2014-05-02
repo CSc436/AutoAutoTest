@@ -8,145 +8,127 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.shape.Rectangle?>
 
+<BorderPane fx:controller="view.ViewController"
+        xmlns:fx="http://javafx.com/fxml" styleClass="root">
 
-<GridPane fx:controller="view.ViewController" 
-    xmlns:fx="http://javafx.com/fxml"
-    alignment="center"
-    hgap="10"
-    vgap="10" 
-    styleClass="root">
-
-    <!-- This is the listview for our tests. -->
-    <ListView fx:id="listView"
-            GridPane.columnIndex="1"
-            GridPane.rowIndex="0"> 
-    </ListView>
-    
-    <!-- This is the Export button. -->
-    <HBox spacing="10"
-            alignment="bottom_right"
-            GridPane.columnIndex="1"
-            GridPane.rowIndex="2">
-        <Button text="Export All Tests"
-                onAction="#handleExportButtonAction"/>
-    </HBox>
-
-     <!-- This is the container for the labels and input fields. -->
-     <GridPane hgap="10"
-             vgap="10"
-             GridPane.columnIndex="0"
-             GridPane.rowIndex="0">
+    <top> 
+	    <!-- Here is our menu bar with its menus. -->
+		<MenuBar>
+		    <Menu text="File">
+			    <MenuItem text="Load" onAction="#handleLoadTestsMenuOption"/>
+			    <MenuItem text="Save" onAction="#handleSaveTestsMenuOption"/>
+			    <MenuItem text="Export" onAction="#handleExportMenuOption"/>
+			    <MenuItem text="Exit" onAction="#handleExitMenuOption"/>
+		    </Menu>
+		    <Menu text="Method Options">
+		        <CheckMenuItem text="Return Void"
+		                onAction="#handleVoidMenuCheckBox"/>
+		        <CheckMenuItem text="Ignore Casing" 
+		                onAction="#handleCasingMenuCheckBox"/>
+		        <CheckMenuItem text="Ignore WhiteSpace"
+		                onAction="#handleWhiteSpaceMenuCheckBox"/>
+		        <CheckMenuItem text="Ignore Punctuation"
+		                onAction="#handlePunctuationMenuCheckBox"/>
+		    </Menu>
+		</MenuBar>
+	</top>
+	
+    <right>
+	    <!-- This is the listview for our tests. -->
+	    <ListView fx:id="listView"/> 
+    </right>
+   
+    <center> 
+	    <!-- This is the container for the labels and input fields. -->
+	    <GridPane hgap="10" vgap="10" styleClass="grid">
+	             
+	        <!-- These are the text labels. -->
+	        <Label text="Test Name:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="1"/>
+	        <Label text="Parameters:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="2"/>
+	        <Label text="Return Value:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="3"/>
+	        <Label text="Standard In:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="4"/>
+	        <Label text="Standard Out:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="5"/>
+	        <Label text="Method Name:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="6"/>
+	        <Label text="Class Name:"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="7"/>
+	        <Label text="Timeout Limit:"
+	        		GridPane.columnIndex="0"
+	        		GridPane.rowIndex="8"/>
+	        <Label text="Float Precision:"
+	        		GridPane.columnIndex="0"
+	        		GridPane.rowIndex="9"/>              
+	         
+	        <!-- These are the input fields. -->
+	        <TextField fx:id="namefield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="1"/>
+	        <TextField fx:id="paramsfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="2"/>
+	        <TextField fx:id="returnfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="3"/>
+	        <TextField fx:id="stdinfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="4"/>
+	        <TextField fx:id="stdoutfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="5"/>
+	        <TextField fx:id="methodnamefield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="6"/>
+	        <TextField fx:id="classnamefield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="7"/>
+	        <TextField fx:id="timeoutfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="8"/>
+	        <TextField fx:id="floatprecisionfield"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="9"/>
+	        
+	        <!-- This is the Generate Button. -->
+	        <HBox spacing="10"
+	                alignment="bottom_right"
+	                GridPane.columnIndex="1"
+	                GridPane.rowIndex="14">
+	            <Button text="Generate Test"
+	                    onAction="#handleGenerateButtonAction"/>
+	        </HBox>
+	        
+	        <!-- This is the Delete Button. -->
+	        <HBox spacing="10"
+	                alignment="bottom_right"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="14">
+	            <Button text="Delete Selected Test"
+	                    onAction="#handleDeleteButtonAction"/>
+	        </HBox>
+	        
+	        <!-- This is the header text. -->
+	        <Text id="welcome-text"
+	                text="AutoAuto Tester"
+	                GridPane.columnIndex="0"
+	                GridPane.rowIndex="0"
+	                GridPane.columnSpan="2"/>
+	    </GridPane>
+    </center>
         
-        <!-- These are the text labels. -->
-        <Label text="Test Name:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="1"/>
-        <Label text="Parameters:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="2"/>
-        <Label text="Return Value:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="3"/>
-        <Label text="Standard In:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="4"/>
-        <Label text="Standard Out:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="5"/>
-        <Label text="Method Name:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="6"/>
-        <Label text="Class Name:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="7"/>
-        <Label text="Timeout Limit:"
-        		GridPane.columnIndex="0"
-        		GridPane.rowIndex="8"/>
-        <Label text="Float Precision:"
-        		GridPane.columnIndex="0"
-        		GridPane.rowIndex="9"/>
-        <Label text="Ignore Casing:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="10"/>
-        <Label text="Ignore Whitespace:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="11"/>
-        <Label text="Ignore Punctuation:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="12"/>
-        <Label text="Return Void:"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="13"/>                
-         
-        <!-- These are the input fields. -->
-        <TextField fx:id="namefield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="1"/>
-        <TextField fx:id="paramsfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="2"/>
-        <TextField fx:id="returnfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="3"/>
-        <TextField fx:id="stdinfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="4"/>
-        <TextField fx:id="stdoutfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="5"/>
-        <TextField fx:id="methodnamefield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="6"/>
-        <TextField fx:id="classnamefield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="7"/>
-        <TextField fx:id="timeoutfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="8"/>
-        <TextField fx:id="floatprecisionfield"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="9"/>
-        <CheckBox fx:id="ignoreCasingBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="10"/>
-        <CheckBox fx:id="ignoreWhitespaceBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="11"/>        
-        <CheckBox fx:id="ignorePunctuationBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="12"/>
-        <CheckBox fx:id="returnVoidBox"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="13"/>
-        
-        <!-- This is the Generate Button. -->
-        <HBox spacing="10"
-                alignment="bottom_right"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="14">
-            <Button text="Generate Test"
-                    onAction="#handleGenerateButtonAction"/>
-        </HBox>
-        
-        <!-- This is the Delete Button. -->
-        <HBox spacing="10"
-                alignment="bottom_right"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="14">
-            <Button text="Delete Selected Test"
-                    onAction="#handleDeleteButtonAction"/>
-        </HBox>
-        
-        <!-- This is the header text. -->
-        <Text id="welcome-text"
-                text="AutoAuto Tester"
-                GridPane.columnIndex="0"
-                GridPane.rowIndex="0"
-                GridPane.columnSpan="2"/>
-    </GridPane>
-    
     <stylesheets>
         <URL value="@View.css" />
     </stylesheets>
-
-</GridPane>
+    
+</BorderPane>
