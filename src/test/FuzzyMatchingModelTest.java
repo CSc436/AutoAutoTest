@@ -116,5 +116,5 @@ public class FuzzyMatchingModelTest {
         boolean answer = model1.getResult("hello!!!", "hell.", .90);
         assertEquals(answer, false);
     }
-
+    
 }

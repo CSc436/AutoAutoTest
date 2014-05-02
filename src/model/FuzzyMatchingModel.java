@@ -1,5 +1,6 @@
 package model;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,10 +71,30 @@ public class FuzzyMatchingModel {
         return str;
     }
     
+    /**
+     * @param str
+     *            Any string
+     * @return The string with floating point numbers rounded to the precision
+     *         for this matcher.
+     */
+    private String roundFloats(String str) {
+        Pattern floatPattern = Pattern.compile("\\d*\\.\\d+");
+        Matcher floatMatcher = floatPattern.matcher(str);
+        while (floatMatcher.find()) {
+            String numberAsString = floatMatcher.group();
+            BigDecimal num = new BigDecimal(numberAsString);
+            num = num.setScale(floatPrecision, BigDecimal.ROUND_HALF_EVEN);
+            String roundedNumber = "" + num.doubleValue();
+            str = str.replace(numberAsString, roundedNumber);
+        }
+        return str;
+    }
+    
     private String filterString(String str) {
         str = filterWhitespace(str);
         str = filterPunctuation(str);
         str = filterCasing(str);
+        str = roundFloats(str);
         return str;
     }
     
@@ -89,7 +110,6 @@ public class FuzzyMatchingModel {
         two = filterString(two);
         double actualRatio = getRatio(one, two);
         return actualRatio >= expectedRatio;
-        
     }
     
 }
