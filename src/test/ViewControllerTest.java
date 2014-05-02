@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.TestCollection;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import view.ViewController;
@@ -18,44 +18,47 @@ import view.ViewController;
  * Tests for the view controller
  * 
  * @author jeffersd
- * 
  */
 
 public class ViewControllerTest {
 
-    private Field listViewField;
-    private ViewController viewController;
-    private Class<ViewController> viewControllerClass;
-    /**
-     * This is used for testing, because our test collection is a singleton.
-     */
-    private int currentnumberoftests;
-
+    private static Field listViewField;
+    private static ViewController viewController;
+    private static Class<ViewController> viewControllerClass;
+    private static int currentnumberoftests;
+    private static TestCollection testCollection;
+    
     /**
      * Set up reflection for each of the tests.
      * 
      * @throws Exception
      *             If reflection isn't allowed
      */
-    @Before
-    public void makeEverythingPublic() throws Exception {
-        currentnumberoftests = 0;
+    @BeforeClass
+    public static void makeEverythingPublic() throws Exception {
         viewController = new ViewController();
+        testCollection = TestCollection.getInstance();
         viewControllerClass = ViewController.class;
         for (Field field : viewControllerClass.getDeclaredFields()) {
             field.setAccessible(true);
             if (field.getType() == TextField.class) {
                 field.set(viewController, new TextField());
             }
-            if (field.getType() == CheckBox.class) {
-                field.set(viewController, new CheckBox());
-            }
         }
         listViewField = viewControllerClass.getDeclaredField("listView");
         listViewField.setAccessible(true);
         listViewField.set(viewController, new ListView<String>());
     }
-
+    
+    /**
+     * Updates the current number of tests to be asserted against before the 
+     * running of every test.
+     */
+    @Before
+    public void updateCurrentNumberOfTests() {
+        currentnumberoftests = getActualNumberOfTests();
+    }
+    
     /**
      * Tests the deletion of a test from the list.
      * 
@@ -67,15 +70,15 @@ public class ViewControllerTest {
     public void testDeleteButtonAction() throws Exception {
         setupBogusValues("testname", "className", "methodName", "1");
         viewController.handleGenerateButtonAction(null);
-        currentnumberoftests = TestCollection.getInstance().testCount();
-        ListView<String> theListView;
-        theListView = (ListView<String>) listViewField.get(viewController);
+        currentnumberoftests += 1;
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
+        
+        ListView<String> theListView = 
+                (ListView<String>) listViewField.get(viewController);
         theListView.getSelectionModel().select(0);
         viewController.handleDeleteButtonAction(null);
         currentnumberoftests -= 1;
-        
-        int actual = TestCollection.getInstance().testCount();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
     }
 
     /**
@@ -88,15 +91,12 @@ public class ViewControllerTest {
      */
     @Test
     public void testGetNumberOfTests() throws Exception {
-        currentnumberoftests = TestCollection.getInstance().testCount();
         for (int i = 0; i < 100; i++) {
             setupBogusValues("testname" + i, "className", "methodName", "1");
             viewController.handleGenerateButtonAction(null);
         }
-
         currentnumberoftests += 100;
-        int actual = TestCollection.getInstance().testCount();
-        assertEquals(currentnumberoftests, actual);
+        assertEquals(currentnumberoftests, getActualNumberOfTests());
     }
     
     /**
@@ -111,20 +111,34 @@ public class ViewControllerTest {
     private void setupBogusValues(String testName, String className,
             String methodName, String returnValue) throws Exception {
 
-        Field namefield = viewControllerClass.getDeclaredField("namefield");
+        Field namefield = viewControllerClass
+                .getDeclaredField("namefield");
         Field classfield = viewControllerClass
                 .getDeclaredField("classnamefield");
         Field methodfield = viewControllerClass
                 .getDeclaredField("methodnamefield");
-        Field returnfield = viewControllerClass.getDeclaredField("returnfield");
+        Field returnfield = viewControllerClass
+                .getDeclaredField("returnfield");
         namefield.setAccessible(true);
         classfield.setAccessible(true);
         methodfield.setAccessible(true);
         returnfield.setAccessible(true);
-        ((TextField) namefield.get(viewController)).setText(testName);
-        ((TextField) classfield.get(viewController)).setText(className);
-        ((TextField) methodfield.get(viewController)).setText(methodName);
-        ((TextField) returnfield.get(viewController)).setText(returnValue);
+        ((TextField) namefield
+                .get(viewController)).setText(testName);
+        ((TextField) classfield
+                .get(viewController)).setText(className);
+        ((TextField) methodfield
+                .get(viewController)).setText(methodName);
+        ((TextField) returnfield
+                .get(viewController)).setText(returnValue);
     }
-
+    
+    /**
+     * 
+     * @return The actual number of tests in the test collection.
+     */
+    private int getActualNumberOfTests() {
+        return testCollection.testCount();
+    }
+    
 }

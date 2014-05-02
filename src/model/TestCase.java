@@ -240,9 +240,8 @@ public class TestCase {
     public boolean isVoid() {
         return isVoid;
     }
-    
-    
 
+    
     /**
      * @return The code that will test the method based on the parameters
      *         specified.

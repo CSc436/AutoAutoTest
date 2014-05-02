@@ -6,9 +6,9 @@ import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +39,7 @@ public class ViewController {
     private boolean ignoreWhitespace;
     private boolean ignorePunctuation;
     private boolean isVoid;
-
+    
     @FXML
     private TextField namefield;
     @FXML
@@ -60,22 +60,99 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
-    @FXML
-    private CheckBox ignoreCasingBox;
-    @FXML
-    private CheckBox ignoreWhitespaceBox;
-    @FXML
-    private CheckBox ignorePunctuationBox;
-    @FXML
-    private CheckBox returnVoidBox;
     
     /**
      * Generic constructor used for tests.
      */
     public ViewController() {
+        isVoid = false;
+        ignoreCasing = false;
+        ignorePunctuation = false;
+        ignoreWhitespace = false;
         myTestCollection = TestCollection.getInstance();
     }
-
+    
+    /**
+     * Handles the clicking of the return void menu checkbox.
+     * @param event Clicking on the menu item.
+     */
+    @FXML
+    public void handleVoidMenuCheckBox(ActionEvent event) {
+        isVoid = !isVoid;
+    }
+    
+    /**
+     * Handles the clicking of the ignore casing menu checkbox.
+     * @param event Clicking on the menu item.
+     */
+    @FXML
+    public void handleCasingMenuCheckBox(ActionEvent event) {
+        ignoreCasing = !ignoreCasing;
+    }
+    
+    /**
+     * Handles the clicking of the ignore whitespace menu checkbox.
+     * @param event Clicking on the menu item. 
+     */
+    @FXML
+    public void handleWhiteSpaceMenuCheckBox(ActionEvent event) {
+        ignoreWhitespace = !ignoreWhitespace;
+    }
+    
+    /**
+     * Handles the clicking of the ignore punctuation menu checkbox.
+     * @param event Clicking on the menu item.
+     */
+    @FXML
+    public void handlePunctuationMenuCheckBox(ActionEvent event) {
+        ignorePunctuation = !ignorePunctuation;
+    }
+    
+    /**
+     * This method handles the action of exiting the GUI via the menu.
+     * @param event Clicking on the menu item.
+     */
+    @FXML
+    public void handleExitMenuOption(ActionEvent event) {
+        Platform.exit();
+    }
+    
+    /**
+     * Loads the tests into the program via the menu.
+     * @param event Clicking on the menu item.
+     * @throws Exception File loading.
+     */
+    @FXML
+    public void handleLoadTestsMenuOption(ActionEvent event) throws Exception {
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Load Tests");
+        File file = myFileChooser.showOpenDialog(new Stage());
+        if (file != null) {
+            String fileName = file.getAbsolutePath();
+            myTestCollection.load(fileName);
+            for (int i = 0; i < myTestCollection.testCount(); i++) {
+                listView.getItems().add(
+                        getTestForView(myTestCollection.getTest(i)));
+            }
+        }
+    }
+    
+    /**
+     * Exports the tests to a .java file via the menu.
+     * @param event Clicking on the Export Tests menu item.
+     * @throws Exception Saving Exception.
+     */
+    @FXML
+    public void handleExportMenuOption(ActionEvent event) throws Exception {
+        FileChooser myFileChooser = new FileChooser();
+        myFileChooser.setTitle("Export Tests");
+        File file = myFileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            String filePath = file.getAbsolutePath();
+            myTestCollection.export(filePath);
+        }
+    }
+    
     /**
      * 
      * @param event
@@ -109,14 +186,14 @@ public class ViewController {
                     Integer.toString(
                             myTestCollection.getTest(index).
                             getFloatPrecision()));
-            ignoreCasingBox.selectedProperty().set(
-                    myTestCollection.getTest(index).isIgnoreCasing());
-            ignorePunctuationBox.selectedProperty().set(
-                    myTestCollection.getTest(index).isIgnorePunctuation());
-            ignoreWhitespaceBox.selectedProperty().set(
-                    myTestCollection.getTest(index).isIgnoreWhitespace());
-            returnVoidBox.selectedProperty().set(
-                    myTestCollection.getTest(index).isVoid());
+//            ignoreCasingBox.selectedProperty().set(
+//                    myTestCollection.getTest(index).isIgnoreCasing());
+//            ignorePunctuationBox.selectedProperty().set(
+//                    myTestCollection.getTest(index).isIgnorePunctuation());
+//            ignoreWhitespaceBox.selectedProperty().set(
+//                    myTestCollection.getTest(index).isIgnoreWhitespace());
+//            returnVoidBox.selectedProperty().set(
+//                    myTestCollection.getTest(index).isVoid());
         }
     }
     
@@ -128,9 +205,9 @@ public class ViewController {
     public void handleGenerateButtonAction(ActionEvent event) {
         getAllData();
         if (dataIsAcceptable()) {
-            generateTest();
-            String anotherTest = getTestForView(myTestCollection
-                .getTest(myTestCollection.testCount() - 1));
+            TestCase newTest = myTestCollection.newTest();
+            sendAllDataToTestCase(newTest);
+            String anotherTest = getTestForView(newTest);
             listView.getItems().add(anotherTest);
         }
     }
@@ -154,8 +231,8 @@ public class ViewController {
 
     /**
      * This method is the response to the user clicking the 'Delete Button'. The
-     * selected test in the listview is deleted from the TestCollection data
-     * structure, and is then removed from the list.
+     * selected test in the listview is deleted from the listview, and from the
+     * test collection.
      * 
      * @param event
      *            The event that triggers this method. In this case, pressing
@@ -165,8 +242,8 @@ public class ViewController {
     public void handleDeleteButtonAction(ActionEvent event) {
         int testIndex = listView.getSelectionModel().getSelectedIndex();
         if (testIndex >= 0) {
-            deleteTest(testIndex);
             listView.getItems().remove(testIndex);
+            myTestCollection.removeTest(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
             if (newSelected == -1) {
@@ -178,22 +255,23 @@ public class ViewController {
     }
 
     /**
-     * This method exports all of the created tests.
+     * This method saves all of tests in the TestCollection. It calls the save
+     * method in the test collection, and the test collection will save the 
+     * tests in an xml format to be loaded later.
      * 
      * @param event
-     *            The event that triggers this method. In this case, pressing
-     *            the 'Export' button.
-     * @throws Exception
-     *             Throws an exception if the file is not found.
+     *            The event that triggers this method. In this case, clicking
+     *            on the save menu option.
+     * @throws Exception Due to file errors.
      */
     @FXML
-    public void handleExportButtonAction(ActionEvent event) throws Exception {
+    public void handleSaveTestsMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
-        myFileChooser.setTitle("Export Tests");
+        myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
         if (file != null) {
             String filePath = file.getAbsolutePath();
-            myTestCollection.export(filePath);
+            myTestCollection.save(filePath);
         }
     }
 
@@ -242,10 +320,6 @@ public class ViewController {
         stdout = stdoutfield.getText();
         classname = classnamefield.getText();
         methodname = methodnamefield.getText();
-        ignoreCasing = ignoreCasingBox.isSelected();
-        ignoreWhitespace = ignoreWhitespaceBox.isSelected();
-        ignorePunctuation = ignorePunctuationBox.isSelected();
-        isVoid = returnVoidBox.isSelected();
         timeoutlimit = timeoutfield.getText();
         floatprecision = floatprecisionfield.getText();
     }
@@ -356,10 +430,10 @@ public class ViewController {
         classnamefield.setText(null);
         timeoutfield.setText(null);
         floatprecisionfield.setText(null);
-        ignoreCasingBox.selectedProperty().set(false);
-        ignorePunctuationBox.selectedProperty().set(false);
-        ignoreWhitespaceBox.selectedProperty().set(false);
-        returnVoidBox.selectedProperty().set(false);
+//        ignoreCasingBox.selectedProperty().set(false);
+//        ignorePunctuationBox.selectedProperty().set(false);
+//        ignoreWhitespaceBox.selectedProperty().set(false);
+//        returnVoidBox.selectedProperty().set(false);
     }
 
 }

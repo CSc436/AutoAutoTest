@@ -1,7 +1,9 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import model.FakeStandardIn;
 import model.FakeStandardOutput;
+import model.RelaxedStringFloatCheck;
 import org.junit.Test;
 import java.io.UnsupportedEncodingException;
 
@@ -13,12 +15,12 @@ public class CLASSNAME {
             double expectedValue = (double) expected;
             double actualValue = (double) actual;
             assertEquals(expectedValue, actualValue, precision);
-        } /*else if(expected instanceof String) {
+        } else if(expected instanceof String) {
             RelaxedStringFloatCheck checker = new RelaxedStringFloatCheck(
-                isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, precision
+                isIgnoreCasing, isIgnoreWhitespace, isIgnorePunctuation, floatPrecision
             );
             assertTrue(checker.isAcceptable((String) expected, (String) actual));
-        } */else {
+        } else {
             assertEquals(expected, actual);
         }
     }
