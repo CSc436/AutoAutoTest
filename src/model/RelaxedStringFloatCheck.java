@@ -140,6 +140,9 @@ public class RelaxedStringFloatCheck {
      *         if they cannot.
      */
     private boolean canAdvanceToEnd(StringBuilder inputStr, int probeLocation) {
+        if (probeLocation == inputStr.length()) {
+            return true;
+        }
         boolean stringIsExhausted = false;
         int inputLength = inputStr.length();
         char probeChar = inputStr.charAt(probeLocation);
@@ -204,8 +207,6 @@ public class RelaxedStringFloatCheck {
         int actualIndex = 0; // tracks the index as we parse actual string
         int expectedLength = 0;
         int actualLength = 0;
-        boolean expectedIsExhausted = false;
-        boolean actualIsExhausted = false;
         char chFromActual = '0';
         char chFromExpected = '0';
 
@@ -220,6 +221,8 @@ public class RelaxedStringFloatCheck {
         // parse the new strings for being acceptable
         expectedIndex = 0;
         actualIndex = 0;
+        boolean expectedIsExhausted = expectedIndex == expectedLength;
+        boolean actualIsExhausted = actualIndex == actualLength;
         while ((!expectedIsExhausted) && (!actualIsExhausted)) {
             // update current characters to probe
             chFromExpected = newExpected.charAt(expectedIndex);
