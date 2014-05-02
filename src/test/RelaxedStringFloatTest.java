@@ -25,6 +25,18 @@ public class RelaxedStringFloatTest {
     }
 
     /**
+     * Ensure empty strings don't match other things
+     */
+    @Test
+    public void testEmptyStringsDontMatchNonEmpty() {
+        String expected = "";
+        String actual = "asdf";
+        RelaxedStringFloatCheck rsfc = new RelaxedStringFloatCheck(
+                false, false, false, 2);
+        assertFalse(rsfc.isAcceptable(expected, actual));
+    }
+
+    /**
      * These unit tests test the relaxed checking with ONLY differences in
      * whitespace being ignored.
      */
