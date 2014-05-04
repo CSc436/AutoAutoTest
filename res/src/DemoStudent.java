@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class DemoStudent {
 
@@ -8,7 +9,7 @@ public class DemoStudent {
         return n * factorial(n - 1);
     }
 
-    public greetUser() {
+    public void greetUser() {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String name = keyboard.nextLine();
