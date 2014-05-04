@@ -2,10 +2,6 @@ package view;
 
 import java.io.File;
 
-import javax.swing.JOptionPane;
-
-import org.apache.logging.log4j.LogManager;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +10,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+
+import javax.swing.JOptionPane;
+
 import model.TestCase;
 import model.TestCollection;
+
+import org.apache.logging.log4j.LogManager;
 
 /**
  * This is the main class for the controller code. It contains all of the
@@ -136,6 +138,8 @@ public class ViewController {
     public void handleLoadTestsMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
         myFileChooser.setTitle("Load Tests");
+        ExtensionFilter xmlFilter = new ExtensionFilter("*.xml", "*.xml");
+        myFileChooser.getExtensionFilters().add(xmlFilter);
         File file = myFileChooser.showOpenDialog(new Stage());
         if (file != null) {
             String fileName = file.getAbsolutePath();
@@ -155,6 +159,8 @@ public class ViewController {
     @FXML
     public void handleExportMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
+        ExtensionFilter javaFilter = new ExtensionFilter("*.java", "*.java");
+        myFileChooser.getExtensionFilters().add(javaFilter);
         myFileChooser.setTitle("Export Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
         if (file != null) {
@@ -277,6 +283,8 @@ public class ViewController {
     @FXML
     public void handleSaveTestsMenuOption(ActionEvent event) throws Exception {
         FileChooser myFileChooser = new FileChooser();
+        ExtensionFilter xmlFilter = new ExtensionFilter("*.xml", "*.xml");
+        myFileChooser.getExtensionFilters().add(xmlFilter);
         myFileChooser.setTitle("Save Tests");
         File file = myFileChooser.showSaveDialog(new Stage());
         if (file != null) {
