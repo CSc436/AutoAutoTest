@@ -9,8 +9,10 @@ import org.apache.logging.log4j.LogManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.TestCase;
@@ -59,6 +61,15 @@ public class ViewController {
     private TextField floatprecisionfield;
     @FXML
     private ListView<String> listView;
+    @FXML
+    private CheckMenuItem returnVoidMenuItem;
+    @FXML
+    private CheckMenuItem ignoreCasingMenuItem;
+    @FXML
+    private CheckMenuItem ignoreWhitespaceMenuItem;
+    @FXML
+    private CheckMenuItem ignorePunctuationMenuItem;    
+    
     
     /**
      * Generic constructor used for tests.
@@ -153,6 +164,50 @@ public class ViewController {
     }
     
     /**
+     * 
+     * @param event
+     *             Repopulates the fields with the data from the test
+     *              to be changed.
+     */
+    @FXML
+    public void handleClickOnListAction(MouseEvent event) {
+        int index = listView.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            // change the data in the fields to the data from the selected test
+            namefield.setText(
+                    myTestCollection.getTest(index).getTestName());
+            paramsfield.setText(
+                    myTestCollection.getTest(index).getArgs());
+            returnfield.setText(
+                    myTestCollection.getTest(index).getExpectedReturn());
+            stdinfield.setText(
+                    myTestCollection.getTest(index).getStockedInput());
+            stdoutfield.setText(
+                    myTestCollection.getTest(index).
+                    getExpectedStandardOutput());
+            methodnamefield.setText(
+                    myTestCollection.getTest(index).getMethodName());
+            classnamefield.setText(
+                    myTestCollection.getTest(index).getClassName());
+            timeoutfield.setText(
+                    Integer.toString(
+                            myTestCollection.getTest(index).getTimeoutTime()));
+            floatprecisionfield.setText(
+                    Integer.toString(
+                            myTestCollection.getTest(index).
+                            getFloatPrecision()));
+            ignoreCasingMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnoreCasing());
+            ignorePunctuationMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnorePunctuation());
+            ignoreWhitespaceMenuItem.setSelected(
+                    myTestCollection.getTest(index).isIgnoreWhitespace());
+            returnVoidMenuItem.setSelected(
+                    myTestCollection.getTest(index).isVoid());
+        }
+    }
+    
+    /**
      * @param event
      *            This method generates a new test when the button is pressed.
      */
@@ -164,6 +219,23 @@ public class ViewController {
             sendAllDataToTestCase(newTest);
             String anotherTest = getTestForView(newTest);
             listView.getItems().add(anotherTest);
+        }
+    }
+    
+    /**
+     * 
+     * @param event
+     *             This method will replace the selected test from the listview
+     *             with new data.
+     */
+    @FXML
+    public void handleReplaceButtonAction(ActionEvent event) {
+        int index = listView.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            getAllData();
+            if (dataIsAcceptable()) {
+                replaceTest(index);
+            }
         }
     }
 
@@ -184,6 +256,11 @@ public class ViewController {
             myTestCollection.removeTest(testIndex);
             int newSelected = listView.getSelectionModel().getSelectedIndex();
             listView.getSelectionModel().select(newSelected);
+            if (newSelected == -1) {
+                clearFields();
+            } else {
+                handleClickOnListAction(null);
+            }
         }
     }
 
@@ -206,6 +283,17 @@ public class ViewController {
             String filePath = file.getAbsolutePath();
             myTestCollection.save(filePath);
         }
+    }
+    
+    /**
+     * Replaces the data of a test inside of the test collection.
+     * @param index The index of the test to replace inside of the 
+     * test collection and the list view.
+     */
+    public void replaceTest(int index) {     
+        TestCase testToReplace = myTestCollection.getTest(index);
+        sendAllDataToTestCase(testToReplace);
+        listView.getItems().set(index, getTestForView(testToReplace));
     }
 
     /**
@@ -316,6 +404,25 @@ public class ViewController {
         }
         
         return true;
+    }
+    
+    /**
+     * Clears the data in the input fields.
+     */
+    public void clearFields() {
+        namefield.setText(null);
+        paramsfield.setText(null);
+        returnfield.setText(null);
+        stdinfield.setText(null);
+        stdoutfield.setText(null);
+        methodnamefield.setText(null);
+        classnamefield.setText(null);
+        timeoutfield.setText(null);
+        floatprecisionfield.setText(null);
+        ignoreCasingMenuItem.setSelected(false);
+        ignorePunctuationMenuItem.setSelected(false);
+        ignoreWhitespaceMenuItem.setSelected(false);
+        returnVoidMenuItem.setSelected(false);
     }
 
 }
