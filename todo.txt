@@ -1,0 +1,10 @@
+Generate the test
+Copy student code
+Run Tests
+Show generated Tests
+Run ANT
+
+Tests:
+int factorial(int)
+void greetUser()
+void infiniteLoop()
