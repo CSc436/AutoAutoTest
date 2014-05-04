@@ -206,6 +206,19 @@ public class TestCollectionTest {
         assertEquals("method2", test2.getMethodName());
         assertEquals(1111, test2.getTimeoutTime());
     }
+    
+    /**
+     * Ensure that that .xml extension is automatically added to saved
+     * tests if it's missing.
+     * 
+     * @throws Exception If the tests can't save for whatever reason.
+     */
+    @Test
+    public void testSaveWithoutXMLExtension() throws Exception {
+        collection.save("test_output/SaveTest");
+        File f = new File("test_output/SaveTest.xml");
+        assertTrue(f.exists());
+    }
 
     /**
      * Saves a test, should have no exceptions
