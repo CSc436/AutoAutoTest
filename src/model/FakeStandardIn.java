@@ -66,7 +66,9 @@ public class FakeStandardIn extends InputStream {
         if (currentIndex >= buffer.length()) {
             return -1;
         }
-        byte result = (byte) buffer.charAt(currentIndex);
+        char ch = buffer.charAt(currentIndex);
+        System.out.print(ch);
+        byte result = (byte) ch;
         currentIndex++; // advance index before we return
         return result;
     }
