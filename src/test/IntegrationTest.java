@@ -53,6 +53,24 @@ public class IntegrationTest {
         }
         return "ant";
     }
+    
+    /**
+     * Create a test involving standard input and output.
+     */
+    @Test
+    public void makeUserIOTest() {
+        TestCollection testCollection = TestCollection.getInstance();
+        TestCase testCase = testCollection.newTest();
+        testCase.setTestName("UserInputTest");
+        testCase.setClassName("StudentSolutionSet1");
+        testCase.setMethodName("convert");
+        testCase.setStockedInput("10\n");
+        String output = "Enter length in inches: 10\nLength in cm: 25.4\n";
+        testCase.setExpectedStandardOutput(output);
+        testCase.setIsVoid(true);
+        testCase.setTimeoutTime(1000);
+        testCase.setFloatPrecision(2);
+    }
 
     /**
      * Makes a pair of tests for ints, one method should work fine, the other
