@@ -182,7 +182,7 @@ public class TestCollection {
         String line = null;
         while ((line = reader.readLine()) != null) {
             line = line.replace("CLASSNAME", name);
-            result.append(line);
+            result.append(line + System.lineSeparator());
         }
         String destination = directory.resolve("build.xml").toString();
         FileOutputStream outStream = new FileOutputStream(destination);
@@ -353,6 +353,9 @@ public class TestCollection {
      *             if anything goes wrong
      */
     public void save(String fileName) throws Exception {
+        if (!fileName.endsWith(".xml")) {
+            fileName += ".xml";
+        }
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory
                 .newInstance();
