@@ -353,6 +353,9 @@ public class TestCollection {
      *             if anything goes wrong
      */
     public void save(String fileName) throws Exception {
+        if (!fileName.endsWith(".xml")) {
+            fileName += ".xml";
+        }
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory
                 .newInstance();
